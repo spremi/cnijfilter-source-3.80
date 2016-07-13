@@ -1,5 +1,5 @@
-AC_INIT(paramlist/paramlist.h)
-AM_INIT_AUTOMAKE(buftool, 1.0.0)
+AC_INIT(buftool, 1.0.0, no-define)
+AM_INIT_AUTOMAKE
 
 AM_CONFIG_HEADER(config.h)
 
