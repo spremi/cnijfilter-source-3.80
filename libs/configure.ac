@@ -30,4 +30,3 @@ CFLAGS="-O2"
 AC_OUTPUT(Makefile
                  buftool/Makefile
                  paramlist/Makefile)
-
