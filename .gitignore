@@ -1,0 +1,67 @@
+#
+# Patterns matching files that git should ignore
+#
+
+#
+# File generated bu autotools
+#
+**/*/Makefile
+**/*/Makefile.in
+
+**/*/autom4te.cache
+**/*/autoscan.log
+**/*/autoscan-*.log
+**/*/aclocal.m4
+**/*/compile
+**/*/configure
+**/*/configure.scan
+**/*/depcomp
+**/*/install-sh
+**/*/missing
+**/*/stamp-h1
+
+**/*/config.h
+**/*/config.h.in
+**/*/config.guess
+**/*/config.log
+**/*/config.status
+**/*/config.sub
+
+**/*/m4
+
+**/*/.deps
+**/*/.libs
+**/*/.dirstamp
+
+**/*/libtool
+**/*/ltmain.sh
+**/*/install-sh
+
+#
+# Objects & Library files
+#
+*.[oa]
+*.l[oa]
+
+#
+# Automatic backup files
+#
+*~
+*.swp
+
+
+#
+# Patch & Diff files
+#
+*.patch
+*.diff
+*.orig
+*.rej
+
+
+#
+# Specifically, don't ignore these files
+#
+!.gitignore
+
+
