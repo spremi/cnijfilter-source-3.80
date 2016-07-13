@@ -3,6 +3,8 @@ AM_INIT_AUTOMAKE(buftool, 1.0.0)
 
 AM_CONFIG_HEADER(config.h)
 
+AC_CONFIG_MACRO_DIRS([m4])
+
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
