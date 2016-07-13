@@ -1,5 +1,6 @@
-AC_INIT(canonmp230.ppd)
-AM_INIT_AUTOMAKE(canonppd, 1.0.0, no-define)
+AC_INIT(canon.ppd, 1.0.0, no-define)
+
+AM_INIT_AUTOMAKE
 
 if test "${program_suffix}" = "NONE"; then
 	program_suffix="mp230"
