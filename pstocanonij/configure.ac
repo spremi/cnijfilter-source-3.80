@@ -10,7 +10,13 @@ if test "${enable_progpath}" = "" ; then
    enable_progpath="${ac_default_prefix}/bin"
 fi
 
-AC_DEFINE_UNQUOTED(PROG_PATH, "$enable_progpath")
+AH_TEMPLATE([PACKAGE_LOCALE_DIR])
+AH_TEMPLATE([PACKAGE_DATA_DIR])
+AH_TEMPLATE([PACKAGE_SOURCE_DIR])
+AH_TEMPLATE([PACKAGE_PRINTER_MODEL])
+AH_TEMPLATE([PROG_PATH])
+
+AC_DEFINE_UNQUOTED([PROG_PATH], ["${enable_progpath}"], [PROG_PATH])
 AC_SUBST(PROG_PATH)
 
 # Checks for programs.
