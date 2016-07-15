@@ -1,6 +1,8 @@
 AC_INIT(filter/pstocanonij.c)
 AM_INIT_AUTOMAKE(pstocanonij, 1.0.0)
 
+AC_CONFIG_MACRO_DIRS([m4])
+
 AM_CONFIG_HEADER(config.h)
 
 AC_ARG_ENABLE(progpath)
