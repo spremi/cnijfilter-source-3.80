@@ -1,5 +1,6 @@
-AC_INIT(filter/pstocanonij.c)
-AM_INIT_AUTOMAKE(pstocanonij, 1.0.0)
+AC_INIT(pstocanonij, 1.0.0, no-define)
+
+AM_INIT_AUTOMAKE
 
 AC_CONFIG_MACRO_DIRS([m4])
 
