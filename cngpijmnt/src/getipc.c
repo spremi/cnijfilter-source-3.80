@@ -42,7 +42,7 @@ int GetIPCData(LPIPCU pipc, char *sname)
 	int server_fd;
 	int client_fd;
 	char buf[128];
-	size_t len;
+	socklen_t len;
 	short ret = RET_ERROR;
 
 	if( (server_fd = socket(PF_UNIX, SOCK_STREAM, 0)) < 0 )
