@@ -88,4 +88,3 @@ src/Makefile
 include/Makefile
 include/cncl/Makefile
 ])
-
