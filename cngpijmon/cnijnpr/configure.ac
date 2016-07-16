@@ -1,5 +1,6 @@
-AC_INIT(configure.in)
-AM_INIT_AUTOMAKE(cnijnpr, 3.80-1)
+AC_INIT(cnijnpr, 3.80-1, no-define)
+
+AM_INIT_AUTOMAKE
 
 AM_CONFIG_HEADER(config.h)
 
