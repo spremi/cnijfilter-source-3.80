@@ -108,4 +108,3 @@ include/cncl/Makefile
 include/misc/Makefile
 po/Makefile.in
 ])
-
