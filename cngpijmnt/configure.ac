@@ -1,5 +1,6 @@
-AC_INIT(src/main.c)
-AM_INIT_AUTOMAKE(cngpijmnt, 3.80-1)
+AC_INIT(cngpijmnt, 3.80-1, no-define)
+
+AM_INIT_AUTOMAKE
 
 AC_CONFIG_MACRO_DIRS([m4])
 
