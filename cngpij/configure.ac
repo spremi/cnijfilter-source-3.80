@@ -10,7 +10,9 @@ if test "${enable_progpath}" = "" ; then
    enable_progpath="${ac_default_prefix}/bin"
 fi
 
-AC_DEFINE_UNQUOTED(PROG_PATH, "$enable_progpath")
+AH_TEMPLATE([PROG_PATH])
+
+AC_DEFINE_UNQUOTED([PROG_PATH], ["${enable_progpath}"], [PROG_PATH])
 AC_SUBST(PROG_PATH)
 
 
