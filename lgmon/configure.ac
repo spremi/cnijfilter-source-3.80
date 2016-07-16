@@ -1,6 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(configure.in)
+AC_INIT(lgmon, 3.80-1, no-define)
+
+AM_INIT_AUTOMAKE
+
 AC_ARG_PROGRAM
 
 if test "${program_suffix}" = "NONE"; then
@@ -8,7 +11,6 @@ if test "${program_suffix}" = "NONE"; then
   program_transform_name="s,\$\$,${program_suffix},;"
 fi
 
-AM_INIT_AUTOMAKE(lgmon{program_suffix}, 3.80-1)
 AM_CONFIG_HEADER(config.h)
 dnl AM_MAINTAINER_MODE
 
