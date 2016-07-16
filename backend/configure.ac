@@ -1,6 +1,8 @@
 AC_INIT(src/cnij_backend_common.c)
 AM_INIT_AUTOMAKE(backend, 3.80-1)
 
+AC_CONFIG_MACRO_DIRS([m4])
+
 AM_CONFIG_HEADER(config.h)
 
 AC_ARG_ENABLE(progpath)
