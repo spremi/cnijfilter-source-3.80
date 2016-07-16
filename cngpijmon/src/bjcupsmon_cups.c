@@ -116,7 +116,7 @@ PUBLIC gint getProductName(gchar *pDestName, gchar *pProductName, gchar *pModelI
 			if (strcmp(pPPD->manufacturer, STR_MANUFACTURER_NAME) == 0) {
 				strncpy(pProductName, pPPD->modelname, strlen(pPPD->modelname));	// use modelname from 22th Jan.'03
 				/* Ver.3.20 for modelID to cnijnpr */
-				snprintf(pModelIDstr, sizeof(pModelIDstr), "%d", pPPD->model_number);
+				snprintf(pModelIDstr, 5, "%d", pPPD->model_number);
 				retVal = ID_ERR_NO_ERROR;
 			}
 			ppdClose(pPPD);
