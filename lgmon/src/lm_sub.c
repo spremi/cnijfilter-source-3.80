@@ -827,7 +827,7 @@ int write_status_info( struct bjst_rback *rback, int r_bytes, char *buf )
 		fflush(log_path);
 #endif
 		if( ret3 == CNCL_OK ){
-			memset( buf, 0, sizeof(buf) );
+			memset( buf, 0, r_bytes );
 			memcpy( &buf[0], &buf2[0], MAX_STATBUF );
 		}
 		else
