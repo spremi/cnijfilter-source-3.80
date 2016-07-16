@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-INCLUDES = \
+AM_CPPFLAGS = \
   -I$(top_srcdir)/include/cncl \
   -I$(top_srcdir)/include/misc \
   @XML2_CFLAGS@ \
