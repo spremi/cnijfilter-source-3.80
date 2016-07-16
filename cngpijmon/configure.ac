@@ -78,4 +78,3 @@ Makefile
 src/Makefile
 po/Makefile.in
 ])
-
