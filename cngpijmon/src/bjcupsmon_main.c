@@ -114,6 +114,7 @@ int main(gint argc, gchar *argv[])
 	gint			retVal = ID_ERR_NO_ERROR;	// Return value.
 /*** Parameters end ***/
 
+	memset(&errorInfo, 0, sizeof(ST_ErrorCodeTbl));
 
 	// Argument check.
 	if (argc > 2) {
@@ -371,7 +372,7 @@ PRIVATE gint initApplication(gint argc, gchar *argv[], gchar *pPrinterName)
 	} /* parents process */
 	else {
 		//for bscc
-		output_dev		Odev;
+		output_dev __attribute__ ((unused)) Odev;
 	    char			buf[4096];
 
 		memset( buf, 0x00, sizeof(buf) ) ;
@@ -493,7 +494,7 @@ PRIVATE gint initApplication(gint argc, gchar *argv[], gchar *pPrinterName)
 										// Set calling timeout function.
 										//for Network Ver.3.10
 										/* Ver.3.70 */
-										gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, (gpointer)backend_Is);
+										gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, GINT_TO_POINTER(backend_Is));
 										//gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, backend_Is);
 										//gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, small_modelname);
 										//gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, NULL);
@@ -528,7 +529,7 @@ EXT_SPOOLER_ERROR:
 					/* if(backend_Is == CANON_USB_BACKEND_CNIJ_USB) */
 					memset(small_modelname, 0, sizeof(small_modelname));
 					/* Ver.3.70 */
-					gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, (gpointer)backend_Is);
+					gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, GINT_TO_POINTER(backend_Is));
 					//gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, backend_Is);
 					//gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, small_modelname);
 					//gTimeoutFuncTag = gtk_timeout_add(TIMEOUT_CALL_UPDATE_UI_FUNC, (GtkFunction)updateUI, NULL);
@@ -615,7 +616,7 @@ PRIVATE gboolean updateUI(gint backend_Is)
 	static struct timeb	prevTime;
 	static gboolean		initTime = FALSE;
 	//Ver.3.10 for Network
-	output_dev		Odev;
+	output_dev __attribute__ ((unused)) Odev;
     char			buf[4096];
 	short			select_flag = 0;
 /*** Parameters end ***/
@@ -676,7 +677,7 @@ PRIVATE gboolean updateUI(gint backend_Is)
 				{
 					fd_set rfds;
 					struct timeval tv;
-					int retx = 0;
+					int __attribute__ ((unused)) retx = 0;
 					//int retval_select = 0;
 					//int retval;
 
