@@ -1231,7 +1231,7 @@ PUBLIC void updateUISettings(ST_PrinterStatus *pPrinterStatus, ENUM_OtherMessage
 							gchar inkname[32];
 							int xxx = 0;
 							memset(inkname, 0, sizeof(inkname));
-							memset(message2, 0, sizeof(message2));
+							memset(message2, 0, 32);
 
 							insertStringToText(STR_MAIN_TEXT_STATUS, msgPtr );
 							insertStringToText_NoConv(STR_MAIN_TEXT_STATUS, "<");
@@ -1512,7 +1512,7 @@ PRIVATE void insertStringToText_NoConv(const gchar *pWidgetName, const gchar *pS
 PRIVATE void freezeText(const gchar *pWidgetName, gboolean freeze)
 {
 /*** Parameters start ***/
-	GtkWidget	*widget = NULL;		// Temporary pointer to widget.
+	GtkWidget __attribute__ ((unused)) *widget = NULL;		// Temporary pointer to widget.
 /*** Parameters end ***/
 
 	widget = lookupWidget(pWidgetName);
