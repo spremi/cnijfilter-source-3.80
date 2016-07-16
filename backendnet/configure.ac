@@ -1,5 +1,6 @@
-AC_INIT(backend/cnijnetlm.c)
-AM_INIT_AUTOMAKE(backendnet, 3.80-1)
+AC_INIT(backendnet, 3.80-1, no-define)
+
+AM_INIT_AUTOMAKE
 
 AC_CONFIG_MACRO_DIRS([m4])
 
