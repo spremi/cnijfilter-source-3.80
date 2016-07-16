@@ -1,6 +1,11 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(configure.in)
 
+AH_TEMPLATE([PACKAGE])
+AH_TEMPLATE([VERSION])
+AH_TEMPLATE([XBJLIBPATH])
+AH_TEMPLATE([XBINPATH])
+
 if test "${program_suffix}" = "NONE"; then
   program_suffix="mg6300"
   program_transform_name="s,\$\$,${program_suffix},;"
@@ -11,7 +16,7 @@ if test "${enable_libpath}" = ""; then
   enable_libpath="/usr/lib/bjlib"
 fi
 
-AC_DEFINE_UNQUOTED(XBJLIBPATH, $enable_libpath)
+AC_DEFINE_UNQUOTED([XBJLIBPATH], ["${enable_libpath}"], [XBJLIBPATH])
 AC_SUBST(XBJLIBPATH)
 
 
@@ -20,7 +25,7 @@ if test "${enable_binpath}" = ""; then
   enable_binpath="/usr/local/bin"
 fi
 
-AC_DEFINE_UNQUOTED(XBINPATH, $enable_binpath)
+AC_DEFINE_UNQUOTED([XBINPATH], ["${enable_binpath}"], [XBINPATH])
 AC_SUBST(XBINPATH)
 
 
