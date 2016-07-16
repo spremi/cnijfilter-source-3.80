@@ -1,6 +1,8 @@
 AC_INIT(src/main.c)
 AM_INIT_AUTOMAKE(cngpijmnt, 3.80-1)
 
+AC_CONFIG_MACRO_DIRS([m4])
+
 AM_CONFIG_HEADER(config.h)
 
 AC_ARG_ENABLE(progpath)
