@@ -43,7 +43,7 @@ short GetIPCData(LPIPCU pipc, char *sname)
 	struct sockaddr_un		sun;
 	int						s, c;
 	char					buf[128];
-	size_t					adrlen;
+	socklen_t				adrlen;
 	short					ret = RET_ERROR;
 
 	if ((s = socket(PF_UNIX, SOCK_STREAM, 0)) < 0)

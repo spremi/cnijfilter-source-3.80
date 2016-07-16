@@ -39,6 +39,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
 #include <png.h>
 
 #include "cpktypes.h"
@@ -1520,8 +1522,8 @@ static short png_image_init( LPBJF_IMAGEINFO lpbjfimage )
 	short			tmpformat;
 	short			retbyte = 0;
 	short			bpp = 3;
-	long			width = 0;
-	long			length = 0;
+	png_uint_32		width = 0;
+	png_uint_32		length = 0;
 	long			rstep = 0;
 	long			RasterLength = 0;
 	long			i;
@@ -1574,7 +1576,7 @@ static short png_image_init( LPBJF_IMAGEINFO lpbjfimage )
 		goto onErr;
 	}
 
-	if (setjmp (png_p->jmpbuf))
+	if (setjmp (png_jmpbuf (png_p)))
 	{
 		png_destroy_read_struct(&png_p, &info_p, (png_infopp)NULL);
 		goto onErr;
@@ -1585,7 +1587,7 @@ static short png_image_init( LPBJF_IMAGEINFO lpbjfimage )
 
 	png_read_info( png_p, info_p );
 
-	png_get_IHDR( png_p, info_p, (unsigned long *)&width, (unsigned long *)&length, &bit_depth,
+	png_get_IHDR( png_p, info_p, &width, &length, &bit_depth,
 	              &color_type, &interlace_type, NULL, NULL);
 
 	/* not support Interlace */
