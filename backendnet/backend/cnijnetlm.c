@@ -249,10 +249,9 @@ int		net_lgmon_exec( int argc, int mode, FILE *fp, int copies , char *resource, 
 
 	if	( g_pid > 0 ) {				/* if child process has started....	*/
 		int child_status = 0;
-		pid_t child_pid = 0;
 
 		// waitpid( g_pid, NULL, 0) ;		/* child process wait		*/
-		child_pid = wait(&child_status);
+		wait(&child_status);
 
 		if (!WIFEXITED(child_status)){
 			return( CANON_STS_NG ) ;
@@ -356,12 +355,11 @@ void	data_write( int argc, FILE *fp, int copies, int pipe_fds )
 			}
 
 			struct pollfd fds;
-			int pollst;
 
 			fds.fd = pipe_fds;
 			fds.events = POLLOUT;
 
-			pollst = poll(&fds, 1, polltime);
+			poll(&fds, 1, polltime);
 
 			if (fds.revents & POLLOUT){
 				fseek(tempfp, read_position, SEEK_SET);
