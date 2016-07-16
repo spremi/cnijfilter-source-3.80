@@ -245,7 +245,7 @@ static int setup_bscc(int dev_path, char *jobIDStr)
 #endif
 			/* for Ver.380 write again SSR=DF; */
 			if( err == CNCL_OK ){
-				short bsccdf_err = 0;
+				short __attribute__ ((unused)) bsccdf_err = 0;
 				bsccdf_err = write_printer_command(dev_path, bscc_com, size);
 #ifdef DEBUG
 				fprintf(log_path, "BSCC_SSR_DF @ size, bsccdf_err : %d,%d\n",size, bsccdf_err);
@@ -516,7 +516,7 @@ static short PreparePrint( char *jobIDStr, short jobIDStrlen )
 	int dev_path = PRNT_PATH;
 	short	cnclerr = -1;
 	char *cmd_wrbuf = NULL;
-	short i=0;
+	short __attribute__ ((unused)) i=0;
 
 	/* write command buffer */
 	cmd_wrbuf = (char *)malloc(MAX_STATBUF); /* 4096 */

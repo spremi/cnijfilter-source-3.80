@@ -245,7 +245,7 @@ static unsigned int data_output_main(int sm_sock_fd, int fix_size)
 		ptr = buf;
 		/* data print(output) loop */
 		for(;r_size > 0;r_size -= w_size){
-			int err;
+			int __attribute__ ((unused)) err;
 
 			signal_block(sigmask);   /* signal block */
 			get_printer_sem(sem_id); /* printer lock */
