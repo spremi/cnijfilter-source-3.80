@@ -75,7 +75,7 @@ int selectcommonfunc(ST_STORESET *p_s, ST_BSCC2STS *p_ct, bscc2sts_tbl *p_tbl,  
 
 /*
  * A common status set function.
- * return :   
+ * return :
  *        Usual             --The length of status written in the table.
  *        no conversion item--BADITEM macros.
  */
@@ -271,7 +271,7 @@ int com_setoperate(ST_STORESET *p_s, ST_BSCC2STS *p_ct, bscc2sts_tbl *p_tbl)
 		return(OK);
 	  }
 	  length+=ret;
-	  //for DOC multi Ver.2.70 
+	  //for DOC multi Ver.2.70
 	  //parameter_num=0;
 	}
   }
@@ -388,7 +388,7 @@ err01:
 /*
  * It investigates whether ink low and ink out have occurred.
  * return:
- *       When having generated -- OCCUR macros. 
+ *       When having generated -- OCCUR macros.
  */
 int com_warnoperatechk(char *p_call, char color, int buf_length)
 {

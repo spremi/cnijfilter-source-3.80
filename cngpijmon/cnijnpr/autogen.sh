@@ -70,7 +70,7 @@ xlc )
 esac
 
 for coin in `find $srcdir -name configure.in -print`
-do 
+do
   dr=`dirname $coin`
   if test -f $dr/NO-AUTO-GEN; then
     echo skipping $dr -- flagged as no auto-gen
@@ -82,7 +82,7 @@ do
       for k in $macrodirs; do
   	if test -d $k; then
           aclocalinclude="$aclocalinclude -I $k"
-  	##else 
+  	##else
 	##  echo "**Warning**: No such directory \`$k'.  Ignored."
         fi
       done

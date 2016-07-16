@@ -44,7 +44,7 @@ char *stamon_arg[ARGV_MAX];		/* arg space */
 struct ptdev_func dev_access;		/* read/write dispatch struct */
 struct ptdev_func *p_dvacs = &dev_access;
 unsigned int total_bytes = 0;		/* write data total bytes --utilbyte=xxxxx */
-int  header_data = 0;			/* bjfiler > "header-data" > data_output_process */ 
+int  header_data = 0;			/* bjfiler > "header-data" > data_output_process */
 
 int command_type = NORMAL_COMMAND;
 int ivec_poweroff_flag = NORMAL_POWEROFF;

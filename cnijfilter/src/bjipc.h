@@ -46,8 +46,8 @@ typedef struct BJFLT_UISETUP	/* other UI setup */
 {
 	short	bjflt_fit;			/* fit for printarea */
 	short	bjflt_percent;		/* percent (%) */
-	short	bjflt_extension;	/* amount of extention for borderless printing */	
-	short	bjflt_location;		/* location */	
+	short	bjflt_extension;	/* amount of extention for borderless printing */
+	short	bjflt_location;		/* location */
 	short	bjflt_copies;		/* copies */
 	short	bjflt_revprint;		/* reverse print */
 	short	bjflt_collate;		/* collate */

@@ -66,7 +66,7 @@
 
 
 /* SetConfigInfo */
-#define BUTTON_NAME_STR_SIZE	64	
+#define BUTTON_NAME_STR_SIZE	64
 typedef struct {
 	const char *uiStr;
 	const char *cmd1Str;
@@ -190,9 +190,9 @@ static const char	*paperWFeedString[] = {
 	"ON",
 };
 
-static const char	*autoPowerOnValue[] = {		
-	"Disable",                  
-	"Enable",					
+static const char	*autoPowerOnValue[] = {
+	"Disable",
+	"Enable",
 };
 
 static const short drylevel5_button_value[] =
@@ -204,22 +204,22 @@ static const short drylevel5_button_value[] =
 	5,
 };
 
-static const char	*autoPowerOffValue[] = {		
-	"Disable",                  
-	"5",                        
-	"10",                       
-	"15",                       
-	"30",                       
-	"60"                        
+static const char	*autoPowerOffValue[] = {
+	"Disable",
+	"5",
+	"10",
+	"15",
+	"30",
+	"60"
 };
 
-static const char	*autoPowerOffValueType2[] = {		
-	"Disable",                  
-	"15",                        
-	"30",                       
+static const char	*autoPowerOffValueType2[] = {
+	"Disable",
+	"15",
+	"30",
 	"60",
-	"120",                       
-	"240"                        
+	"120",
+	"240"
 };
 
 static const char	*switchString[] = {
@@ -245,10 +245,10 @@ typedef struct{
 	short nValue[INKCRTRG_NUM_MAX];
 }INKCRTRGMSGINFO;
 
-INKCRTRGMSGINFO inkCartridgeInfo[] = 
-{ 
+INKCRTRGMSGINFO inkCartridgeInfo[] =
+{
 	{ 3, 2, { "util_ink_cartridge_1", 		// type A
-	   		"util_ink_cartridge_2", 
+	   		"util_ink_cartridge_2",
 		    "util_ink_cartridge_3" },
  		  { "utility_message_55",
 		   	"utility_message_56",
@@ -257,7 +257,7 @@ INKCRTRGMSGINFO inkCartridgeInfo[] =
 		   	CND_CARTRIDGE_BK,
 			CND_CARTRIDGE_BK_COLOR } },
 	{ 3, 2, { "util_ink_cartridge_1", 		// type B
-	   		"util_ink_cartridge_2", 
+	   		"util_ink_cartridge_2",
 		    "util_ink_cartridge_3" },
  		  { "utility_message_55",
 		   	"LUM_IDS_CARTRIDGE_EXP_BK_2",
@@ -266,7 +266,7 @@ INKCRTRGMSGINFO inkCartridgeInfo[] =
 		   	CND_CARTRIDGE_BK,
 			CND_CARTRIDGE_BK_COLOR } },
 	{ 3, 2, { "util_ink_cartridge_1", 		// type C
-	   		"util_ink_cartridge_2", 
+	   		"util_ink_cartridge_2",
 		    "util_ink_cartridge_3" },
  		  { "utility_message_55",
 		   	"LUM_IDS_CARTRIDGE_EXP_BK_3",
@@ -294,10 +294,10 @@ typedef struct {
 } SETCONFIGCOMPTYPE001RES, *LPSETCONFIGCOMPTYPE001RES;
 
 SETCONFIGCOMPTYPE001RES setConfigType001Res[] = {
-	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog }, 
-	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog }, 
-	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog }, 
-	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog }, 
+	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog },
+	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog },
+	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog },
+	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog },
 	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog }, /* Ver.3.50 */
 	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog }, /* Ver.3.50 */
 	{ RES_SETCONFIG_COMPTYPE001, create_setconfig_type001_dialog }, /* Ver.3.60 */
@@ -393,29 +393,29 @@ static const gchar* setconfig_type001_radiobutton_name[] =
 };
 
 
-static const gchar	*setconfig_type001_02_onlist[] = {		
-	"autopower_disable",		
+static const gchar	*setconfig_type001_02_onlist[] = {
+	"autopower_disable",
 	"autopower_enable",
 	NULL
 };
 
-static const gchar	*setconfig_type001_02_offlist[] = {		
-	"autopower_disable",		
-	"autopower_5min",			
-	"autopower_10min",			
-	"autopower_15min",			
-	"autopower_30min",			
+static const gchar	*setconfig_type001_02_offlist[] = {
+	"autopower_disable",
+	"autopower_5min",
+	"autopower_10min",
+	"autopower_15min",
+	"autopower_30min",
 	"autopower_60min",
 	NULL
 };
 
 static const gchar *setconfig_type001_03list[] = {
-	"autopower_disable",		
-	"autopower_15min",			
-	"autopower_30min",			
+	"autopower_disable",
+	"autopower_15min",
+	"autopower_30min",
 	"autopower_60min",
-	"LUM_IDS_AUTOPOWER_120MINUTES",			
-	"LUM_IDS_AUTOPOWER_240MINUTES",			
+	"LUM_IDS_AUTOPOWER_120MINUTES",
+	"LUM_IDS_AUTOPOWER_240MINUTES",
 	NULL
 };
 
@@ -860,19 +860,19 @@ static void InitCreate_SetConfigType001_QuietMode( int uiType )
 		}
 
 		/* Update isFirst flag */
-		gIsFirstExecQuiet = 0;	
+		gIsFirstExecQuiet = 0;
 	}
 }
 
 static int GetAutoPowerIndex(const SETCONFIGTABLE *table, int n, char *mode)
 {
 	int			i;
-	
+
 	for (i=0; i < n; i++) {
-		if (!strcmp(LookupText(g_keytext_list, table[i].uiStr), mode))	
-			return i;		
+		if (!strcmp(LookupText(g_keytext_list, table[i].uiStr), mode))
+			return i;
 	}
-	return 0;		
+	return 0;
 }
 
 static LPSETCONFIGCOMPTYPE001WORK CreateWorkSetConfigType001( LPSETCONFIGCOMPTYPE001RES lpRes )
@@ -1101,7 +1101,7 @@ static void SetUISetConfigType001_QuietMode( int uiType, GtkWidget *dialog, int 
 		button = LookupWidget( dialog, "setconfig_type001_checkbutton401" );
 		if ( isDefault ){
 			gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(button), FALSE );
-		}	
+		}
 		else {
 			if ( gQuietMode ){
 				gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(button), TRUE );
@@ -1243,7 +1243,7 @@ short ExecSetConfigType001( void *lpWork, char *dialogName )
 	/* ---- Show Dialog ---- */
 	/* init parameter */
 	InitParamSetConfigType001( lpRes, gLPSetConfigWork );
-	
+
 	/* show labels */
 	SetLabelSetConfigType001( lpRes, gLPSetConfigWork, dialogName );
 
@@ -1258,7 +1258,7 @@ short ExecSetConfigType001( void *lpWork, char *dialogName )
 
 	DisposeWorkSetConfigType001( gLPSetConfigWork );
 Err:
-	gLPSetConfigWork = NULL;	
+	gLPSetConfigWork = NULL;
 	return result;
 }
 
@@ -1280,7 +1280,7 @@ static void GetParmSetConfigType001_CustomSettings( int uiType, GtkButton *butto
 
 	/* Dry Level */
 	//gCurrentDryLevelValue = (short)GetActiveButtonIndex( window, setconfig_type001_radiobutton_name, CUSTOM_SETTINGS_TYPE001_RADIOBUTTON_DEFAULT );
-	gCurrentDryLevelValue = (short)GetActiveButtonIndexFromSetConfigTable( window, 
+	gCurrentDryLevelValue = (short)GetActiveButtonIndexFromSetConfigTable( window,
 					setConfigTableDryLevel, CUSTOM_SETTINGS_TYPE001_RADIOBUTTON_DEFAULT );
 
 	if ( uiType == UI_CUSTOMSETTINGS_TYPE002 ){
@@ -1324,7 +1324,7 @@ static void GetParmSetConfigType001_AutoPower( int uiType, GtkButton *button )
 	}
 	else if ( uiType == UI_AUTOPOWER_TYPE003 ){
 		gCurrentAutoPowerOffIndex = GetAutoPowerIndex( setConfigTableAutoPowerOff02, offSize02, str2 );
-	}	
+	}
 	else if ( uiType == UI_AUTOPOWER_TYPE004 ){
 		gCurrentAutoPowerOffIndex   = GetAutoPowerIndex( setConfigTableAutoPowerOff, offSize, str1 );
 		gCurrentAutoPowerOffBtIndex = GetAutoPowerIndex( setConfigTableAutoPowerOff03, offSize03, str2 );
@@ -1414,9 +1414,9 @@ on_setconfig_type001_checkbutton_toggled
                                         (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
-	GtkWidget* window = GetTopWidget(GTK_WIDGET(togglebutton));	
+	GtkWidget* window = GetTopWidget(GTK_WIDGET(togglebutton));
 
-	if ( GTK_WIDGET_VISIBLE( window ) == TRUE ){	
+	if ( GTK_WIDGET_VISIBLE( window ) == TRUE ){
 		if( GTK_TOGGLE_BUTTON(togglebutton)->active ) {
 			DisableSensitiveDialog( window );
 			UtilMessageBox(LookupText(g_keytext_list, "LUM_LID_WARNING_PAPER_ABRASION"), g_window_title, MB_ICON_NO | MB_OK, window);
@@ -1434,7 +1434,7 @@ on_setconfig_type001_checkbutton3_toggled
 	GtkWidget* window = GetTopWidget(GTK_WIDGET(togglebutton));
 	int status;
 
-	if ( GTK_WIDGET_VISIBLE( window ) == TRUE ){	
+	if ( GTK_WIDGET_VISIBLE( window ) == TRUE ){
 		if( GTK_TOGGLE_BUTTON(togglebutton)->active ) {
 			DisableSensitiveDialog( window );
 			status = UtilMessageBox(LookupText(g_keytext_list, "LUM_IDS_MNTMSG_PREVENTPAPERGAP_MSG"), g_window_title, MB_ICON_EXCLAMATION | MB_OK | MB_CANCEL, window);
@@ -1456,7 +1456,7 @@ on_setconfig_type001_checkbutton4_toggled
 	GtkWidget* window = GetTopWidget(GTK_WIDGET(togglebutton));
 	int status;
 
-	if ( GTK_WIDGET_VISIBLE( window ) == TRUE ){	
+	if ( GTK_WIDGET_VISIBLE( window ) == TRUE ){
 		if( GTK_TOGGLE_BUTTON(togglebutton)->active ) {
 			DisableSensitiveDialog( window );
 			status = UtilMessageBox(LookupText(g_keytext_list, "LUM_IDS_MNTMSG_PREVENTWFEED_MSG"), g_window_title, MB_ICON_EXCLAMATION | MB_OK | MB_CANCEL, window);
@@ -1478,7 +1478,7 @@ on_setconfig_type001_button1_clicked
 	LPSETCONFIGCOMPTYPE001WORK lpWk = (LPSETCONFIGCOMPTYPE001WORK)gLPSetConfigWork;
 	short status = US_OK;
 	if ( CheckWorkType001() != 0 ) goto Err;
-	GtkWidget* window = GetTopWidget(GTK_WIDGET(button));	
+	GtkWidget* window = GetTopWidget(GTK_WIDGET(button));
 
 
 	if ( IsCustomSettings( gUiType ) ){
@@ -1487,9 +1487,9 @@ on_setconfig_type001_button1_clicked
 	else if ( IsAutoPower( gUiType ) ){
 		GetParmSetConfigType001_AutoPower( gUiType, button );
 		status = GetStatusSetConfigType001_AutoPower( gUiType );
-	}	
+	}
 	else if ( IsPaperSourceSettings( gUiType ) ) {
-		gCurrentPaperSourceSettingsValue = 
+		gCurrentPaperSourceSettingsValue =
 			//(short)GetActiveButtonIndex( window, setconfig_type001_ps_radiobutton_name, PAPERSOURCE_SETTINGS_TYPE001_RADIOBUTTON_DEFAULT );
 			(short)GetActiveButtonIndexFromSetConfigTable( window, setConfigTablePlainPaperFeeder, PAPERSOURCE_SETTINGS_TYPE001_RADIOBUTTON_DEFAULT );
 	}
@@ -1523,10 +1523,10 @@ on_setconfig_type001_button3_clicked
 
 	if ( IsCustomSettings( gUiType ) ){
 		SetDefaultUISetConfigType001_CustomSettings( gUiType, (GtkWidget *)button );
-	}	
+	}
 	else if ( IsPaperSourceSettings( gUiType ) ) {
 		SetDefaultUISetConfigType001_PaperSourceSettings( (GtkWidget *)button );
-	}	
+	}
 	else if ( IsQuietMode( gUiType ) ) {
 		SetDefaultUISetConfigType001_QuietMode( gUiType, (GtkWidget *)button );
 	}
@@ -1535,7 +1535,7 @@ Err:
 }
 
 /* Ver.3.60 */
-static void 
+static void
 update_quiet_type002_radiobutton( GtkWidget* dialog )
 {
 	GtkWidget *window = GetTopWidget( dialog );
@@ -1780,7 +1780,7 @@ static short GetStatusSetConfigType002( void *lpGWork )
 -------------------------------------------------------------------------------*/
 unsigned int GetFlagSetConfigType002( void )
 {
-	LPSETCONFIGCOMPTYPE002WORK lpWk = (LPSETCONFIGCOMPTYPE002WORK)gLPSetConfigWork;	
+	LPSETCONFIGCOMPTYPE002WORK lpWk = (LPSETCONFIGCOMPTYPE002WORK)gLPSetConfigWork;
 	if ( lpWk != NULL ) {
 		return lpWk->flag;
 	}
@@ -1907,7 +1907,7 @@ short ExecSetConfigType003( void *lpWork, char *dialogName )
 	/* ---- Show Dialog ---- */
 	/* init parameter */
 	InitParamSetConfigType003( lpRes, gLPSetConfigWork );
-	
+
 	/* show labels */
 	SetLabelSetConfigType003( lpRes, gLPSetConfigWork, dialogName );
 
@@ -1963,9 +1963,9 @@ on_setconfig_type003_dialog_combo_changed
 	//if( DisableSignal() )
 	{
 		type = (char*)gtk_combo_box_get_active_text( combobox );
-	
+
 		currentIndex = KeyToIndex(lpWk->lpInkCartridgeMsgInfo->type, index_num, type );
-	
+
 		msg = LookupText(g_keytext_list, lpWk->lpInkCartridgeMsgInfo->info[currentIndex]);
 		label = LookupWidget(GTK_WIDGET(combobox), "setconfig_type003_label3");
 		gtk_label_set_text(GTK_LABEL(label), msg);
@@ -2151,7 +2151,7 @@ static int CreateMSIListFromDeviceID( char *buf, int bufSize, GList **gList )
 		if ( *curPtr == ';' ) break;
 		curPtr++;
 	}
-	
+
 	*gList = lGlist;
 	result = 0;
 onErr:
@@ -2181,7 +2181,7 @@ static int CreateMSIListViaNet( GList **gList, char *uriBuf, int uriBufSize, int
 	int isCash = 0;
 	int status = 0;
 	void *handle = NULL;
-	
+
 	if ( gList == NULL ) goto onErr1;
 	*gList = NULL;
 
@@ -2206,7 +2206,7 @@ static int CreateMSIListViaNet( GList **gList, char *uriBuf, int uriBufSize, int
 	if ( retry > 0 ) {
 		//status = CNNL_GetIPAddressEx( gHandle, CNIJNET_CASHFILE, uriBuf, ipAddr, sizeof(ipAddr), CNNET_SEARCH_CACHE_ALL, 5, 200 );
 		status = cnnl_getipaddressex( gHandle, CNIJNET_CASHFILE, uriBuf, ipAddr, sizeof(ipAddr), CNNET_SEARCH_CACHE_ALL, 5, 200 );
-	
+
 		if ( status == CNNL_RET_SUCCESS ){
 			//if( CNNL_OpenEx( gHandle, ipAddr, CNNET_TYPE_PRINTER, 3, 1500) == CNNL_RET_SUCCESS ){
 			if( cnnl_openex( gHandle, ipAddr, CNNET_TYPE_PRINTER, 3, 1500) == CNNL_RET_SUCCESS ){
@@ -2215,7 +2215,7 @@ static int CreateMSIListViaNet( GList **gList, char *uriBuf, int uriBufSize, int
 			//CNNL_Close( gHandle );
 			cnnl_close( gHandle );
 		}
-		
+
 		if ( isCash == 0 ) {
 			for ( cnt=0; cnt<retry; cnt++ ){
 				//status = CNNL_GetIPAddressEx( gHandle, CNIJNET_CASHFILE, uriBuf, ipAddr, sizeof(ipAddr), CNNET_SEARCH_BROADCAST, 1, timeout );
@@ -2256,7 +2256,7 @@ static int CreateMSIListViaNet( GList **gList, char *uriBuf, int uriBufSize, int
 		goto onErr4;
 	}
 
-	result = 0;	
+	result = 0;
 onErr4:
 	/* Close printer */
 	//CNNL_Close( gHandle );
@@ -2307,8 +2307,8 @@ typedef struct {
 } DEVURICOMP;
 
 enum {
-	DEVURI_TYPE_USB = 0,	
-	DEVURI_TYPE_NET,	
+	DEVURI_TYPE_USB = 0,
+	DEVURI_TYPE_NET,
 };
 
 static DEVURICOMP backendComp[] =
@@ -2364,7 +2364,7 @@ static int CreateMSIList( GList **gList, int retry, int timeout )
 	char uriBuf[URI_BUF_SIZE];
 	int result = -1;
 
-	type = -1;	
+	type = -1;
 	if ( ParseDeviceURI( &type, uriBuf, URI_BUF_SIZE ) == -1 ) goto onErr;
 
 	switch( type ){
@@ -2486,7 +2486,7 @@ static int GetMSITime( GList *glist, int *startHour, int *startMin, int *endHour
 
 	result = 0;
 onErr:
-	return result;	
+	return result;
 }
 
 
@@ -2502,7 +2502,7 @@ static int SearchSetConfigTableIndex( SETCONFIGTABLE *table, char *str )
 	while( table[i].index != -1 ){
 		if ( !strcmp( table[i].cmd2Str, str ) ) {
 			break;
-		} 
+		}
 		i++;
 	}
 	if ( table[i].index == -1 ) i = -1;
@@ -2519,7 +2519,7 @@ onErr:
 	[Args]
 		void
 	[Return]
-		-1 : Error 
+		-1 : Error
 ----------------------------------------------------------------------------- */
 static int GetMSIList01( void ) {
 	GList *gList = NULL;
@@ -2650,7 +2650,7 @@ onErr:
 		Get printer status for papersource settings via printer.
 	[Args]
 	[Return]
-		-1 : Error 
+		-1 : Error
 ----------------------------------------------------------------------------- */
 int SetMSIPaperSourceSettings( void )
 {
@@ -2665,7 +2665,7 @@ int SetMSIPaperSourceSettings( void )
 
 	/* Plain Paper Feeder */
 	if ( (strPtr = GetMSIStr(gList, MSI_TYPE_PLAINPAPERFEEDER)) == NULL ) goto onErr;
-	
+
 	if ( !strcmp( strPtr, MSI_STR_FSF )){
 		gPaperSourceSettingsValueForUI = CND_SUPPLY_CASSETTE;
 	}
@@ -2697,7 +2697,7 @@ int GetMSIPaperSourceSettingsCurrentValue( void )
 			The following is set.
 				CND_SUPPLY_ASF or CND_SUPPLY_CASSETTE
 	[Return]
-		-1 : Error 
+		-1 : Error
 ----------------------------------------------------------------------------- */
 int GetMSIPaperSourceSettings01( int *paperSource )
 {

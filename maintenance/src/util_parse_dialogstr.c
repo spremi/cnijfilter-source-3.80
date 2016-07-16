@@ -43,11 +43,11 @@ static short NewDialogStrComp( DIALOGSTRCOMP **dialogStrComp, short type, char *
 	if ( (lpDialogStrComp->label = (char *)malloc(strlen(label) + 1)) == NULL ) goto Err2;
 	strncpy( lpDialogStrComp->label, label, strlen(label) + 1 );
 	lpDialogStrComp->label[strlen(label)] = '\0';
-	
-	if ( (lpDialogStrComp->strid = (char *)malloc(strlen(strid) + 1)) == NULL ) goto Err3;	
+
+	if ( (lpDialogStrComp->strid = (char *)malloc(strlen(strid) + 1)) == NULL ) goto Err3;
 	strncpy( lpDialogStrComp->strid, strid, strlen(strid) + 1 );
 	lpDialogStrComp->strid[strlen(strid)] = '\0';
-	
+
 	lpDialogStrComp->next = NULL;
 	*dialogStrComp = lpDialogStrComp;
 
@@ -80,7 +80,7 @@ static short AppendDialogStrComp( DIALOGSTRCOMP *root, DIALOGSTRCOMP *append )
 	result = 0;
 Err:
 	return result;
-	
+
 }
 
 static short FreeDialogStrComp( DIALOGSTRCOMP *current )
@@ -100,10 +100,10 @@ static short FreeDialogStrComp( DIALOGSTRCOMP *current )
 
 	result = 0;
 Err:
-	return result;	
+	return result;
 }
 
-short FreeDialogStrCompList( DIALOGSTRCOMP *list ) 
+short FreeDialogStrCompList( DIALOGSTRCOMP *list )
 {
 	DIALOGSTRCOMP *current, *prev = NULL;
 	short result = -1;
@@ -148,7 +148,7 @@ static short ParseStringTag( xmlNodePtr ptr, char *dialogName, LPDIALOGSTRCOMP l
 			type = (short)atoi( (char *)xmlGetProp( current, (const xmlChar *)"type" ) );
 			label = (char *)xmlGetProp( current, (const xmlChar *)"label" );
 			strid = (char *)xmlGetProp( current, (const xmlChar *)"strid" );
-			
+
 			if ( NewDialogStrComp( &lpDialogStrComp, type, label, strid ) != 0 ) goto Err;
 			AppendDialogStrComp( lpRootComp, lpDialogStrComp );
 		}
@@ -219,7 +219,7 @@ EXIT:
 	return result;
 
 Err2:
-	FreeDialogStrCompList( rootComp.next );	
+	FreeDialogStrCompList( rootComp.next );
 Err1:
 	goto EXIT;
 }

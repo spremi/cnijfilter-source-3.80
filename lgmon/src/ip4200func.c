@@ -25,7 +25,7 @@
 
 
 /*
- * ip4200func.c 
+ * ip4200func.c
  *
  * A processing function group peculiar to a model.
  */

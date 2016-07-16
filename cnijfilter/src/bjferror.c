@@ -34,9 +34,9 @@ short bjf_error( char *, short );
 short bjf_error( char *message, short err_code )
 {
 	if ( err_code == NO_ERROR ) return 0;
-	
+
 	fprintf( stderr, "CIF COMMAND ERROR :" );
-	
+
 	switch( err_code ){
 		case FILE_ERROR:
 			fprintf( stderr, "file access Error!\n" );
@@ -47,11 +47,11 @@ short bjf_error( char *message, short err_code )
 		default:
 			break;
 	}
-	
-	
+
+
 	if ( message != NULL ){
 		fprintf( stderr, "%s\n", message );
 	}
-	
+
 	return 0;
 }

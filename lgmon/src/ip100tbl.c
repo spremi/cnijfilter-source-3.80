@@ -25,7 +25,7 @@
 
 
 /*
- * ip100tbl.c 
+ * ip100tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */
@@ -176,7 +176,7 @@ ST_BSCC2STS ip100_doc2operate[]={
   {"1700","x"},
   {"1701","k"},
   {"1810","D"},
-  {"2001","U"}, 
+  {"2001","U"},
   {"2500","N"},
   {ENDTAG,ENDTAG}
 };

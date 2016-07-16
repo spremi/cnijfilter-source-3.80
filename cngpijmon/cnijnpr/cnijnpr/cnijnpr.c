@@ -173,7 +173,7 @@ int main (int argc, const char **argv)
 		buf3 = (char *)malloc(STATUS_BUF);
 		if(buf3 == NULL)	goto error04;
 		memset(buf3, 0, STATUS_BUF);
-	
+
 		buf4 = (char *)malloc(STATUS_BUF);
 		if(buf4 == NULL)	goto error05;
 		memset(buf4, 0, STATUS_BUF);
@@ -227,7 +227,7 @@ int main (int argc, const char **argv)
 				case 0x20:
 					buf[0] = 's';
 				break;
-				
+
 				case 0x11:
 					buf[0] = 'o';
 				break;
@@ -238,7 +238,7 @@ int main (int argc, const char **argv)
 				case 0x08:
 					buf[0] = 'f';
 				break;
-				
+
 				case 0x03:
 					buf[0] = 'w';
 				break;
@@ -282,7 +282,7 @@ int main (int argc, const char **argv)
 					}
 				}
 
-				//printf("############ CNCL_GetStatusCommad (rtn, bscc_size) ############= %d,%d\n", rtn, bscc_size);  
+				//printf("############ CNCL_GetStatusCommad (rtn, bscc_size) ############= %d,%d\n", rtn, bscc_size);
 				//buf2[0] = buf[0];
 				buf2[0] = tempbuf;
 				memset( buf, 0, sizeof(buf) );
@@ -333,10 +333,10 @@ int main (int argc, const char **argv)
 		while(1){
 			//printf("############ Loop ############\n");
 			p_search_result = 0;
-	
+
 			/* Library Initialize */
 			if( CNNL_Init(&h) != CNNL_RET_SUCCESS ) goto error;
-	
+
 			/* Get IPAddress */
 			while(1){
 				/* Ready : 0-0.9sec */
@@ -356,40 +356,40 @@ int main (int argc, const char **argv)
 				}
 				sleep(1);
 			}
-	
+
 			/* open Printer */
 			if( CNNL_OpenEx(h, ipaddr, CNNET_TYPE_PRINTER, 3, 3000) != CNNL_RET_SUCCESS ) goto error01;
 			//if (CNNL_Open(h, ipaddr) != CNNL_RET_SUCCESS) goto error01;
-	
+
 			/* decide command_type */
 			if( CNNL_GetCommandType(h, &command_type, 3, 3000) != CNNL_RET_SUCCESS ) goto error01;
-	
+
 			/* open cnclapixxx */
 			if( command_type == CNNL_COMMAND_IVEC ){
 				memset(module_name, '\0', sizeof(module_name));
 				snprintf(module_name, sizeof(module_name), "%s%s%s", "libcnbpcnclapi", argv[6], ".so");
 				//printf("\nmodule_name %s\n" ,module_name);
-	
+
 				handle = dlopen(module_name, RTLD_NOW);
 				if ( handle == NULL ) goto error01;
 				if( (prntobscc = dlsym(handle, "CNCL_GetStatusCommand")) == NULL )	goto error02;
 			}
-	
+
 			/* Data read from Printer and write to pipe */
 			while(1){
 				memset( buf, 0, sizeof(buf) );
 				memset( buf2, 0, sizeof(buf2) );
-	
+
 					buffsz = STATUS_BUF;
 					{
 						int count,activeid,ret1=-1,ret2=-1;
 						char user[256],computer[256],hostname[256],document[256];
-	
+
 						memset(user, 0, sizeof(user));
 						memset(computer, 0, sizeof(computer));
 						memset(hostname, 0, sizeof(hostname));
 						memset(document, 0, sizeof(document));
-	
+
 						rtn = CNNL_GetSessionInfo(h, &count, &activeid, user, sizeof(user), computer, sizeof(computer), document, sizeof(document), 3, 1500);
 						//rtn = CNNL_GetSessionInfo(h, &count, &activeid, user, sizeof(user), computer, sizeof(computer), document, sizeof(document), 3, 500);
 						if(rtn != CNNL_RET_SUCCESS){
@@ -399,13 +399,13 @@ int main (int argc, const char **argv)
 						else{
 							session_errcount = 0;
 						}
-	
+
 						/* change Ver.3.50 */
 						ret1 = strncmp(argv[3], computer, COMPARE_LENGTH);
 						ret2 = strncmp(argv[4], user, COMPARE_LENGTH);
 						/* ret1 = strncmp(argv[3], computer, sizeof(computer)); */
 						/* ret2 = strncmp(argv[4], user, sizeof(user)); */
-	
+
 						/*  My Job is Printing and Cable OFF ---> CNNL_RET_FAILURE && activeid != 0 && (ret1 != 0 || ret2 != 0) */
 						if( rtn == CNNL_RET_SUCCESS ){
 							if( (activeid != 0) && ( (ret1 != 0) || (ret2 != 0) ) ){
@@ -424,18 +424,18 @@ int main (int argc, const char **argv)
 							case 0x20:
 								buf[0] = 's';
 							break;
-							
+
 							case 0x11:
 								buf[0] = 'o';
 							break;
 						}
-						
+
 						sta = (sta >> 4) & 0x000F;
 						switch( sta ){
 							case 0x08:
 								buf[0] = 'f';
 							break;
-							
+
 							case 0x03:
 								buf[0] = 'w';
 							break;
@@ -445,11 +445,11 @@ int main (int argc, const char **argv)
 					if(rtn == CNNL_RET_SUCCESS){
 						int i=0,ret3=-1;
 						short bscc_size=-1;
-	
+
 						rtn = CNNL_DataRead(h, &buf[1], &buffsz, BUFSZ, 3, 3000);
 						//rtn = CNNL_DataRead(h, &buf[1], &buffsz, BUFSZ, 3, 1000);
 						//printf("############ buf[1] ############ rtn = %s\n", &buf[1]);
-	
+
 						/* Ver.3.20 pharse xml->sts */
 						if( command_type == CNNL_COMMAND_IVEC ){
 							char tempbuf = buf[0];
@@ -463,11 +463,11 @@ int main (int argc, const char **argv)
 							//memcpy( &buf[1], &buf2[1], BUFSZ-1 );
 							//printf("############ CNCL_GetStatusCommad (rtn, bscc_size) ############= %d,%d\n", rtn, bscc_size);
 						}
-	
+
 						/* Ver.3.20 bscc->sts  */
 						if( argv[5] != NULL ){
 							ret3 = bscc2sts((char *)argv[5], &buf[1], &Odev, (Bscc2sts_tbl)&statusStr);
-		
+
 							memset( &buf[1], 0, STATUS_BUF-1 );
 							while( 1 ){
 								buf[i + 1] = statusStr[i];
@@ -476,7 +476,7 @@ int main (int argc, const char **argv)
 							}
 							//printf("X--- buf[1] ---X = %s\n", &buf[1]);
 						}
-	
+
 						if(rtn != CNNL_RET_SUCCESS){
 							session_errcount++;
 							//printf("############ DataRead Err!!! ############ rtn = %d, session_errcount = %d\n",rtn,session_errcount);
@@ -485,7 +485,7 @@ int main (int argc, const char **argv)
 							session_errcount = 0;
 						}
 					}
-	
+
 					if (rtn != CNNL_RET_SUCCESS) {
 						//memset( buf, 0, sizeof(buf) );
 						err_count = err_count + 1;
@@ -518,18 +518,18 @@ int main (int argc, const char **argv)
 					}
 					sleep(1);
 			}
-	
+
 		error02:
 			/* close cnclapixxx */
 			if( (command_type == CNNL_COMMAND_IVEC) && (handle != NULL) ){
 				dlclose(handle);
 				handle = NULL;
 			}
-	
+
 		error01:
 			/* Close Library */
 			CNNL_Close(h);
-	
+
 		error:
 			/* Terminate Library */
 			CNNL_Terminate(&h);
@@ -589,7 +589,7 @@ static int get_printer_devid(fdusb)
 	char	devid[1024];
 	char	*ivec = NULL;
 	int		command_type = -1;
-	
+
 	memset(devid, '\0', sizeof(devid));
 
 	if (ioctl(fdusb, _IOC(_IOC_READ, 'P', 1, sizeof(devid)), devid) == 0){
@@ -601,7 +601,7 @@ static int get_printer_devid(fdusb)
 					}else{
 						command_type = CNNL_COMMAND_NONIVEC;
 					}
-				}	
+				}
 			}
      	}
 	}

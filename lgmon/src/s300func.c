@@ -121,7 +121,7 @@ int s300_inklowlevel1chk(char color, char *p_call)
   char level1[5];
 
   memset (level1, 0, 5);
-  
+
   if(p_call == NULL){
 	return(OK);
   }

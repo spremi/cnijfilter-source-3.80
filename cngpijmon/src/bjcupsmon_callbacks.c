@@ -37,7 +37,7 @@ gboolean on_mainWindow_delete_event(void)
 //void on_mainWindow_delete_event(void)
 {
 	//closeApplication();
-	
+
 	return (FALSE);
 //	return;
 }// End on_mainWindow_delete_event
@@ -48,7 +48,7 @@ gboolean on_mainWindow_delete_event(void)
 void on_mainWindow_destroy(void)
 {
 	closeApplication();
-	
+
 	return;
 }// End on_mainWindow_destroy
 
@@ -69,7 +69,7 @@ void on_mainWindow_destroy(void)
 //	ST_ErrorCodeTbl		errorInfo;					// Error info.
 //	gint				retVal = ID_ERR_NO_ERROR;	// Return value.
 ///*** Parameters end ***/
-//	
+//
 //	// Remove active print job.
 //	retVal = removeJob(gDestName);
 //	if (retVal != ID_ERR_NO_ERROR) {
@@ -82,7 +82,7 @@ void on_mainWindow_destroy(void)
 //			closeApplication();
 //		}
 //	}
-//	
+//
 //	return;
 //}// End on_buttonMainCancel_clicked
 
@@ -94,7 +94,7 @@ gboolean on_drawMainCartridge_configure_event(GtkWidget *widget, GdkEventConfigu
 	// Update drawing area.
 //	updateCartridgePictArea(&gPrinterStatus, TRUE);
 	updateCartridgePictArea(&gPrinterStatus, FALSE);
-	
+
 	return(TRUE);
 }// End on_drawMainCartridge_configure_event
 
@@ -105,7 +105,7 @@ gboolean on_drawMainCartridge_expose_event(GtkWidget *widget, GdkEventExpose *ev
 {
 	// Re-draw drawing area.
 	if( gpPixmap == NULL ) return(FALSE);
-	
+
 	gdk_draw_pixmap(widget->window,
 					widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
 					gpPixmap,
@@ -115,7 +115,7 @@ gboolean on_drawMainCartridge_expose_event(GtkWidget *widget, GdkEventExpose *ev
 					event->area.y,
 					event->area.width,
 					event->area.height);
-	
+
 	return(FALSE);
 }// End on_drawMainCartrigePictArea_expose_event
 

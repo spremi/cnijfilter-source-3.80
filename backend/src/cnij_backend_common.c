@@ -57,7 +57,7 @@ static int write_to_bsccfile( char*, char*, short );
 
 //* Functions *****************************************************************
 /*----------------------------------------------------------------------------*
- * This function is a main function for calling a monitor process. 
+ * This function is a main function for calling a monitor process.
  */
 
 int 	_canon_bj( int argc, FILE *fp, int fd, int copies, char* option )
@@ -111,7 +111,7 @@ int 	_canon_bj( int argc, FILE *fp, int fd, int copies, char* option )
 		/* Clear printer status */
 		fprintf( stderr, "INFO: \n" );
 
-		sts = lgmon_exec( argc, fp, fd, lgmon_command, copies ) ; 
+		sts = lgmon_exec( argc, fp, fd, lgmon_command, copies ) ;
 	}
 	if  ( sts != CANON_STS_SUCCESS ) {			/* status check				*/
 												/* error					*/
@@ -164,7 +164,7 @@ int	make_lgmon_command( char *command, char *option, int utilbyte, short is_dire
 	add_direct = is_direct;
 	if( (p_ppd = ppdOpenFile(p_ppd_name)) == NULL )
 		return CANON_STS_NG;
-	
+
 	if( p_ppd->model_number < 356 ) add_direct = 0;
 	fprintf(stderr,"DEBUG: (cnijusb)p_ppd->model_number=(%d)\n",p_ppd->model_number);
 	ppdClose(p_ppd);
@@ -173,7 +173,7 @@ int	make_lgmon_command( char *command, char *option, int utilbyte, short is_dire
 	memset( model_name, 0x00, sizeof( model_name ) ) ;
 
 										/* model neme get 					*/
-	if	( ( status = get_model_name( model_name ) ) == CANON_STS_SUCCESS ) { 
+	if	( ( status = get_model_name( model_name ) ) == CANON_STS_SUCCESS ) {
 
 										/* making lgmon command 			*/
 		if( utilbyte > 0 ){
@@ -192,7 +192,7 @@ int	make_lgmon_command( char *command, char *option, int utilbyte, short is_dire
 					 LGMON_CMD_GUI_OPTIN_STR,
 					 LGMON_CMD_CUPS_OPTIN_STR,
 					 LGMON_CMD_UTIL_OPTIN_STR,
-					 utilbyte) ;	
+					 utilbyte) ;
 			}
 		}
 		else{		/* in this case, CNBjDirect is never specified. */
@@ -206,7 +206,7 @@ int	make_lgmon_command( char *command, char *option, int utilbyte, short is_dire
 
 
 /*----------------------------------------------------------------------------*
- * This function is carrying out processing which acquires 
+ * This function is carrying out processing which acquires
  * the model name of a device (printer) from the product key of a PPD file.
  */
 static
@@ -240,7 +240,7 @@ int     get_model_name( char *model_name )
 		}
 		ppdClose( p_file ) ;
 	}
-	else {							/* ppd file open eror	r				*/ 
+	else {							/* ppd file open eror	r				*/
 			status = CANON_STS_PPD_FILE_OPEN_ERR ;
 	}
 
@@ -249,7 +249,7 @@ int     get_model_name( char *model_name )
 
 
 /*----------------------------------------------------------------------------*
- * This function is carrying out processing which calls a lgmon process. 
+ * This function is carrying out processing which calls a lgmon process.
  * And pipes create.
  */
 static
@@ -411,13 +411,13 @@ void	data_write( int argc, FILE *fp, int copies, int pipe_fds )
 #define UTIL_OPTION	"CNBjUtilByte"
 #define DIRECT_OPTION	"CNBjDirect"
 
-static 
+static
 int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 				  char* tmp_file, char* option , short *is_direct)
 {
 
 	cups_option_t *p_opt = NULL;
-	int num_opt = 0; 
+	int num_opt = 0;
 	int i,result = 0;
 	short regi_flag=0;
 	short direct_flag=0;
@@ -426,8 +426,8 @@ int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 
 	if( (num_opt = cupsParseOptions(option, 0, &p_opt)) > 0 ){
 		for( i=0; i< num_opt; i++ ){
-	
-			/* bscc */	
+
+			/* bscc */
 			if( strcmp( p_opt[i].name, REGI_OPTION)== 0){
 				bscc_id = atoi(p_opt[i].value);
 				regi_flag = 1;
@@ -442,7 +442,7 @@ int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 			}
 		}
 	}
-	
+
 	if( regi_flag ){
 		char model_name[MODEL_NAME_STR_LEN] ;
 		char bscc_file[256];
@@ -455,7 +455,7 @@ int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 //		if( (tmp_fp =fopen( tmp_file, "w")) == NULL )
 		if( (tmp_fp =fopen( tmp_file, "w+b")) == NULL ){	/* Ver.2.90 */
 			fprintf(stderr,"CNBjBackend open_error\n");
-			goto open_error;	
+			goto open_error;
 		}
 
 		total_size = cmdlen;
@@ -465,30 +465,30 @@ int check_options( FILE** fp, short *is_setregi, int *utilbyte,
 			total_size -= r_size;
 		}
 		fseek( tmp_fp, 0, SEEK_SET );
-		
+
 		r_size = fread( bscc_buf, 1, 256, (FILE*)(*fp) );
 		fprintf(stderr,"bscc_buf r_size=%d\n",r_size);
 		/* bscc file */
 		get_model_name( model_name );
 		sprintf( bscc_file, "%scif%s.bscc", BSCCFILEPATH, model_name );
 		//sprintf( bscc_file, "%sbjfilter%s.bscc", BSCCFILEPATH, model_name );
-		
+
 		if( write_to_bsccfile( bscc_file, bscc_buf, bscc_id ) )
 			result = -1;
 
 		*fp = tmp_fp;
 	}
-	
+
 	*is_setregi = regi_flag;
 	*is_direct = direct_flag;	/* Ver.3.20 */
-	
+
 	cupsFreeOptions( num_opt, p_opt );
 	return result;
-	
+
  open_error:
 	cupsFreeOptions( num_opt, p_opt );
 	return -1;
-		
+
 }
 
 static int is_bscctag( FILE** fp )
@@ -504,27 +504,27 @@ static int is_bscctag( FILE** fp )
 
 	while( (cc=fgetc(fpTmp)) != EOF ){
 		if( cc == ']' )
-			bufTmp[pos] = 0x00;	
+			bufTmp[pos] = 0x00;
 		else if( cc == 0x09 || cc == 0x20 )
 			;
 		else if( cc == 0x0A ){
 			result = strcmp( bufTmp, "bscc" ) ? 0 : 1;
 			break;
-		}	
+		}
 		else
-			bufTmp[pos++] = cc;	
+			bufTmp[pos++] = cc;
 	}
-		
+
 	*fp = fpTmp;
 	return result;
-		
+
 }
 
 
 static int write_to_bsccfile( char* bscc_file, char* bscc_buf, short bscc_id )
 {
 
-	FILE* fp = NULL;	
+	FILE* fp = NULL;
 	int cc;
 	char bufTmp[128];
 	char *pStr[2];
@@ -534,17 +534,17 @@ static int write_to_bsccfile( char* bscc_file, char* bscc_buf, short bscc_id )
 	int index = 0;
 	int pos = 0;
 	int result = 1;
-	
+
 	if( strncmp( bscc_buf, "REG", 3 ) != 0 ){
 		fprintf( stderr, "bscc command error \n" );
-		return -1;	
+		return -1;
 	}
 
 	/* Open BSCC File */
 	if( (fp = fopen( bscc_file, "r+")) == NULL ){
 		fprintf( stderr, "bscc file error \n" );
-		return -1;	
-	}		
+		return -1;
+	}
 
 	isFirst = 0;
 	isBscc = 0;
@@ -558,30 +558,30 @@ static int write_to_bsccfile( char* bscc_file, char* bscc_buf, short bscc_id )
 		else if( cc == '[' ){
 			isBscc = is_bscctag( &fp ) ? 1:0;
 			if( isBscc )
-				isFirst = 1;	
+				isFirst = 1;
 		}
 		else{
 			if( isBscc ){
 				if( cc == 0x0A ){	// End Of Command Line
-					bufTmp[pos] = 0x00;	
+					bufTmp[pos] = 0x00;
 					id = (short)atoi( pStr[1] );
 					if( id == bscc_id ){
 						if(	strlen( pStr[0] ) == strlen( bscc_buf ) ){
 							fseek( fp, -(strlen(pStr[0])+strlen(pStr[1])+2),
 								   SEEK_CUR );
 							if( (fputs(bscc_buf,fp)) != EOF )
-								result = 0;	
+								result = 0;
 							break;
 						}
 					}
 					else{
-						isFirst = 1; 
+						isFirst = 1;
 						index = 0;
 						pos = 0;
 					}
 				}
 				else if( cc == 0x09 || cc == 0x20 ){	// Space or Tab
-					isFirst = 1;	
+					isFirst = 1;
 					bufTmp[pos++] = 0x00;
 				}
 				else{			// Command string or Id string
@@ -597,14 +597,14 @@ static int write_to_bsccfile( char* bscc_file, char* bscc_buf, short bscc_id )
 			}
 		}
 	}
-			
-	
+
+
 	if( fp != NULL )
-		fclose( fp );	
+		fclose( fp );
 	return result;
 
 }
-		
-				
 
-	
+
+
+

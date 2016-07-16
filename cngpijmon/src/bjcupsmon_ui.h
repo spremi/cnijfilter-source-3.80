@@ -26,7 +26,7 @@
 #ifdef USE_libglade
 // Glade file name.
 #define GLADE_FILE_NAME		"bjcupsmon.glade"
-#endif 
+#endif
 
 /*** Static function prototypes ***/
 PRIVATE void setWindowTitle(const gchar*, const gchar*);

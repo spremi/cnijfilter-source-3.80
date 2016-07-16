@@ -25,7 +25,7 @@
 
 
 /*
- * mp510tbl.c 
+ * mp510tbl.c
  *
  * The conversion table for xxx, and a model dependence function table.
  */

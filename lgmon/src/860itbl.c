@@ -25,7 +25,7 @@
 
 
 /*
- * pixus860itbl.c 
+ * pixus860itbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */

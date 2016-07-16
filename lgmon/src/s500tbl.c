@@ -25,7 +25,7 @@
 
 
 /*
- * s500tbl.c 
+ * s500tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */

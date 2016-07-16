@@ -73,7 +73,7 @@ changequote([,])dnl
 XML2_CFLAGS=`xml2-config --cflags`
 AC_SUBST(XML2_CFLAGS)
 
-AC_OUTPUT([  
+AC_OUTPUT([
 Makefile
 src/Makefile
 po/Makefile.in

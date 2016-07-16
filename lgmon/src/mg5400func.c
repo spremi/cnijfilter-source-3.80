@@ -25,7 +25,7 @@
 
 
 /*
- * mg5400func.c 
+ * mg5400func.c
  *
  * A processing function group peculiar to a model.
  */

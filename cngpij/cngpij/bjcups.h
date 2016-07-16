@@ -250,7 +250,7 @@ short g_size_value[] =
 	CND_SIZE_5X7,			// Actual Size 5x7 ( 127mm x 177.8mm )
 	CND_SIZE_POST_DBL,		// Double postal card ( 200mm x 148mm )
 //	CND_SIZE_ENV_CHOU3_P,	// Long Env #3( 120mm x 235mm )
-//	CND_SIZE_ENV_CHOU4_P,	// Long Env #4 ( 90mm x 205mm ) 
+//	CND_SIZE_ENV_CHOU4_P,	// Long Env #4 ( 90mm x 205mm )
 	CND_SIZE_BUSINESSCARD,
 	CND_SIZE_CREDITCARD,
 	CND_SIZE_4X8,

@@ -25,7 +25,7 @@
 
 
 /*
- * mg8100tbl.c 
+ * mg8100tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */

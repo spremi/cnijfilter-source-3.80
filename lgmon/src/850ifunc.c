@@ -25,7 +25,7 @@
 
 
 /*
- * 850ifunc.c 
+ * 850ifunc.c
  *
  * A processing function group peculiar to a model.
  */
@@ -101,7 +101,7 @@ int pixus850i_setoperate(ST_STORESET *p_s, ST_BSCC2STS *p_ct, bscc2sts_tbl *p_tb
 			break;
 		}
   	}
-  	
+
   }
   return(OK);
 }

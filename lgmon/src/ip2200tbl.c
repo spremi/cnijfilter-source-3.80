@@ -25,7 +25,7 @@
 
 
 /*
- * ip2200tbl.c 
+ * ip2200tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */

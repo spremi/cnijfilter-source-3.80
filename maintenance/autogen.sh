@@ -32,7 +32,7 @@ fi
 
 (grep "^AC_PROG_INTLTOOL" $srcdir/configure.in >/dev/null) && {
   (intltoolize --version) < /dev/null > /dev/null 2>&1 || {
-    echo 
+    echo
     echo "**Error**: You must have \`intltool' installed."
     echo "You can get it from:"
     echo "  ftp://ftp.gnome.org/pub/GNOME/"
@@ -104,7 +104,7 @@ xlc )
 esac
 
 for coin in `find $srcdir -path $srcdir/CVS -prune -o -name configure.in -print`
-do 
+do
   dr=`dirname $coin`
   if test -f $dr/NO-AUTO-GEN; then
     echo skipping $dr -- flagged as no auto-gen
@@ -131,7 +131,7 @@ do
 	xml-i18n-toolize --copy --force --automake
       fi
       if grep "^AM_PROG_LIBTOOL" configure.in >/dev/null; then
-	if test -z "$NO_LIBTOOLIZE" ; then 
+	if test -z "$NO_LIBTOOLIZE" ; then
 	  echo "Running libtoolize..."
 	  libtoolize --force --copy
 	fi

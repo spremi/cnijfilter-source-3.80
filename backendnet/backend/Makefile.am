@@ -2,10 +2,10 @@
 
 backendnet_bindir = /usr/lib/cups/backend
 backendnet_bin_PROGRAMS = cnijnet
-transform = 
+transform =
 
 
-cnijnet_SOURCES = cnijnetlm.c cnijnet.c 
+cnijnet_SOURCES = cnijnetlm.c cnijnet.c
 
 CFLAGS = -O2 -Wall -I.
 

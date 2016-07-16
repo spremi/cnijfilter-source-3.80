@@ -1,1 +1,1 @@
-SUBDIRS = cngpij 
+SUBDIRS = cngpij

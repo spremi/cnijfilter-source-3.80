@@ -25,7 +25,7 @@
 
 
 /*
- * mp240func.c 
+ * mp240func.c
  *
  * A processing function group peculiar to a model.
  */

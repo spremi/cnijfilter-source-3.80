@@ -41,7 +41,7 @@ int chk_servicecall(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 	int ret = ID_ERR_ARGUMENT_ERR;
 	int string_pattern;
 
-  /* if(p_tbl->service_call[0]==SPACE){  condition change Ver.3.80 */ 
+  /* if(p_tbl->service_call[0]==SPACE){  condition change Ver.3.80 */
   if(p_tbl->service_call2 == SPACE){
     return(ID_ERR_NO_ERROR);
   }
@@ -53,10 +53,10 @@ int chk_servicecall(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 		if((p_tbl->service_call[0]!=SPACE) && (string_pattern < 0)){
 			string_pattern = COMMON_SERIVICE_ERROR_PATTERN;
 		}
-	
+
 		if( string_pattern == -1 )
 			return ID_ERR_NO_ERROR;
-	
+
 		ret = common_storeMessageIDs(p_tbl, p_sts, p_tbl->service_call, string_pattern);
 		if(ret != ID_ERR_NO_ERROR){
 			return(ret);
@@ -69,10 +69,10 @@ int chk_servicecall(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 		if((p_tbl->service_call[0]!=SPACE) && (string_pattern < 0)){
 			string_pattern = COMMON_SERIVICE_ERROR_PATTERN;
 		}
-	
+
 		if( string_pattern == -1 )
 			return ID_ERR_NO_ERROR;
-	
+
 		ret = common_storeMessageIDs(p_tbl, p_sts, &p_tbl->service_call2, string_pattern);
 		if(ret != ID_ERR_NO_ERROR){
 			return(ret);
@@ -98,7 +98,7 @@ int chk_operatorcall_level1(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 	int HeadProtect_Flag = 0;
 	int CoverOpen_flag = 0;
 
-	
+
 	/* Ver.3.10 for DOC=1200 & DWS=1900 --> DBS=(A-35) */
 	for(k=0; (k<sizeof(p_tbl->warning)) && (*(p_tbl->warning+k)!=SPACE); k++){
 		if( p_tbl->warning[k] == 'P' ) {
@@ -153,7 +153,7 @@ int chk_operatorcall_level1(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 			}
 			return(UNIQUESTS);
 		}
-		
+
 		if( string_pattern == -1 )
 			return ID_ERR_NO_ERROR;
 
@@ -330,7 +330,7 @@ int chk_basestatus(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 
 
 /*
- * The message ID acquired with the following functions 
+ * The message ID acquired with the following functions
  * can be displayed with other messages.
  *
  * chk_inklow_part1();
@@ -425,7 +425,7 @@ int chk_noinkcheck(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 }
 
 //for Ver.2.70
-//decide with CTK:SETZ and CIR:UK 
+//decide with CTK:SETZ and CIR:UK
 int chk_noinkcheck2(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 {
 	int ret = ID_ERR_ARGUMENT_ERR;
@@ -523,7 +523,7 @@ static int common_storeMessageIDs(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts, ch
 
 	// The corresponding color is acquired.
 	for(color=0; color_tbl_inkout[color].pr_name!=ENDTAG; color++){
-		if(	!strncmp(p_tbl->pr_name, color_tbl_inkout[color].pr_name, strlen(color_tbl_inkout[color].pr_name)) ) 
+		if(	!strncmp(p_tbl->pr_name, color_tbl_inkout[color].pr_name, strlen(color_tbl_inkout[color].pr_name)) )
 			break;
 	}
 	if(color_tbl_inkout[color].pr_name == ENDTAG)
@@ -531,7 +531,7 @@ static int common_storeMessageIDs(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts, ch
 
 	// The corresponding type is acquired.
 	for(type=0; ink_type_tbl[type].pr_name!=ENDTAG; type++){
-		if( !strncmp(p_tbl->pr_name, ink_type_tbl[type].pr_name, strlen(ink_type_tbl[type].pr_name)) ) 
+		if( !strncmp(p_tbl->pr_name, ink_type_tbl[type].pr_name, strlen(ink_type_tbl[type].pr_name)) )
 			break;
 	}
 	if(ink_type_tbl[type].pr_name == ENDTAG)
@@ -625,7 +625,7 @@ static int common_storeMessageIDs(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts, ch
 				}
 				else{
 					int r,tmp_msgid = -1;
-					
+
 					//message change for Printer Region(PDR)
 					for(r=0; msg_cnv_pdr[r].status!=ENDTAG ;r++){
 						if( (p_tbl->prnregion == msg_cnv_pdr[r].status) && ( string_table[m].message_id[i] == msg_cnv_pdr[r].before_msgid ) ){
@@ -641,7 +641,7 @@ static int common_storeMessageIDs(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts, ch
 	}
 
 	return(ret);
-} 
+}
 
 
 /*
@@ -687,7 +687,7 @@ static int storeMessageID(ST_PrinterStatus *p_sts, int msgID)
   *((p_sts->pMessageID)+(p_sts->messageNum))=msgID;
   (p_sts->messageNum)++;
   return(ID_ERR_NO_ERROR);
-} 
+}
 
 
 // for String Pattern for Ver.3.00
@@ -709,7 +709,7 @@ static int set_StringPattern(ST_CUPSSTS *p_tbl, char *p_status, int status_size,
 	}
 
 	return(str_pattern);
-} 
+}
 
 
 #if 0
@@ -731,7 +731,7 @@ static int set_doc_StringPattern(ST_CUPSSTS *p_tbl, char *p_status, int status_s
 	}
 
 	return(str_pattern);
-} 
+}
 
 // for DJS String Pattern for Ver.3.00
 static int set_djs_StringPattern(ST_CUPSSTS *p_tbl, char *p_status, int status_size)
@@ -751,7 +751,7 @@ static int set_djs_StringPattern(ST_CUPSSTS *p_tbl, char *p_status, int status_s
 	}
 
 	return(str_pattern);
-} 
+}
 
 // for DBS String Pattern for Ver.3.00
 static int set_dbs_StringPattern(ST_CUPSSTS *p_tbl, char *p_status, int status_size)
@@ -771,7 +771,7 @@ static int set_dbs_StringPattern(ST_CUPSSTS *p_tbl, char *p_status, int status_s
 	}
 
 	return(str_pattern);
-} 
+}
 
 // for DWS String Pattern for Ver.3.00
 static int set_dws_StringPattern(ST_CUPSSTS *p_tbl, char *p_status, int status_size)
@@ -791,7 +791,7 @@ static int set_dws_StringPattern(ST_CUPSSTS *p_tbl, char *p_status, int status_s
 	}
 
 	return(str_pattern);
-} 
+}
 #endif
 
 //static int processstandardmsgcheck(ST_PrinterStatus *p_sts, const ST_MSGTBL *p_msgtbl, char *p_status, int status_size)

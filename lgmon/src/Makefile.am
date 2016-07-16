@@ -2,7 +2,7 @@
 
 INCLUDES = \
 	-I$(top_srcdir)/include/cncl \
-	-I$(top_srcdir)/src 
+	-I$(top_srcdir)/src
 ##INCLUDES = \
 ##	-I$(top_srcdir)/src \
 ##	@GTK_CFLAGS@
@@ -18,7 +18,7 @@ lgmon_SOURCES = \
 	bscc2sts.h
 
 lgmon_LDADD = -lcnbpcnclapi@CNCL_LIB_ID@ $(INTLLIBS) libbscc2sts.a\
-              -lcnbpcmcm@CNCL_LIB_ID@ -lcnbpess@CNCL_LIB_ID@ -lcnbpcnclbjcmd@CNCL_LIB_ID@ 
+              -lcnbpcmcm@CNCL_LIB_ID@ -lcnbpess@CNCL_LIB_ID@ -lcnbpcnclbjcmd@CNCL_LIB_ID@
 ##lgmon_LDADD = @GTK_LIBS@ $(INTLLIBS) libbscc2sts.a
 ## lgmon_DEPENDENCIES = libbscc2sts.a
 lgmon_LDFLAGS = -L../../@CNCL_LIB_ID@/libs_bin@ARC@

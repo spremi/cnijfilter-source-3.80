@@ -21,7 +21,7 @@ cif_SOURCES = \
 	bjfversion.h \
 	getipc.c \
 	bjflist.c \
-	uitypes.h 
+	uitypes.h
 
 
 cif_LDADD = -lcnbpcmcm@CNCL_LIB_ID@ -lcnbpess@CNCL_LIB_ID@ -lm -ldl -ltiff -lpng\

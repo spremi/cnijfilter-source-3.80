@@ -427,14 +427,14 @@ static short	GetModelName( char *device , char *model_name , short len)
 	short	model_found = 0;
 
 	int	fd;	/* File descriptor */
-	
+
 	if ((fd = open(device, O_RDONLY)) >= 0)
 	{
 		memset( devid , 0x00 , 1024 );
 		model_found = 0;
 		aaa = 0;
 		des_p = NULL;
-          
+
 		/* Get DeviceID */
 		if (ioctl(fd, _IOC(_IOC_READ, 'P', 1, sizeof(devid)), devid) == 0){
 			/* Get "DES" from DeviceID */

@@ -157,7 +157,7 @@ int get_printer_devid()
 {
 	char	devid[1024];
 	char	*ivec = NULL;
-	
+
 	memset(devid, '\0', sizeof(devid));
 
 	if (ioctl(PRNT_PATH, _IOC(_IOC_READ, 'P', 1, sizeof(devid)), devid) == 0){
@@ -169,7 +169,7 @@ int get_printer_devid()
 					}else{
 						command_type = NORMAL_COMMAND;
 					}
-				}	
+				}
 			}
      	}
 	}
@@ -300,7 +300,7 @@ int get_printer_sem(int id)
 		if(semop(id, &sem_buf, 1) == 0)
 			break;
 	}
-	return 0;	
+	return 0;
 }
 
 int release_printer_sem(int id)
@@ -320,7 +320,7 @@ int release_printer_sem(int id)
 	sem_buf.sem_flg = SEM_UNDO;
 
 	while(1){
-		if(semop(id, &sem_buf, 1) == 0) 
+		if(semop(id, &sem_buf, 1) == 0)
 			break;
 	}
 	return 0;
@@ -484,7 +484,7 @@ int get_printer_status(int dev_path, char *buf, int *reg, int *bytes)
 		free(buf3);
 		free(buf2);
 	}
-	
+
 #ifdef DEBUG
 		fprintf(log_path, "separate_flag##### = %d\n",separate_flag);
 		fflush(log_path);
@@ -532,7 +532,7 @@ int check_arg(int ac, char **av)
 
 	/* for init */
 	ivec_poweroff_flag = NORMAL_POWEROFF;
-	
+
 	for(i = 1;ac > i;i++){
 		/* check gui flag */
 		if((error == -1) && (strcmp(&(av[i][0]), "--gui") == 0)){
@@ -570,7 +570,7 @@ int check_arg(int ac, char **av)
 	print_system = PRNSYS_CUPS;
 #endif
 
-	return error; 
+	return error;
 }
 
 int create_arg(int ac, char **av)
@@ -720,7 +720,7 @@ int status_to_viewer(struct bjst_rback *rback)
 	{
 		output_dev   odev;
 
-		struct {			
+		struct {
 			char 	header[5];
 			bscc2sts_tbl sts;
 		}info_sts;
@@ -757,7 +757,7 @@ int status_to_viewer(struct bjst_rback *rback)
 			/* bscc->sts */
 			lib_stat = bscc2sts(PACKAGE_PRINTER_MODEL, buf, &odev, &info_sts.sts);
 
-			if(rback->rback_handle > 0 && lib_stat == OK )	
+			if(rback->rback_handle > 0 && lib_stat == OK )
 				write(rback->rback_handle, (void *)&info_sts, (size_t)sizeof(info_sts));
 #ifdef DEBUG
 			else {
@@ -791,7 +791,7 @@ int write_status_info( struct bjst_rback *rback, int r_bytes, char *buf )
 	char *buf2 = NULL;
 	short	w_size = 0;
 
-	struct {			
+	struct {
 		char 	header[5];
 		bscc2sts_tbl sts;
 	}info_sts;
@@ -836,7 +836,7 @@ int write_status_info( struct bjst_rback *rback, int r_bytes, char *buf )
 	/* bscc->sts */
 	ret3 = bscc2sts(PACKAGE_PRINTER_MODEL, buf, &odev, &info_sts.sts);
 
-	if(rback->rback_handle > 0 && ret3 == OK )	
+	if(rback->rback_handle > 0 && ret3 == OK )
 		//write(rback->rback_handle, (void *)&info_sts, (size_t)sizeof(info_sts));
 		w_size = write(rback->rback_handle, (void *)&info_sts, (size_t)sizeof(info_sts));
 		if(w_size < 0){
@@ -849,7 +849,7 @@ int write_status_info( struct bjst_rback *rback, int r_bytes, char *buf )
 	}
 #endif
 
-Err01:	
+Err01:
 	free(buf2);
 
 	return ret3;

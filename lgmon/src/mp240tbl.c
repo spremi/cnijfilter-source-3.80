@@ -25,7 +25,7 @@
 
 
 /*
- * mp240tbl.c 
+ * mp240tbl.c
  *
  * The conversion table for mp240, and a model dependence function table.
  */

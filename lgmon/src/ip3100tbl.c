@@ -25,7 +25,7 @@
 
 
 /*
- * pixusip3100tbl.c 
+ * pixusip3100tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */
@@ -144,7 +144,7 @@ ST_BSCC2STS pixusip3100_doc2operate[]={
   {"1851","G"},	//
   {"1846","F"},	// v2.5
   {"1856","F"},	// v2.5
-  {"2001","U"},	// 
+  {"2001","U"},	//
   {"2500","A"},	// v2.5
   {ENDTAG,ENDTAG}
 };

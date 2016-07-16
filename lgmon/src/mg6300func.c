@@ -25,7 +25,7 @@
 
 
 /*
- * mg6300func.c 
+ * mg6300func.c
  *
  * A processing function group peculiar to a model.
  */

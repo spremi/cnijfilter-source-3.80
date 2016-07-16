@@ -25,7 +25,7 @@
 
 
 /*
- * ip6600dfunc.c 
+ * ip6600dfunc.c
  *
  * A processing function group peculiar to a model.
  */

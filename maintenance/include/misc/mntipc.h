@@ -1,6 +1,6 @@
 /*
  *  Canon Inkjet Printer Driver for Linux
- *  Copyright CANON INC. 2001-2012 
+ *  Copyright CANON INC. 2001-2012
  *  All Rights Reserved.
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -46,8 +46,8 @@ typedef struct BJFLT_UISETUP	/* other UI setup */
 {
 	short	bjflt_fit;			/* fit for printarea */
 	short	bjflt_percent;		/* percent (%) */
-	short	bjflt_extension;	/* amount of extention for borderless printing */	
-	short	bjflt_location;		/* location */	
+	short	bjflt_extension;	/* amount of extention for borderless printing */
+	short	bjflt_location;		/* location */
 	short	bjflt_copies;		/* copies */
 	short	bjflt_revprint;		/* reverse print */
 	short	bjflt_collate;		/* collate */

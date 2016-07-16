@@ -64,13 +64,13 @@ extern int ppm_write_tmpfile( LPBJF_IMAGEINFO lpbjfimage, char *filename , char 
 static short h_extend( CPKByte CPKPTR, CPKByte CPKPTR, int, int, int );
 static void outCmd(CPKByte CPKPTR, CPKUInt32, int);
 static CPKBoolean whiteLine( CPKByte CPKPTR, CPKUInt32, CPKUInt32, CPKUInt32 CPKPTR, CPKUInt32 CPKPTR );
-static void set_cncl_modelIDinfo( CNCLPtr, short ); 
+static void set_cncl_modelIDinfo( CNCLPtr, short );
 static void set_cncl_timeinfo(  CNCLPtr );
 static short set_cncl_bsccinfo( CNCLPtr, char * );	/* set bscc */
 static void set_cncl_imginfo( CNCLPtr, long, long, short, short );
 static void set_cncl_printerinfo( CNCLPtr, LPBJFLTDEVICE, LPCNCLPAPERSIZE, LPBJFLTCOMSYSTEM );
 static void set_position_parameter( LPBJFILTERINFO, LPCNCLPAPERSIZE, LPBJFLTCOMSYSTEM );
-static void set_cncl_colorinfo( CNCLPtr, LPBJFLTCOLORSYSTEM ); 
+static void set_cncl_colorinfo( CNCLPtr, LPBJFLTCOLORSYSTEM );
 static short MakeBJPrintData( LPBJFILTERINFO, LPBJFLTDEVICE, LPCNCLPAPERSIZE, LPBJFLTCOLORSYSTEM );
 static short mirror_raster( CPKByte CPKPTR, long, short );
 static void SetPrinterFd( LPBJFILTERINFO lpbjfinfo );
@@ -143,10 +143,10 @@ int main( int argc, char *argv[] )
 #if DEBUGLOG
 	create_log( );
 #endif
-	
+
 	/* allocate new work area */
 	if ( (lpbjinfo = (LPBJFILTERINFO)malloc( sizeof(BJFILTERINFO) )) == NULL ) goto onErr;
-	
+
 	/* init bjinfo */
 	memset( (LPBJFILTERINFO)lpbjinfo, 0, sizeof(BJFILTERINFO) );
 	snprintf(socketname, sizeof(socketname), "%s%d",BJSOCKET,getpid());
@@ -156,7 +156,7 @@ int main( int argc, char *argv[] )
 	/*---------
 		Analyze command line options.
 	---------*/
-	if ( (modelstrnum = SetCmdOption( argc, (char **)argv, &lpbjinfo->bjfoption, &bjfltcolor, 
+	if ( (modelstrnum = SetCmdOption( argc, (char **)argv, &lpbjinfo->bjfoption, &bjfltcolor,
 			&bjfltdevice, &cnclpapersize, dispname, lpbjinfo->filename, tmp_modelname )) < 0 ) goto onErr;
 
 
@@ -202,20 +202,20 @@ int main( int argc, char *argv[] )
 	if ( CheckSettings( &bjfltdevice , confname ) < 0 ){
 		goto onErr;
 	}
-	
+
 	/* Make Printing Data */
 	if ( MakeBJPrintData( lpbjinfo, &bjfltdevice, &cnclpapersize, &bjfltcolor ) < 0 ){
-		fprintf( stderr, "Err in MakeBJPrintData!\n" );	
+		fprintf( stderr, "Err in MakeBJPrintData!\n" );
 		goto onErr;
 	}
-	
+
 	return_code = 0;
-	
+
 onErr:
 	close( lpbjinfo->prn );	/* Ver.3.00 */
-	
+
 	if ( lpbjinfo ) free( lpbjinfo );
-	
+
 #if DEBUGLOG
 	dispose_log( );
 #endif
@@ -244,7 +244,7 @@ static short MakeBJPrintData
 	long				page_width;
 	long				i;
 	short				bpp;
-	
+
 	CNCLNAMEINFO		cnclnameinfo;
 	BJFLTCOMSYSTEM		bjfltcom;
 	char 				tblPath[] = BJLIBPATH;
@@ -261,7 +261,7 @@ static short MakeBJPrintData
 	char		command_buffer[CNCL_MAKECOMMAND_BUF_LEN];
 	char		ssr_command[256];
 	short				ssr_command_size = sizeof(ssr_command);
-	
+
 #if DEBUGLOG
 	fprintf(stderr,"LGMONPATH:%s\n",LGMONPATH);
 #endif
@@ -276,7 +276,7 @@ static short MakeBJPrintData
 
 	/* Set Infomation ( MODELID ) */
 	set_cncl_modelIDinfo( &CnclData, lpbjfltdevice->bjfltModelID );
-	
+
 	/* Set Infomation ( Date, Time ) */
 	set_cncl_timeinfo( &CnclData );
 
@@ -284,8 +284,8 @@ static short MakeBJPrintData
 	CnclData.CommandParamSize = 0;
 	CnclData.TablePath = tblPath;
 	CnclData.ImageRotate = lpbjinfo->bjfoption.rotate;
-	
-	/*--- 
+
+	/*---
 		If bscc file exists, set bscc info in CnclData.
 	---*/
 	if( lpbjinfo->bsccfile_exist == 1 ){
@@ -294,35 +294,35 @@ static short MakeBJPrintData
 			goto finish1;
 		}
 	}
-	
+
 	/****** IVEC Startjob ******/
 	if (lpbjinfo->bjfoption.is_ivec == 1){
 		/* poweron */
 		memset(command_buffer, 0x00, sizeof(command_buffer));
 		if (CNCL_MakePrintCommand(CNCL_COMMAND_POWERON, command_buffer, sizeof(command_buffer), NULL, "0") != CNCL_OK) goto finish1;
 		outCmd( (unsigned char *)command_buffer, strlen(command_buffer), lpbjinfo->prn );
-		
+
 		/* start1 */
 		memset(command_buffer, 0x00, sizeof(command_buffer));
 		if (CNCL_MakePrintCommand(CNCL_COMMAND_START1, command_buffer, sizeof(command_buffer), NULL, "0") != CNCL_OK) goto finish1;
 		outCmd( (unsigned char *)command_buffer, strlen(command_buffer), lpbjinfo->prn );
-		
+
 		/* start2 */
 		memset(command_buffer, 0x00, sizeof(command_buffer));
 		if (CNCL_MakePrintCommand(CNCL_COMMAND_START2, command_buffer, sizeof(command_buffer), NULL, NULL) != CNCL_OK) goto finish1;
 		outCmd( (unsigned char *)command_buffer, strlen(command_buffer), lpbjinfo->prn );
 	}
-	
+
 	/****** CNCL SetSSR ******/
 	if ( (cnclerr = CNCL_SetSSRDef(ssr_command, &ssr_command_size)) != CNCL_OK ) goto finish1;
 	outCmd( (unsigned char *)ssr_command, ssr_command_size, lpbjinfo->prn );
-	
+
 	/****** CNCL Startjob ******/
 	if ( (cnclerr = CNCL_StartJob( &CnclData )) != CNCL_OK ) goto finish1;
 	outCmd( CnclData.outputBuffer, CnclData.outputSize, lpbjinfo->prn );
 
-	/*--- 
-		Input Image open. 
+	/*---
+		Input Image open.
 		we deal width only ppm image format as stdin.
 	---*/
 	if ( lpbjinfo->bjfoption.stdswitch == ON ){
@@ -359,14 +359,14 @@ static short MakeBJPrintData
 		goto finish3;
 	}
 	bjf_init_root(root, lpbjinfo->bjfoption.copies, lpbjinfo->bjfoption.collate, lpbjinfo->bjfoption.revprint);
-	
+
 	/* duplex ON and stdin --> root->isDuplex ON */
 	if( ( lpbjinfo->bjfoption.stdswitch == ON ) && (lpbjfltdevice->bjfltDuplex == CND_DUPLEX_AUTO) ){
 		root->isDuplex = ON;
 	}else{
 		root->isDuplex = OFF;
 	}
-	
+
 
 	/********************************************************************Make Printing Data */
 
@@ -376,13 +376,13 @@ static short MakeBJPrintData
 
 	/* init page ID */
 	CnclData.PageNum = 1;
-	
+
 	while ( (cnclerr = bjf_image_init( &lpbjinfo->bjfimage , rev_flag , CnclData.PageNum )) > 0 ) {
 		/* The 1st page has not to be written to temp file. */
 #if DEBUGLOG
 		fprintf(stderr,"bjf_image_init \n CnclData.PageNum = %d\n rev_flag=%d \n",CnclData.PageNum,rev_flag);
 #endif
-		
+
 		/*---
 			copy RGB image data to bjfposimg and bjfposprn
 		---*/
@@ -405,9 +405,9 @@ static short MakeBJPrintData
 			bjfltovermargin.overmargin_top = 0;
 			bjfltovermargin.overmargin_bottom = 0;
 			bjfltovermargin.duplex = lpbjfltdevice->bjfltDuplex;
-			
+
 			if( CNCL_GetOverMargin( &cnclnameinfo , (void *)tblPath , &bjfltovermargin ) < 0 ) goto finish3;
-			
+
 #if DEBUG
 			display_overmargin_info( &bjfltovermargin);
 #endif
@@ -420,7 +420,7 @@ static short MakeBJPrintData
 		if( modify_image_form( lpbjinfo , root->isDuplex, CnclData.PageNum ) < 0 ) goto finish3;
 
 
-#if DEBUG 
+#if DEBUG
 		fprintf(stderr,"\n### AFTER CUT ###\n");
 		display_pos_info( &lpbjinfo->bjfposinfo );
 		display_margin_info( lpbjinfo );
@@ -432,7 +432,7 @@ static short MakeBJPrintData
 		width = 0;			height = 0;
 		ImageHeight = 0;	topskip = 0;
 		page_width = 0;
-	
+
 		bjf_pos_mask_width( &lpbjinfo->bjfposinfo, &width );
 		bjf_pos_mask_height( &lpbjinfo->bjfposinfo, &height );
 		bjf_pos_out_height( &lpbjinfo->bjfposinfo, &ImageHeight );
@@ -445,16 +445,16 @@ static short MakeBJPrintData
 		---*/
 		bpp = 0;
 		bjf_image_get_bpp( &lpbjinfo->bjfimage, &bpp );				/* Byte per Pixel of original Image */
-		
+
 		/*---
 			set cncl_parameter
 		---*/
 		/* Set Infomation ( width, length, srcdataType, pageno, bpp ) */
 		set_cncl_imginfo( &CnclData, page_width, ImageHeight, CND_ST_RGB24, 1 );
 		if ( topskip ) CnclData.length += topskip; /* if topskip is, increase Vposition */
-		
+
 		/* Set Infomation ( with BJCOMMON STRUCTRE ) */
-		set_cncl_printerinfo( &CnclData, lpbjfltdevice, lpcnclpapersize, &bjfltcom ); 
+		set_cncl_printerinfo( &CnclData, lpbjfltdevice, lpcnclpapersize, &bjfltcom );
 
 		/* Set DuplexCommand */
 		if( root->isDuplex == ON ){
@@ -462,7 +462,7 @@ static short MakeBJPrintData
 		}else{
 			CnclData.DuplexCommand = CND_DUPLEX_OFF;
 		}
-	
+
 		/* Set Infomation ( with COLOR STRUCTRE ) */
 		set_cncl_colorinfo( &CnclData, lpbjfltcolor );
 
@@ -474,13 +474,13 @@ static short MakeBJPrintData
 		if ( rgbBuf == CPKNULL ) goto onErr;
 		memset( rgbBuf, 0xFF, page_width * bpp );
 
-#if DEBUG 
-		/* display parameters */	
+#if DEBUG
+		/* display parameters */
 		display_position_parameter( lpbjinfo, lpcnclpapersize );
 		display_cncl_printerinfo( &CnclData );
 		display_pos_info( &lpbjinfo->bjfposinfo );
 #endif
-		
+
 		/****** CNCL Set param ******/
 		if ( (cnclerr = CNCL_SetParam( &CnclData )) != CNCL_OK ){
 #if DEBUG
@@ -489,20 +489,20 @@ static short MakeBJPrintData
 			goto onErr;
 		}
 		outCmd( CnclData.outputBuffer, CnclData.outputSize, lpbjinfo->prn );
-		
+
 		/* Alloc work2 buf */
 		if ( CnclData.Work2Buf == CPKNULL ){
 			CnclData.Work2Buf = (CPKVoid CPKPTR)malloc( CnclData.Work2Size );
-		}	
+		}
 		if ( CnclData.Work2Buf == CPKNULL ) goto onErr;
-	
+
 		/* dump plural pages. */
 		fd = 0;
 		if( ( fd = createTempfile(root) ) < 0 ) {
 			fprintf(stderr, "error : createTempfile\n");
 			goto onErr;
 		}
-		
+
 
 
 		/****** CNCL Start page ******/
@@ -529,7 +529,7 @@ static short MakeBJPrintData
 		CifRasterInfo.rev_flag		= rev_flag;
 		CifRasterInfo.page			= CnclData.PageNum;
 		CifRasterInfo.fd			= fd;
-		
+
 		/* process raster data. */
 		if( process_raster_data( &CifRasterInfo , lpbjinfo , lpbjfltdevice , root ) < 0 ) goto onErr;
 
@@ -538,8 +538,8 @@ static short MakeBJPrintData
 		if( flush_raster_data( &CnclData, lpbjinfo , fd ,  root ) < 0 ) goto onErr;
 
 		/*--- flush image ---*/
-		bjf_image_flush( &lpbjinfo->bjfimage ); 
-			
+		bjf_image_flush( &lpbjinfo->bjfimage );
+
 		/****** CNCL End page ******/
 		if ( (cnclerr = CNCL_EndPage( &CnclData )) != CNCL_OK ) goto onErr;
 		/* dump plural pages. */
@@ -569,14 +569,14 @@ static short MakeBJPrintData
 
 				/* flush current page and previous page */
 				if( ( dumpp_ret = dumpPluralPages_flush_duplex(root, lpbjinfo->prn) ) < 0 ) goto onErr;
-	
+
 				/* init root (again) */
 				bjf_init_root(root, lpbjinfo->bjfoption.copies, lpbjinfo->bjfoption.collate, lpbjinfo->bjfoption.revprint);
 				root->isDuplex = ON;
 
 			}
 			else if( rev_flag ){			/* front page(odd page) and longside-stapling */
-	
+
 				/* init temp file name */
 				memset(tmp_filename,0,1024);
 				strncpy( tmp_filename, CIFTEMPFILEINPUT, 1024 );
@@ -600,15 +600,15 @@ static short MakeBJPrintData
 				}
 			}
 		}
-	
+
 		CnclData.PageNum++;
-	
+
 		if( lpbjinfo->bjfoption.stdswitch != ON ) break;
 
 	}
-	
+
 	CnclData.PageNum--;
-	
+
 	/* insert blank page */
 	if(  ( CnclData.PageNum % 2 ) && (root->isDuplex == ON) && ( lpbjinfo->bjfoption.copies > 1 ) )
 	{
@@ -621,18 +621,18 @@ static short MakeBJPrintData
 
 		if( output_blank_page( &CnclData , lpbjinfo->prn , fd , root) < 0 ) goto onErr;
 	}
-	
 
-	
+
+
 	/***** flush dump pages. *****/
 	if ( root->isDuplex == ON ){	/* duplex flush */
 		if( ( dumpp_ret = dumpPluralPages_flush_duplex(root, lpbjinfo->prn) ) < 0 ) goto onErr;
 	}else{							/* "duplex OFF" or "duplex ON and input is image file" */
 		if( ( dumpp_ret = dumpPluralPages_flush(root, lpbjinfo->prn) ) < 0 ) goto onErr;
 	}
-	
+
 	if ( cnclerr < 0 ) goto onErr;
-	
+
 	cnclerr = 0;
 
 onErr:
@@ -642,7 +642,7 @@ onErr:
 finish3:
 	/*---close image---*/
 	bjf_image_close( &lpbjinfo->bjfimage );
-	
+
 	/* dump plural pages. */
 	if(fd>0)close(fd);
 	while(bjf_dispose_root(root) > 0) {
@@ -662,15 +662,15 @@ finish2:
 		if (CNCL_MakePrintCommand(CNCL_COMMAND_END, command_buffer, sizeof(command_buffer), NULL, NULL) != CNCL_OK) goto finish1;
 		outCmd( (unsigned char *)command_buffer, strlen(command_buffer), lpbjinfo->prn );
 	}
-	
+
 finish1:
 	if ( CnclData.Work1Buf ) free( CnclData.Work1Buf );
 
 	/* remove temp file */
 	if( f_input >= 0 ) unlink(tmp_filename);
 	if( tmp_filename ) free(tmp_filename);
-	
-	return cnclerr; 
+
+	return cnclerr;
 }
 
 
@@ -678,12 +678,12 @@ finish1:
 /*-------------------------------------------------------------*/
 /* externd raster data for horizon                             */
 /*-------------------------------------------------------------*/
-static short h_extend( 
+static short h_extend(
 					CPKByte CPKPTR		in,
 					CPKByte CPKPTR		out,
 					int			src_width,
 					int			dst_width,
-					int			component 
+					int			component
 				)
 {
 	int Quotient;
@@ -695,7 +695,7 @@ static short h_extend(
 	unsigned char K,Y,M,C,y,m,c;
 	CPKByte CPKPTR src_in;
 	short result = -1;
-	
+
 
 	if ( (src_width < 1) || (dst_width < 0) ) goto onErr; /* Ver.3.60 */
 
@@ -730,7 +730,7 @@ static short h_extend(
 	TotalRest = 0;
 	PrevPos   = -1;
 	CurrPos   = 0;
-	K = Y = M = C = y = m = c = 0;	
+	K = Y = M = C = y = m = c = 0;
 
 	for ( x=0; x<dst_width; x++ ){
 
@@ -769,7 +769,7 @@ static short h_extend(
 					break;
 			}
 		}
-		
+
 		switch ( component ){
 			case 1:
 				out[0] = K;
@@ -789,15 +789,15 @@ static short h_extend(
 				out[3] = C; out[4] = y; out[5] = m; out[6] = c;
 				break;
 		}
-		
+
 		out += component;
-		
+
 		TotalRest += Rest;
 		CurrPos += Quotient;
-		
+
 	}
 
-EXIT:	
+EXIT:
 	result = 0;
 onErr:
 	return result;
@@ -820,7 +820,7 @@ outCmd ( CPKByte CPKPTR buf, CPKUInt32 size, int prn )	/* to take file pointer *
 	r_size = size;
 	while( 1 ){
 		if(r_size == 0) return;
-		
+
 		w_size = write( prn, ptr, r_size );
 
 		if ( w_size <= 0 ){
@@ -891,7 +891,7 @@ static void set_cncl_modelIDinfo( CNCLPtr lpcncldata, short modelID )
 
 
 static void set_cncl_timeinfo(  CNCLPtr lpcncldata )
-{	
+{
 	char		time_para[7][20];
 	char		time_buf[100];
 	char		*ptr1 = NULL;
@@ -924,7 +924,7 @@ static void set_cncl_timeinfo(  CNCLPtr lpcncldata )
 		if ( !strcmp( month[mon], time_para[1] )) break;
 	}
 
-	
+
 	lpcncldata->CurrentTime.TimeInfo	= CND_TIME_CORRECT;
 	lpcncldata->CurrentTime.Year		= atoi( time_para[6] );
 	lpcncldata->CurrentTime.Month		= mon;
@@ -942,7 +942,7 @@ static void set_cncl_imginfo( CNCLPtr lpcncldata, long width, long length, short
 	lpcncldata->length		= length;
 	lpcncldata->srcdatatype	= rgbtype;
 }
-  
+
 
 
 static void set_cncl_printerinfo( CNCLPtr lpcncldata, LPBJFLTDEVICE lpbjfltdevice, LPCNCLPAPERSIZE lpcnclpapersize,LPBJFLTCOMSYSTEM lpbjfltcom )
@@ -1009,7 +1009,7 @@ process01:
 	lpcncldata->CommandParamPtr = bsccdata;
 	lpcncldata->CommandParamSize = length;
 
-	return ret; 
+	return ret;
 
 }
 
@@ -1069,7 +1069,7 @@ static void set_position_parameter( LPBJFILTERINFO lpbjinfo, LPCNCLPAPERSIZE lpc
 	/* set paper size */
 	bjf_pos_set_paperwidth( &lpbjinfo->bjfmgninfo , lpcnclpapersize->nSelPaperWidth );
 	bjf_pos_set_paperlength( &lpbjinfo->bjfmgninfo , lpcnclpapersize->nSelPaperLength );
-} 
+}
 
 static void set_cncl_colorinfo( CNCLPtr lpcncldata, LPBJFLTCOLORSYSTEM lpbjfltcolor )
 {
@@ -1092,10 +1092,10 @@ static void set_cncl_colorinfo( CNCLPtr lpcncldata, LPBJFLTCOLORSYSTEM lpbjfltco
 #if DEBUG
 static void display_cncl_printerinfo( CNCLPtr lpcncldata )
 {
-	
+
 	fprintf( stderr, "\n" );
 	fprintf( stderr, "< Cncl Paramter >\n" );
-	
+
 	fprintf( stderr, "lpcncldata->ModelID:%d\n", lpcncldata->ModelID);
 	fprintf( stderr, "lpcncldata->InkType:%d\n", lpcncldata->InkType);
 	fprintf( stderr, "lpcncldata->MediaType:%d\n", lpcncldata->MediaType);
@@ -1108,7 +1108,7 @@ static void display_cncl_printerinfo( CNCLPtr lpcncldata )
 	fprintf( stderr, "lpcncldata->Banner:%d\n", lpcncldata->Banner);
 	fprintf( stderr, "lpcncldata->PaperWidth:%ld\n", lpcncldata->PaperWidth);
 	fprintf( stderr, "lpcncldata->PaperHeight:%ld\n", lpcncldata->PaperHeight);
-	
+
 	fprintf( stderr, "lpcncldata->Intet:%d\n", lpcncldata->Intent);
 	fprintf( stderr, "lpcncldata->Gamma:%d\n", lpcncldata->Gamma);
 	fprintf( stderr, "lpcncldata->BalanceC:%d\n", lpcncldata->BalanceC);
@@ -1184,7 +1184,7 @@ static void display_overmargin_info( LPBJFLTOVERMARGININFO lpbjfltovermargin)
 static short mirror_raster( CPKByte CPKPTR buf, long width, short bpp )
 {
 	CPKByte CPKPTR		topbuf;
-	CPKByte CPKPTR		tailbuf;	
+	CPKByte CPKPTR		tailbuf;
 	char				pixel[4];
 	long				i,j;
 	long				pixcount;
@@ -1196,20 +1196,20 @@ static short mirror_raster( CPKByte CPKPTR buf, long width, short bpp )
 
 	topbuf  = buf;
 	tailbuf = buf + ( width - 1 ) * bpp;
-	
+
 	for ( i=0; i<pixcount; i++ ){
 		for( j=0; j<bpp; j++ ){
 			pixel[j]    = topbuf[j];
 			topbuf[j]   = tailbuf[j];
-			tailbuf[j]  = pixel[j]; 
+			tailbuf[j]  = pixel[j];
 		}
 		topbuf  += bpp;
 		tailbuf -= bpp;
-	}	
+	}
 
 	result = 0;
 onErr:
-	return result;	
+	return result;
 }
 
 
@@ -1257,10 +1257,10 @@ static int createTempfile(LPBJF_ROOT root)
 	}
 	else
 		fd = 0;
-	
+
 	/* no error */
 	return fd;
-	
+
 onErr:
 	/* queue error */
 	if(fd>0)close(fd);
@@ -1291,22 +1291,22 @@ static short dumpPage(LPBJF_NODE node, int prn)
 	int		fd = 0;
 	int		r_size = 0;
 	short	ret = -1;
-	
+
 	if(node==NULL)return 0;
-	
+
 	if( node->curCopies > 0 ){
 		if ( (fd = open( node->fileName, O_RDONLY )) < 0 ){
 			/* perror( "open" ); */
-			return -2;	
+			return -2;
 		}
-		
+
 		while ( (r_size = read( fd, buf, BUFSIZ)) > 0 ){
 			outCmd( buf, r_size, prn );  /* write( prn, buf, r_size ); */
 		}
 		node->curCopies--;
 	}
 	ret = node->curCopies;
-	
+
 onErr:
 	if(fd>0)close(fd);
 	return ret;
@@ -1319,10 +1319,10 @@ onErr:
 static short dumpPluralPages( LPBJF_ROOT root, int prn )
 {
 	short ret = 0;
-	
+
 	if(!bjf_exist_q(root))
 		return ret; /* do nothing. */
-	
+
 	if(root->isRPrint == REVPRINT_ON)
 		return ret; /* do nothing. */
 
@@ -1335,18 +1335,18 @@ static short dumpPluralPages( LPBJF_ROOT root, int prn )
 	/* in the case of "copies>1". <-- In this case, there is only "head" in the list */
 	/* 1 page written to prn already. */
 	root->head->curCopies--;
-	
+
 	while( ( ret = dumpPage(root->head, prn) ) != 0 ) {
 		if(ret < 0)goto onErr;
 	}
-	
+
 onErr:
 	/* remove tempfile and dispose head-queue. */
 	if( bjf_exist_q(root) ) {
 		unlink(root->head->fileName);
 		bjf_dispose_q(root,BJF_HEAD_NODE);
 	}
-	
+
 	return ret;
 }
 
@@ -1360,21 +1360,21 @@ static short dumpPluralPages_flush( LPBJF_ROOT root, int prn )
 	short	ret = 0;
 
 	/* tail -> head */
-	if(root->isRPrint == REVPRINT_ON) { 
+	if(root->isRPrint == REVPRINT_ON) {
 		if(root->isCollate == COLLATE_ON) {
 			while( bjf_exist_q(root) ) {
-				
+
 				node = root->tail;
 				while( node != NULL ) {
 					next_node = node->prev;
-					
+
 					if( (ret = dumpPage(node, prn)) == 0 ) {
 						/* remove tempfile and dispose tail-queue. */
 						unlink(node->fileName);
 						bjf_dispose_q(root,BJF_TAIL_NODE);
 					}
 					else if (ret < 0) goto onErr;
-					
+
 					node = next_node;
 				}
 			}
@@ -1398,18 +1398,18 @@ static short dumpPluralPages_flush( LPBJF_ROOT root, int prn )
 
 		if(root->isCollate == COLLATE_ON) {
 			while( bjf_exist_q(root) ) {
-			
+
 				node = root->head;
 				while( node != NULL ) {
 					next_node = node->next;
-					
+
 					if( (ret = dumpPage(node, prn)) == 0 ) {
 						/* remove tempfile and dispose head-queue. */
 						unlink(node->fileName);
 						bjf_dispose_q(root,BJF_HEAD_NODE);
 					}
 					else if (ret < 0) goto onErr;
-					
+
 					node = next_node;
 				}
 			}
@@ -1443,7 +1443,7 @@ static short dumpPluralPages_flush_duplex( LPBJF_ROOT root, int prn )
 
 
 	/* REVPRINT or COLLATE is not allowed.  */
-	if(root->isRPrint == REVPRINT_ON) { 
+	if(root->isRPrint == REVPRINT_ON) {
 		ret = -1;
 		goto onErr;
 	}
@@ -1456,21 +1456,21 @@ static short dumpPluralPages_flush_duplex( LPBJF_ROOT root, int prn )
 	for(node = root->head; node != NULL; node = node->next) node->curCopies--;
 
 	while( bjf_exist_q(root) ) {
-		
+
 		node = root->head;
 		while( node != NULL ) {
 			next_node = node->next;
 			if( (ret = dumpPage(node, prn)) == 0 ) {
 				/* remove tempfile and dispose head-queue. */
 				unlink(node->fileName);
-				bjf_dispose_q(root,BJF_HEAD_NODE);	
+				bjf_dispose_q(root,BJF_HEAD_NODE);
 			}
 			else if (ret < 0) goto onErr;
-			
+
 			node = next_node;
 		}
 	}
-		
+
 	ret = 0;
 
 onErr:
@@ -1487,12 +1487,12 @@ static short exec_testprint( char *command , long cmdslen , char *filename , int
 	int		fd = 0;
 	int		r_size = 0;
 	short	ret = -1;
-	
-	
+
+
 	/* open testpattern file */
 	if ( (fd = open( filename, O_RDONLY )) < 0 ){
 		/* perror( "open" ); */
-		return -2;	
+		return -2;
 	}
 
 	/* send BJL to LM */
@@ -1505,12 +1505,12 @@ static short exec_testprint( char *command , long cmdslen , char *filename , int
 	}
 
 	ret = 0;
-	
+
 onErr:
 	if(fd>0)close(fd);
 	return ret;
-	
-	
+
+
 }
 
 
@@ -1523,7 +1523,7 @@ static short modify_image_form( LPBJFILTERINFO lpbjinfo , int isDuplex, int page
 	short	ret = -1;
 
 	/*---------
-		if bbox option is selected, 
+		if bbox option is selected,
 	---------*/
 
 	if ( lpbjinfo->bjfoption.bbox.bbox_flag == BBOX_ON ){
@@ -1554,7 +1554,7 @@ static short modify_image_form( LPBJFILTERINFO lpbjinfo , int isDuplex, int page
 	}
 
 	/*---------
-		if percent option is selected, output image is scaled 
+		if percent option is selected, output image is scaled
 	---------*/
 	if ( lpbjinfo->bjfoption.percent){
 	  if ( ImageScaling(&lpbjinfo->bjfposprn, &lpbjinfo->bjfposinfo,lpbjinfo->bjfoption.percent ) < 0 ) goto onErr;
@@ -1581,7 +1581,7 @@ static short modify_image_form( LPBJFILTERINFO lpbjinfo , int isDuplex, int page
 
 
 	ret = 0;
-	
+
 onErr:
 	return ret;
 
@@ -1614,7 +1614,7 @@ static short output_blank_page( CNCLPtr lpCnclData , int prn , int fd , LPBJF_RO
 
 
 	ret = 0;
-	
+
 onErr:
 	return ret;
 
@@ -1675,11 +1675,11 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 
 	/* raster data before scaling */
 	if ( srcBuf == CPKNULL ){
-		srcBuf = (CPKByte CPKPTR)malloc( width * bpp );	
+		srcBuf = (CPKByte CPKPTR)malloc( width * bpp );
 	}
-	if ( srcBuf == CPKNULL ) goto onErr; 
+	if ( srcBuf == CPKNULL ) goto onErr;
 
-		
+
 	/* set scaling parameter */
 	if ( (height < 1) || (ImageHeight < 0) ) goto onErr; /* Ver.3.60 */
 
@@ -1687,9 +1687,9 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 		goto EXIT;
 	}
 	else if ( ImageHeight == 1 ) { /* Ver.3.60 */
-		if ( bjf_image_read_raster( &lpbjinfo->bjfimage, (char *)srcBuf, (long)width_offset, 
+		if ( bjf_image_read_raster( &lpbjinfo->bjfimage, (char *)srcBuf, (long)width_offset,
 					(long)(CurrPos + height_offset), (long)width , rev_flag , current_page ) < 0 ){
-			fprintf( stderr, "err in bjf_image_read_raster\n" );	
+			fprintf( stderr, "err in bjf_image_read_raster\n" );
 			goto onErr;
 		}
 
@@ -1702,9 +1702,9 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 			case CND_MEDIA_BPF:
 			case CND_MEDIA_TSHIRT:
 				mirror_raster( rgbBuf, page_width, bpp );
-				break;	
+				break;
 		}
- 
+
 		/* if duplex ON and longside-stapling and back page(even page), mirror raster */
 		if ( ( !( current_page % 2 ) ) && rev_flag && ( root->isDuplex == ON ) ) mirror_raster( rgbBuf, page_width, bpp );
 
@@ -1719,7 +1719,7 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 			lpCnclData->left_white = left;
 			lpCnclData->right_white = right;
 		}
-		
+
 		/****** CNCL Source data ******/
 		if ( CNCL_SourceData( lpCnclData ) < 0 ) goto onErr;
 
@@ -1731,7 +1731,7 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 				/* dump plural pages. */
 				outCmdPlural( lpCnclData->rasterDataPtr[i].buf, lpCnclData->rasterDataPtr[i].size, lpbjinfo->prn, fd, root );
 			}
-			
+
 			/****** CNCL Complete data ******/
 			cnclerr = CNCL_CompleteData( lpCnclData );
 			if ( cnclerr != 1 && cnclerr != 0 ){
@@ -1751,7 +1751,7 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 
 #if DEBUG
 		fprintf( stderr, "y:%ld\tCurrPos:%ld\r",y,CurrPos );
-#endif	
+#endif
 
 		/* calculate remainder */
 		if ( TotalRest  * 2 >= (ImageHeight - 1) ){ /* Ver.3.60 */
@@ -1762,12 +1762,12 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 
 		if ( CurrPos != PrevPos ){
 			PrevPos = CurrPos;
-			if ( bjf_image_read_raster( &lpbjinfo->bjfimage, (char *)srcBuf, (long)width_offset, 
+			if ( bjf_image_read_raster( &lpbjinfo->bjfimage, (char *)srcBuf, (long)width_offset,
 						(long)(CurrPos + height_offset), (long)width , rev_flag , current_page ) < 0 ){
-				fprintf( stderr, "err in bjf_image_read_raster\n" );	
+				fprintf( stderr, "err in bjf_image_read_raster\n" );
 				goto onErr;
 			}
-								
+
 			memset( rgbBuf, 0xFF, page_width * bpp );
 			if ( h_extend( srcBuf, rgbBuf+(leftskip*bpp), width, ImageWidth, bpp ) < 0 ) goto onErr;
 
@@ -1778,15 +1778,15 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 				case CND_MEDIA_BPF:
 				case CND_MEDIA_TSHIRT:
 					mirror_raster( rgbBuf, page_width, bpp );
-					break;	
-			} 
+					break;
+			}
 
 			/*---
 				if duplex ON and longside-stapling and back page(even page), mirror raster
 			---*/
 			if ( ( !( current_page % 2 ) ) && rev_flag && ( root->isDuplex == ON ) ) mirror_raster( rgbBuf, page_width, bpp );
 		}
-			
+
 		/* Check white line */
 		if ( whiteLine( rgbBuf, lpCnclData->width*bpp, bpp, (CPKUInt32 CPKPTR)&left, (CPKUInt32 CPKPTR)&right ) ){
 			lpCnclData->WhiteLine = CND_WL_WHITE;
@@ -1798,7 +1798,7 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 			lpCnclData->left_white = left;
 			lpCnclData->right_white = right;
 		}
-		
+
 		/****** CNCL Source data ******/
 		result = CNCL_SourceData( lpCnclData );
 		if ( result < 0 ){
@@ -1814,7 +1814,7 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 				/* dump plural pages. */
 				outCmdPlural( lpCnclData->rasterDataPtr[i].buf, lpCnclData->rasterDataPtr[i].size, lpbjinfo->prn, fd, root );
 			}
-			
+
 			/****** CNCL Complete data ******/
 			cnclerr = CNCL_CompleteData( lpCnclData );
 			if ( cnclerr != 1 && cnclerr != 0 ){
@@ -1825,12 +1825,12 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 
 		TotalRest += Rest;
 		CurrPos += Quotient;
-		
+
 	}
 
 EXIT:
 	ret = 0;
-	
+
 onErr:
 	if ( srcBuf ) free( srcBuf );
 	return ret;
@@ -1862,7 +1862,7 @@ static short flush_raster_data( CNCLPtr lpCnclData , LPBJFILTERINFO lpbjinfo , i
 			/* dump plural pages. */
 			outCmdPlural( lpCnclData->rasterDataPtr[i].buf, lpCnclData->rasterDataPtr[i].size, lpbjinfo->prn, fd, root );
 		}
-		
+
 		/****** CNCL Complete data ******/
 		cnclerr = CNCL_CompleteData( lpCnclData );
 		if ( cnclerr != 1 && cnclerr != 0 ){
@@ -1870,13 +1870,13 @@ static short flush_raster_data( CNCLPtr lpCnclData , LPBJFILTERINFO lpbjinfo , i
 		}
 
 	} while ( cnclerr == 1 );
-	
+
 	ret = 0;
-	
+
 onErr:
 	return ret;
 
-	
+
 }
 
 /*-------------------------------------------------------------*/
@@ -1926,7 +1926,7 @@ void dispose_log(void)
 {
 	if(log_path == 0)
 		return ;
-	
+
 	fclose(log_path);
 	unlink(log_path_name);
 }

@@ -54,8 +54,8 @@ int ModelNameToID(char* name)
 	strncpy(upname, name, upname_len); /* Ver.3.60 */
 	upname[ upname_len -1 ] = '\0';
 
-	// Because the display trouble was found by tr_TR.ISO8859-9, 
-	// g_strup() is replaced with UpperAsciiStr(). 
+	// Because the display trouble was found by tr_TR.ISO8859-9,
+	// g_strup() is replaced with UpperAsciiStr().
 	UpperAsciiStr(upname);	//	g_strup(upname);
 
 	while( g_model_key[i] != NULL )

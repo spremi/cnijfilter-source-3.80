@@ -66,7 +66,7 @@ int ip90_setcartridgetype(ST_STORESET *p_s, ST_BSCC2STS *p_ct, bscc2sts_tbl *p_t
 	p_tbl->cartridge[0].type='X';
 	//p_tbl->cartridge[0].type='F';
   }
-  
+
   return(OK);
 }
 
@@ -179,7 +179,7 @@ int ip90_inklowlevel1chk(char color, char *p_call)
   char level1[5];
 
   memset (level1, 0, 5);
-  
+
   if(p_call == NULL){
 	return(OK);
   }
@@ -217,7 +217,7 @@ int ip90_inkunknownchk(char *p_call, int buf_length)
 	else if( (p_call[i] == 'u') )
 	  flag += 2;
   }
-  
+
   if( flag != 0 )
   	return(flag);
 
@@ -234,14 +234,14 @@ int ip90_inkunsetchk(char *p_call, int buf_length)
 {
   int i;
   int flag = 0;
-  
+
   for(i=0; i < buf_length; i++){
 	if( (p_call[i] == 'M') )
 	  flag += 1;
 	else if( (p_call[i] == 'm') )
 	  flag += 2;
   }
-  
+
   if( flag != 0 )
   	return(flag);
 
@@ -250,7 +250,7 @@ int ip90_inkunsetchk(char *p_call, int buf_length)
 }
 
 /*
- * warning delete 
+ * warning delete
  *
  * 1. NoTank_Bk & InkLow_Warning_Bk -> p_warning[i] = '*'
  * 2. NoTank_Cl & InkLow_Warning_Cl -> p_warning[i] = '*'

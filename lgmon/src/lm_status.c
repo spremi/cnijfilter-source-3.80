@@ -116,7 +116,7 @@ static int setup_bscc(int dev_path, char *jobIDStr)
 	int error = 0;
 	int sta = 0;
 	int count;
-	char *bscc_com; 
+	char *bscc_com;
 	//                  ESC   [    K   C-lo C-hi INIT  ID  L-hi L-lo (total 9byte)
 	//char bscc_head[] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 	char bscc_head[] = {0x1b,0x5b,0x4b,0x00,0x00,0x00,0x1e,0x00,0x00};
@@ -261,7 +261,7 @@ static int setup_bscc(int dev_path, char *jobIDStr)
 		else
 			sleep(1);
 	}
-	
+
 	release_printer_sem(sem_id);
 	free(bscc_com);
 
@@ -373,7 +373,7 @@ static unsigned char get_bst(char *buf)
 	work[1] = 0x00;
 	sscanf((char*)work, "%x", &wk); /* conv Hex string to value(Hi) */
 	/* sscanf(work, "%x", &wk);*/ /* conv Hex string to value(Hi) */
-	val = (char)(wk<<4); 
+	val = (char)(wk<<4);
 
 	ptr++;
 	work[0] = *ptr;

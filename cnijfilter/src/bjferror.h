@@ -30,7 +30,7 @@
 #define NO_ERROR	0
 
 #define FILE_ERROR		-3
-#define MEMORY_ERROR	-2	
+#define MEMORY_ERROR	-2
 #define DEFAULT_ERROR	-1
 
 extern short bjf_error( char *, short );

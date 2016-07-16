@@ -26,14 +26,14 @@
 
 /*
 ** The code use "libtiff library"
-** 
+**
 ** Copyright (c) 1988-1997 Sam Leffler
 ** Copyright (c) 1991-1997 Silicon Graphics, Inc.
 */
 
 /*
 ** The code use "libpng library"
-** 
+**
 ** Copyright (c) 1998-2001 Glenn Randers-Pehrson
 */
 
@@ -96,10 +96,10 @@ short bjf_image_open( LPBJF_IMAGEINFO lpbjfimage, char *filename )
 	FILE				*tf = NULL;
 	unsigned char		tbuf[10];
 	short				result = -1;
-	
+
 	/*--- initialize image work parameter ---*/
 	memset( (LPBJF_IMAGEINFO)lpbjfimage, 0, sizeof(BJF_IMAGEINFO) );
-	
+
 	/*-------------------------------*/
 	/*		Select Image Format		 */
 	/*-------------------------------*/
@@ -118,16 +118,16 @@ short bjf_image_open( LPBJF_IMAGEINFO lpbjfimage, char *filename )
 	}
 	/*--- in case input is file ---*/
 	else{
-		if ( (tf=fopen( filename, "rb" )) == NULL ) goto onErr; 
+		if ( (tf=fopen( filename, "rb" )) == NULL ) goto onErr;
 
 		/* top 4 byte of file */
 		if ( !fread( tbuf, 8, 1, tf ) ) goto onErr;
-		
+
 		if ( tf != NULL ){
 			fclose( tf );
 			tf = NULL;
 		}
-	
+
 		if ( ( bufmatch( (char*)TIFFSTART1, (char *)tbuf, 2 ) > 0 ) | ( bufmatch( (char*)TIFFSTART2, (char *)tbuf, 2 ) > 0 ) )
 			lpbjfimage->imageformat = BJFIMAGE_TIFF;
 		else if ( bufmatch( (char*)BMPSTART, (char *)tbuf, 2 ) > 0 )
@@ -167,7 +167,7 @@ short bjf_image_open( LPBJF_IMAGEINFO lpbjfimage, char *filename )
 
 	result = 0;
 	return result;
-	
+
 onErr:
 	if ( tf != NULL ) fclose( tf );
 	return result;
@@ -186,7 +186,7 @@ short bjf_image_init( LPBJF_IMAGEINFO lpbjfimage , short rev_flag , CPKUInt16 bj
 /*-------------------------------------------------------------*/
 {
 	short				result = -1;
-	
+
 	switch( lpbjfimage->imageformat ){
 		case BJFIMAGE_TIFF:
 			if ( (result = tiff_image_init( lpbjfimage )) < 0 ) goto onErr;
@@ -215,7 +215,7 @@ onErr:
 }
 
 /*-------------------------------------------------------------*/
-short bjf_image_read_raster( 
+short bjf_image_read_raster(
 /*-------------------------------------------------------------*/
 			LPBJF_IMAGEINFO lpbjfimage,
 			char * buf,
@@ -251,7 +251,7 @@ short bjf_image_read_raster(
 		default:
 			goto onErr;
 	}
-	
+
 	result = 0;
 onErr:
 	return result;
@@ -265,7 +265,7 @@ short bjf_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 	short				result = -1;
 
 	/*---------------------------*/
-	/*	Supply raw raster data   */ 
+	/*	Supply raw raster data   */
 	/*---------------------------*/
 	switch ( lpbjfimage->imageformat ){
 		case BJFIMAGE_TIFF:
@@ -284,7 +284,7 @@ short bjf_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 		default:
 			goto onErr;
 	}
-	
+
 	result = 0;
 onErr:
 	return result;
@@ -382,10 +382,10 @@ static short bufmatch( char *buf1, char *buf2, short length )
 	short result = -1;
 	char *tmp1;
 	char *tmp2;
-	
+
 	tmp1 = buf1;
 	tmp2 = buf2;
-	
+
 	while( *buf1++ == *buf2++ ){
 		i++;
 		if ( i == length ){
@@ -393,7 +393,7 @@ static short bufmatch( char *buf1, char *buf2, short length )
 			break;
 		}
 	}
-	
+
 	return result;
 }
 
@@ -404,11 +404,11 @@ static short tiff_image_open( LPBJF_IMAGEINFO lpbjfimage, char *filename )
 {
 	TIFF				*tif = NULL;
 	short				result = -1;
-	
+
 	if ( (tif = TIFFOpen( filename, "r" )) == NULL ) goto onErr;
-	
+
 	lpbjfimage->tif = tif;
-	
+
 	result = 0;
 onErr:
 	return result;
@@ -438,16 +438,16 @@ static short tiff_image_init( LPBJF_IMAGEINFO lpbjfimage )
 		flg = 1;
 		result = 1;
 	}
-	else 
+	else
 		return 0;
-	
+
 	/* copy global to local */
 	tif = lpbjfimage->tif;
-	
+
 	if ( !TIFFGetField( tif, TIFFTAG_SAMPLESPERPIXEL, &bpp ) ){
 		bpp = 1;
 	}
-	
+
 	if ( !TIFFGetField( tif, TIFFTAG_IMAGELENGTH, &length ) ){
 		bjf_error( "TIFF Cannnot get image length", FILE_ERROR );
 		goto onErr;
@@ -456,12 +456,12 @@ static short tiff_image_init( LPBJF_IMAGEINFO lpbjfimage )
 		bjf_error(  "TIFF Cannot get image width", FILE_ERROR );
 		goto onErr;
 	}
-	
+
 	if ( !TIFFGetField( tif, TIFFTAG_PHOTOMETRIC, &photometric ) ){
 		bjf_error( "TIFF Cannot get photometric", FILE_ERROR );
 		goto onErr;
 	}
-	
+
 	if ( !TIFFGetField( tif, TIFFTAG_RESOLUTIONUNIT, &resolution_unit ) ){
 		bjf_error( "TIFF Cannot get resolutionunit", FILE_ERROR );
 	}
@@ -469,7 +469,7 @@ static short tiff_image_init( LPBJF_IMAGEINFO lpbjfimage )
 	if ( !TIFFGetField( tif, TIFFTAG_XRESOLUTION, &x_resolution ) ){
 		bjf_error( "TIFF Cannot get x_resolution", FILE_ERROR );
 	}
-	
+
 	if ( !TIFFGetField( tif, TIFFTAG_YRESOLUTION, &y_resolution ) ){
 		bjf_error( "TIFF Cannot get y_resolution", FILE_ERROR );
 	}
@@ -508,7 +508,7 @@ static short tiff_image_init( LPBJF_IMAGEINFO lpbjfimage )
 			goto onErr;
 		}
 	}
-			
+
 	switch( photometric ){
 		case PHOTOMETRIC_MINISBLACK:
 		case PHOTOMETRIC_MINISWHITE:
@@ -518,12 +518,12 @@ static short tiff_image_init( LPBJF_IMAGEINFO lpbjfimage )
 		case PHOTOMETRIC_RGB:
 			outputtype = BJFOUTPUT_COLOR;
 			break;
-			
+
 		default:
 			bjf_error( "TIFF Unknown photometric", FILE_ERROR );
 			goto onErr;
 	}
-	
+
 	lpbjfimage->width				= width;
 	lpbjfimage->length				= length;
 	lpbjfimage->bpp					= bpp;
@@ -545,8 +545,8 @@ static short tiff_image_read_raster( LPBJF_IMAGEINFO lpbjfimage, char *buf, long
 	long				RasterLength;
 	short				bpp;
 	short				result = -1;
-	
-	
+
+
 	/*
 		here argment width do not use.
 		because argment width is not real image width
@@ -554,20 +554,20 @@ static short tiff_image_read_raster( LPBJF_IMAGEINFO lpbjfimage, char *buf, long
 	*/
 	bpp = lpbjfimage->bpp;
 	RasterLength = lpbjfimage->rasterlength;
-	
+
 	localbuf = (char *)_TIFFmalloc( TIFFScanlineSize( lpbjfimage->tif ) );
-	
+
 	if ( localbuf == NULL ) goto onErr;
-	
+
 	if ( !TIFFReadScanline( lpbjfimage->tif, localbuf, y, 0 ) ){
 		bjf_error( "Error in tiff_image_read_raster", FILE_ERROR );
 		goto onErr;
 	}
 
 	memcpy( (char *)buf, (char *)localbuf + ( bpp * x ), (width * bpp) );
-	
+
 	_TIFFfree( localbuf );
-		
+
 	result = 0;
 onErr:
 	return result;
@@ -581,7 +581,7 @@ static short tiff_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 static short tiff_image_close( LPBJF_IMAGEINFO lpbjfimage )
 {
 	short				result = -1;
-	
+
 	if ( lpbjfimage->tif ){
 		TIFFClose( lpbjfimage->tif );
 		lpbjfimage->tif = NULL;
@@ -610,10 +610,10 @@ static short bmp_image_open( LPBJF_IMAGEINFO lpbjfimage, char *filename )
 	}
 	else
 		readfp = stdin;
-		
+
 	/* copy local to global */
 	lpbjfimage->bmp = readfp;
-	
+
 	result = 0;
 onErr:
 	return result;
@@ -640,7 +640,7 @@ static short bmp_image_init( LPBJF_IMAGEINFO lpbjfimage )
 
 	/*---
 		we must init global parameters again, without isfirstcall and bmp,
-			imageformat is inited in bmp_image_open. 
+			imageformat is inited in bmp_image_open.
 	---*/
 	tmpflg    = lpbjfimage->isfirstcall;
 	tmpformat = lpbjfimage->imageformat;
@@ -665,7 +665,7 @@ static short bmp_image_init( LPBJF_IMAGEINFO lpbjfimage )
 		/*-- not support plural document --*/
 		return 0;
 	}
-	
+
 	if ( !fread( buffer, 12, 1, readfp ) ) goto onErr;
 	bmpfile.bfSize = TOLONG( buffer, 0 );				/* file size */
 	bmpfile.bfOffBits = TOLONG( buffer, 8 );			/* offset till image data */
@@ -688,7 +688,7 @@ static short bmp_image_init( LPBJF_IMAGEINFO lpbjfimage )
 		fprintf( stderr, "can not suport this bmp file\n");
 		goto onErr;
 	}
-	
+
 	/*--- get image raw data (by MAXBUFSIZE unit) ---*/
 	rawImage = bmpfile.bfSize - bmpfile.bfOffBits;
 	rastLength = rawImage / bmpinfo.biHeight;
@@ -697,17 +697,17 @@ static short bmp_image_init( LPBJF_IMAGEINFO lpbjfimage )
 
 	if ( rstep == 0 ){
 		bjf_error( "Error in bmp_image_init", FILE_ERROR );
-	} 
-	
+	}
+
 	if ( (buf = (unsigned char *)malloc( MAXBUF )) == NULL ) goto onErr;
-	
+
 	rawbuf = (unsigned char **)calloc(sizeof(unsigned char *), rstep );
 	if ( rawbuf == NULL ) goto onErr;
 
 	for( i=0; i<rstep; i++ ){
 		rawbuf[i] = buf + rastLength * i;
 	}
-	
+
 	/*--- read reverse ---*/
 	fp_offset = rastLength * ( bmpinfo.biHeight - rstep );
 	if( ( bmpinfo.biHeight - rstep ) < 0 )
@@ -761,12 +761,12 @@ static short bmp_image_read_raster( LPBJF_IMAGEINFO lpbjfimage, char *buf, long 
 	img_width = lpbjfimage->width;
 	img_height = lpbjfimage->length;
 	rasterlength = lpbjfimage->rasterlength;
-	
+
 	if ( y > img_height ){
 		bjf_error( "Error in bmp_image_read_raster:img_height_over", MEMORY_ERROR );
 		goto onErr;
 	}
-	
+
 	if ( width > img_width ){
 		bjf_error( "Error in bmp_image_read_raster:img_width_over", MEMORY_ERROR );
 		goto onErr;
@@ -775,7 +775,7 @@ static short bmp_image_read_raster( LPBJF_IMAGEINFO lpbjfimage, char *buf, long 
 	/*
 		if we must renew current allocate memory, do it.
 	*/
-	
+
 	/*--- copy global to local ---*/
 	top = lpbjfimage->top;
 	rstep = lpbjfimage->rstep;
@@ -797,7 +797,7 @@ static short bmp_image_read_raster( LPBJF_IMAGEINFO lpbjfimage, char *buf, long 
 			isfinalblock = 1;
 			laststep = img_height - top;
 		}
-		
+
 		if ( isfinalblock == 1 ){
 			for ( i=0; i<(block-1); i++ ){
 				fread( rawbuf[0], rasterlength, rstep, readfp );
@@ -813,7 +813,7 @@ static short bmp_image_read_raster( LPBJF_IMAGEINFO lpbjfimage, char *buf, long 
 			fseek( readfp, ( rasterlength * (img_height - rstep - top) + 54L ), SEEK_SET );
 			fread( rawbuf[0], rasterlength, rstep, readfp );
 			lpbjfimage->readraster += rstep;
-		}	
+		}
 	}
 
 	/*--- currentposition ---*/
@@ -829,18 +829,18 @@ static short bmp_image_read_raster( LPBJF_IMAGEINFO lpbjfimage, char *buf, long 
 	/*--- change bgr to rgb ---*/
 	/*--- read reverse ---*/
 	in = rawbuf[currentpos] + ( width_offset * img_bpp );
-	
+
 	for ( i=0; i<width; i++ ){
 		buf[0] = in[2];
 		buf[1] = in[1];
 		buf[2] = in[0];
-		
+
 		/*--- read reverse ---*/
 		in += img_bpp;
 		buf += img_bpp;
 	}
-	
-	
+
+
 	result = 0;
 onErr:
 	return result;
@@ -857,7 +857,7 @@ static short bmp_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 	unsigned char		*tmp;
 	FILE				*readfp = NULL;
 	short				result = -1;
-	
+
 
 	/* copy global to local */
 	top = lpbjfimage->top;
@@ -870,13 +870,13 @@ static short bmp_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 
 	if ( remain > 0 ){
 		if ( (tmp = malloc( remain * rasterlength )) == NULL ) goto onErr;
-	
+
 		fread( tmp, rasterlength, remain, readfp );
-		
+
 		lpbjfimage->readraster = 0;
 
 	}
-	
+
 	if ( lpbjfimage->bmpraw ){
 		if ( lpbjfimage->bmpraw[0] ){
 			free( lpbjfimage->bmpraw[0] );
@@ -885,7 +885,7 @@ static short bmp_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 		free( lpbjfimage->bmpraw );
 		lpbjfimage->bmpraw = NULL;
 	}
-	
+
 	result = 0;
 onErr:
 	return result;
@@ -894,12 +894,12 @@ onErr:
 static short bmp_image_close( LPBJF_IMAGEINFO lpbjfimage )
 {
 	short				result = -1;
-	
+
 	if ( lpbjfimage->bmp ){
 		fclose( lpbjfimage->bmp );
 		lpbjfimage->bmp = NULL;
 	}
-	
+
 	result = 0;
 	return result;
 }
@@ -914,7 +914,7 @@ static short ppm_image_open( LPBJF_IMAGEINFO lpbjfimage, char *filename )
 	unsigned char	buffer[5];
 	short			result = -1;
 
-	
+
 	/* firstcall flg on for plural document */
 	lpbjfimage->isfirstcall = 1;
 
@@ -925,7 +925,7 @@ static short ppm_image_open( LPBJF_IMAGEINFO lpbjfimage, char *filename )
 	else {
 		readfp = stdin;
 	}
-	
+
 	lpbjfimage->bmp = readfp;
 
 	result = 0;
@@ -955,7 +955,7 @@ static short ppm_image_init( LPBJF_IMAGEINFO lpbjfimage )
 	char			ch;
 
 	/*---
-		We must init global parameters again, without isfirstcall and 
+		We must init global parameters again, without isfirstcall and
 			ppm imageformat is inited in ppmraw_image_open
 	---*/
 	tmpflg    = lpbjfimage->isfirstcall;
@@ -968,10 +968,10 @@ static short ppm_image_init( LPBJF_IMAGEINFO lpbjfimage )
 	lpbjfimage->imageformat = tmpformat;
 	lpbjfimage->bmp			= tmpfp;
 
-	
+
 	readfp = lpbjfimage->bmp;
 
-	/*--- 
+	/*---
 		when second page,
 	---*/
 	if ( lpbjfimage->isfirstcall ){
@@ -989,14 +989,14 @@ static short ppm_image_init( LPBJF_IMAGEINFO lpbjfimage )
 	}
 
 	/* skip "0x0A" after "P6" */
-	if ( (ch = fgetc( readfp )) == EOF ) goto onErr;	
+	if ( (ch = fgetc( readfp )) == EOF ) goto onErr;
 
 	readPPMParam( readfp, &width, &length, &maxvalue );
-	
+
 	if ( (!width) || (!length) ) goto onErr;
-	
+
 	RasterLength = width * bpp;
-	
+
 	/* parameter check */
 	if ( maxvalue != 255 ) goto onErr;
 
@@ -1014,7 +1014,7 @@ static short ppm_image_init( LPBJF_IMAGEINFO lpbjfimage )
 
 	for( i=0; i<rstep; i++ ){
 		rawbuf[i] = buf + RasterLength * i;
-	} 
+	}
 
 	if ( !fread( buf, (width*bpp), rstep, readfp ) ) goto onErr;
 	lpbjfimage->readraster += rstep;
@@ -1033,17 +1033,17 @@ static short ppm_image_init( LPBJF_IMAGEINFO lpbjfimage )
 
 	result = 1;
 onErr:
-	return result;	
-}	
+	return result;
+}
 
 
 static short ppm_image_read_raster
-( 
+(
 	LPBJF_IMAGEINFO lpbjfimage,
 	char			*buf,
 	long			width_offset,
 	long			y,
-	long			width 
+	long			width
 )
 {
 	unsigned char	*in = NULL;
@@ -1059,7 +1059,7 @@ static short ppm_image_read_raster
 
 
 	/*---
-		Current Aread Check 
+		Current Aread Check
 	---*/
 	img_bpp		 = lpbjfimage->bpp;
 	img_width    = lpbjfimage->width;
@@ -1081,13 +1081,13 @@ static short ppm_image_read_raster
 	rawbuf	     = lpbjfimage->bmpraw;
 	currentmax   = top + rstep;
 	skip         = y - currentmax;
-	
+
 	block    = isfinalblock = 0;
 	laststep = currentpos   = 0;
 
 	/* Parameter Error Check */
 	if ( y < top ) goto onErr;
-	
+
 
 	/*	load new data from file or stdin */
 	if ( skip >=0 ){
@@ -1103,10 +1103,10 @@ static short ppm_image_read_raster
 		if ( isfinalblock == 1 ){
 			for ( i=0; i<(block-1); i++ ){
 				fread( rawbuf[0], RasterLength, rstep, readfp );
-				lpbjfimage->readraster += rstep;			 
+				lpbjfimage->readraster += rstep;
 			}
 			fread( rawbuf[0], RasterLength, laststep, readfp );
-			lpbjfimage->readraster += laststep; 
+			lpbjfimage->readraster += laststep;
 		}
 		else{
 			for ( i=0; i<block; i++ ){
@@ -1114,7 +1114,7 @@ static short ppm_image_read_raster
 				lpbjfimage->readraster += rstep;
 			}
 		}
-	}	
+	}
 
 	/* CurrentPosition */
 	currentpos = y - top;
@@ -1129,7 +1129,7 @@ static short ppm_image_read_raster
 	result = 0;
 onErr:
 	return result;
-	
+
 }
 
 static short ppm_image_flush( LPBJF_IMAGEINFO lpbjfimage )
@@ -1165,12 +1165,12 @@ static short ppm_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 			lpbjfimage->bmpraw[0] = NULL;
 		}
 		free( lpbjfimage->bmpraw );
-		lpbjfimage->bmpraw = NULL;	
+		lpbjfimage->bmpraw = NULL;
 	}
 
 	result = 0;
 onErr:
-	return result;	
+	return result;
 }
 
 static short ppm_image_close( LPBJF_IMAGEINFO lpbjfimage )
@@ -1184,7 +1184,7 @@ static short ppm_image_close( LPBJF_IMAGEINFO lpbjfimage )
 			lpbjfimage->bmp = NULL;
 		}
 	}
-	
+
 	result = 0;
 	return result;
 }
@@ -1204,7 +1204,7 @@ static void readPPMParam( FILE *fp, long *width, long *height, long *maxvalue )
 		while( (ch = (char)fgetc( fp )) != EOF ){
 			ptr = wid_buf;
 			if ( ch == 0x0A ) break;
-		}	
+		}
 	}
 	else {
 		wid_buf[0] = ch;
@@ -1230,13 +1230,13 @@ static void readPPMParam( FILE *fp, long *width, long *height, long *maxvalue )
 	ptr = max_buf;
 	while( (ch = (char)fgetc( fp )) != EOF ){
 		if ( ch == 0x0A ) break;
-		*ptr++ = ch;	
+		*ptr++ = ch;
 	}
 	*ptr = 0x00;
 
 	*maxvalue = atol( max_buf );
-	
-	return ; 
+
+	return ;
 }
 
 static short ppm_image_init_rev( LPBJF_IMAGEINFO lpbjfimage )
@@ -1261,7 +1261,7 @@ static short ppm_image_init_rev( LPBJF_IMAGEINFO lpbjfimage )
 	long			fp_offset;
 
 	/*---
-		We must init global parameters again, without isfirstcall and 
+		We must init global parameters again, without isfirstcall and
 			ppm imageformat is inited in ppmraw_image_open
 	---*/
 	tmpflg    = lpbjfimage->isfirstcall;
@@ -1274,10 +1274,10 @@ static short ppm_image_init_rev( LPBJF_IMAGEINFO lpbjfimage )
 	lpbjfimage->imageformat = tmpformat;
 	lpbjfimage->bmp			= tmpfp;
 
-	
+
 	readfp = lpbjfimage->bmp;
 
-	/*--- 
+	/*---
 		when second page,
 	---*/
 	if ( lpbjfimage->isfirstcall ){
@@ -1295,14 +1295,14 @@ static short ppm_image_init_rev( LPBJF_IMAGEINFO lpbjfimage )
 	}
 
 	/* skip "0x0A" after "P6" */
-	if ( (ch = fgetc( readfp )) == EOF ) goto onErr;	
+	if ( (ch = fgetc( readfp )) == EOF ) goto onErr;
 
 	readPPMParam( readfp, &width, &length, &maxvalue );
-	
+
 	if ( (!width) || (!length) ) goto onErr;
-	
+
 	RasterLength = width * bpp;
-	
+
 	/* parameter check */
 	if ( maxvalue != 255 ) goto onErr;
 
@@ -1320,10 +1320,10 @@ static short ppm_image_init_rev( LPBJF_IMAGEINFO lpbjfimage )
 
 	for( i=0; i<rstep; i++ ){
 		rawbuf[i] = buf + RasterLength * i;
-	} 
+	}
 
 	fp_offset = RasterLength * ( length - rstep );
-	
+
 	if ( fseek( readfp, fp_offset, SEEK_CUR ) != 0 ){
 		goto onErr;
 	}
@@ -1352,17 +1352,17 @@ static short ppm_image_init_rev( LPBJF_IMAGEINFO lpbjfimage )
 
 	result = 1;
 onErr:
-	return result;	
-}	
+	return result;
+}
 
 
 static short ppm_image_read_raster_rev
-( 
+(
 	LPBJF_IMAGEINFO lpbjfimage,
 	char			*buf,
 	long			width_offset,
 	long			y,
-	long			width 
+	long			width
 )
 {
 	unsigned char	*in = NULL;
@@ -1377,7 +1377,7 @@ static short ppm_image_read_raster_rev
 	short			result = -1;
 
 	/*---
-		Current Aread Check 
+		Current Aread Check
 	---*/
 	img_bpp		 = lpbjfimage->bpp;
 	img_width    = lpbjfimage->width;
@@ -1399,14 +1399,14 @@ static short ppm_image_read_raster_rev
 	rawbuf	     = lpbjfimage->bmpraw;
 	currentmax   = top + rstep;
 	skip         = y - currentmax;
-	
+
 	block    = isfinalblock = 0;
 	laststep = currentpos   = 0;
 
-	
+
 	/* Parameter Error Check */
 	if ( y < top ) goto onErr;
-	
+
 
 	/*	load new data from file or stdin */
 	if ( skip >=0 ){
@@ -1417,7 +1417,7 @@ static short ppm_image_read_raster_rev
 		if ( currentmax > img_length ){
 			isfinalblock = 1;
 			laststep     = img_length - top;
-			
+
 		}
 
 		if ( isfinalblock == 1 ){
@@ -1459,7 +1459,7 @@ static short ppm_image_read_raster_rev
 			}
 			lpbjfimage->readraster += rstep;
 		}
-	}	
+	}
 
 	/* CurrentPosition */
 	currentpos = ( rstep - 1 ) - ( y - top );
@@ -1474,7 +1474,7 @@ static short ppm_image_read_raster_rev
 	result = 0;
 onErr:
 	return result;
-	
+
 }
 
 
@@ -1499,7 +1499,7 @@ static short png_image_open( LPBJF_IMAGEINFO lpbjfimage, char *filename )
 	else {
 		readfp = stdin;
 	}
-	
+
 	lpbjfimage->bmp = readfp;
 
 	result = 0;
@@ -1536,7 +1536,7 @@ static short png_image_init( LPBJF_IMAGEINFO lpbjfimage )
 
 
 	/*---
-		We must init global parameters again, without isfirstcall and 
+		We must init global parameters again, without isfirstcall and
 			png imageformat is inited in png_image_open
 	---*/
 	tmpflg    = lpbjfimage->isfirstcall;
@@ -1667,17 +1667,17 @@ static short png_image_init( LPBJF_IMAGEINFO lpbjfimage )
 	result = 1;
 
 onErr:
-	return result;	
-}	
+	return result;
+}
 
 
 static short png_image_read_raster
-( 
+(
 	LPBJF_IMAGEINFO lpbjfimage,
 	char			*buf,
 	long			width_offset,
 	long			y,
-	long			width 
+	long			width
 )
 {
 	unsigned char	*in = NULL;
@@ -1693,7 +1693,7 @@ static short png_image_read_raster
 	png_structp		png_ptr;
 
 	/*---
-		Current Aread Check 
+		Current Aread Check
 	---*/
 	img_bpp		 = lpbjfimage->bpp;
 	img_width    = lpbjfimage->width;
@@ -1718,7 +1718,7 @@ static short png_image_read_raster
 	rawbuf	     = lpbjfimage->bmpraw;
 	currentmax   = top + rstep;
 	skip         = y - currentmax;
-	
+
 	block    = isfinalblock = 0;
 	laststep = currentpos   = 0;
 
@@ -1750,7 +1750,7 @@ static short png_image_read_raster
 				lpbjfimage->readraster += rstep;
 			}
 		}
-	}	
+	}
 
 	/* CurrentPosition */
 	currentpos = y - top;
@@ -1765,7 +1765,7 @@ static short png_image_read_raster
 	result = 0;
 onErr:
 	return result;
-	
+
 }
 
 static short png_image_flush( LPBJF_IMAGEINFO lpbjfimage )
@@ -1781,12 +1781,12 @@ static short png_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 /* for second page and large data */
 /*	png_read_end(png_ptr, info_ptr); */
 	png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
-	lpbjfimage->png_ptr = NULL;	
+	lpbjfimage->png_ptr = NULL;
 	lpbjfimage->info_ptr = NULL;
 
 	return 0;
 onErr:
-	return result;	
+	return result;
 
 }
 
@@ -1803,7 +1803,7 @@ static short png_image_close( LPBJF_IMAGEINFO lpbjfimage )
 		fclose( lpbjfimage->bmp );
 		lpbjfimage->bmp = NULL;
 	}
-	
+
 	result = 0;
 	return result;
 }
@@ -1831,8 +1831,8 @@ int ppm_write_tmpfile( LPBJF_IMAGEINFO lpbjfimage, char *filename , char *outfil
 	long			block_num = 0;
 	long			lastblock_size = 0;
 	short			i;
-	
-	
+
+
 	if ( filename != NULL ){
 		if ( (readfp = fopen( filename, "rb" )) == NULL ) goto onErr;
 		fread( buffer, 2, 1, readfp );
@@ -1841,7 +1841,7 @@ int ppm_write_tmpfile( LPBJF_IMAGEINFO lpbjfimage, char *filename , char *outfil
 		readfp = stdin;
 	}
 
-	
+
 	/* check header */
 	retbyte = fread( buffer, 2, 1, readfp );
 
@@ -1861,7 +1861,7 @@ int ppm_write_tmpfile( LPBJF_IMAGEINFO lpbjfimage, char *filename , char *outfil
 	w_size = write( fd , PPMRAWSTART , 2 );
 
 	/* skip "0x0A" after "P6" */
-	if ( (ch = fgetc( readfp )) == EOF ) goto onErr;	
+	if ( (ch = fgetc( readfp )) == EOF ) goto onErr;
 	w_size = write( fd , &ch , 1 );
 
 
@@ -1869,7 +1869,7 @@ int ppm_write_tmpfile( LPBJF_IMAGEINFO lpbjfimage, char *filename , char *outfil
 	parm_len = readwritePPMParam( readfp, &width, &length, &maxvalue , fd );
 
 	if ( (!width) || (!length) ) goto onErr;
-	
+
 	/* parameter check */
 	if ( maxvalue != 255 ) goto onErr;
 
@@ -1888,14 +1888,14 @@ int ppm_write_tmpfile( LPBJF_IMAGEINFO lpbjfimage, char *filename , char *outfil
 		}
 		w_size = write( fd , buf , MAXBUF );
 	}
-	
+
 	if( lastblock_size > 0 ){
 		if ( !(read_len = fread( buf, 1, lastblock_size, readfp ) )){
 			goto onErr;
 		}
 		w_size = write( fd , buf , lastblock_size );
 	}
-	
+
 	if( buf ) free(buf);
 	close( fd );
 	return fd;
@@ -1928,7 +1928,7 @@ static long readwritePPMParam( FILE *fp, long *width, long *height, long *maxval
 		while( (ch = (char)fgetc( fp )) != EOF ){
 			ptr = wid_buf;
 			if ( ch == 0x0A ) break;
-		}	
+		}
 	}
 	else {
 		w_size = write( fd , &ch , 1 );
@@ -1941,7 +1941,7 @@ static long readwritePPMParam( FILE *fp, long *width, long *height, long *maxval
 	while( (ch = (char)fgetc( fp )) != EOF ){
 		w_size = write( fd , &ch , 1 );
 		count++;
-		
+
 		if ( ch == 0x0A ) break;
 		else if ( ch == ' ' ){
 			*ptr = 0x00;
@@ -1960,14 +1960,14 @@ static long readwritePPMParam( FILE *fp, long *width, long *height, long *maxval
 	while( (ch = (char)fgetc( fp )) != EOF ){
 		w_size = write( fd , &ch , 1 );
 		count++;
-		
+
 		if ( ch == 0x0A ) break;
-		*ptr++ = ch;	
+		*ptr++ = ch;
 	}
 	*ptr = 0x00;
 
 	*maxvalue = atol( max_buf );
-	
-	return count; 
+
+	return count;
 }
 

@@ -136,7 +136,7 @@ void to_lower_except_size_X(char *str)
 	}
 }
 
-static 
+static
 int is_acro_util(char *p_data_buf, int read_bytes)
 {
 	if( strncmp(p_data_buf, ACRO_UTIL, ACRO_UTIL_LEN) == 0 )
@@ -145,7 +145,7 @@ int is_acro_util(char *p_data_buf, int read_bytes)
 		return 0;
 }
 
-static 
+static
 int is_end_resource(char *p_data_buf, int read_bytes)
 {
 	if( strncmp(p_data_buf, "%%EndResource", 13) == 0 )
@@ -199,7 +199,7 @@ int read_line(int fd, char *p_buf, int bytes)
 			break;
 	}
 
-	return read_bytes; 
+	return read_bytes;
 }
 
 static
@@ -209,7 +209,7 @@ ParamList *get_ps_params(int ifd, BufList **ps_data)
 	ParamList *p_list = NULL;
 	int begin_page = 0;
 	int read_bytes;
-	int acro_util = 0;	
+	int acro_util = 0;
 	BufList *bl = NULL;
 	BufList *prev_bl = NULL;
 	int NumCopies = 0;		// Ver.3.50
@@ -232,23 +232,23 @@ ParamList *get_ps_params(int ifd, BufList **ps_data)
 		int dev_len = strlen(PAGE_DEV_BEGIN);
 		int end_len = strlen(PAGE_DEV_END);
 
-		// For Acrobat Reader 
+		// For Acrobat Reader
 		{
 			if( is_acro_util(read_buf, read_bytes) ){
-				acro_util = 1;	
+				acro_util = 1;
 			}
 			else if( acro_util && is_end_resource(read_buf, read_bytes) ){
-				acro_util = 0;	
+				acro_util = 0;
 			}
 
 			if( acro_util ){
 				int line_bytes=0;
 				while( line_bytes+29 < read_bytes ){
-					if(!strncmp(&read_buf[line_bytes], 
+					if(!strncmp(&read_buf[line_bytes],
 						" ct_BadResourceImplementation?", 30)){
 						strcpy(&read_buf[line_bytes], " false");
 						line_bytes+=6;
-						strcpy(&read_buf[line_bytes], 
+						strcpy(&read_buf[line_bytes],
 							&read_buf[line_bytes+24]);
 						read_bytes-=24;
 					}
@@ -279,7 +279,7 @@ ParamList *get_ps_params(int ifd, BufList **ps_data)
 					dimx[k][31] = '\0';
 					fprintf( stderr, "DEBUG: dimx[%d] = %s\n", k, dimx[k] );
 				}
-				
+
 				if( (strncmp( dimx[1], dimx[2], 32) == 0) && (strncmp( dimx[1], "0", 32) == 0) ){
 					if( strncmp( dimx[0], "-", 1) == 0 ){
 						rotate_info = 2;  /* Rotate:180 */
@@ -311,7 +311,7 @@ ParamList *get_ps_params(int ifd, BufList **ps_data)
 			FlagLanguageLevel = 1;
 		}
 		if( strncmp(read_buf, "%RBIBeginNonPPDFeature:", 23) == 0 )
-		{	
+		{
 			FlagCopies = 1;
 		}
 		else if( (strncmp(read_buf, "/#copies", 8) == 0) && (FlagLanguageLevel == 1) )
@@ -518,7 +518,7 @@ ParamList *get_ps_params(int ifd, BufList **ps_data)
 			}
 		}
 	}
-	
+
 	/* ver.3.80 Landscape/Portrait */
 	fprintf( stderr, "DEBUG: ****$$$ rotate_info = %d\n",rotate_info );
 	snprintf(rotate_buf, 16, "%d", rotate_info);
@@ -590,7 +590,7 @@ void mark_ps_param_options(ppd_file_t *p_ppd, ParamList *p_param)
 #ifdef	DEBUG_IN_PS
 				ppd_option_t	*o;
 				short	j;
-	
+
 				fprintf(stderr,"DEBUG: ### mark_ps_param_options(%d) : %s=%s ###\n" , i,options[i].name,options[i].value);
 
 				fprintf(stderr,"DEBUG: ** p_ppd->size after cupsMarkOptions num=%d **\n" , p_ppd->num_sizes);
@@ -682,7 +682,7 @@ char** make_filter_param_list(char *model, int reso,
 	short	borderless_on = 0;
 	short	ext_on = 0;
 	char	ext_value[256];
-	
+
 	memset( ext_value , 0x00 , 256 );
 
 	// Make command path.
@@ -841,7 +841,7 @@ static short parse_custom_size(char *param , char *width , char *height , char *
 		lpr_custom_unit[j] = param[i];
 	}
 	lpr_custom_unit[j] = '\0';
-		
+
 
 	strncpy( width , lpr_custom_width , 256 );
 	width[256-1] = '\0';
@@ -932,19 +932,19 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 	{
 		short i = 0;
 		cups_option_t	*lpr_opt;			/* Current option */
-		
+
 		for ( i = num_opt, lpr_opt = p_cups_opt; i > 0; i --, lpr_opt ++){
 			if( !strcmp(lpr_opt->name, "PageSize") && !strncmp(lpr_opt->value, "Custom" , 6) )
 			{
 				fprintf(stderr,"DEBUG: name=%s value=%s\n",lpr_opt->name,lpr_opt->value);
-	
+
 				/* lpr_custom_size : (ex) "100x150mm" */
 				strncpy( lpr_custom_size , (lpr_opt->value)+7 , 256 );
 				lpr_custom_size[256 -1] = '\0';
 				fprintf(stderr,"DEBUG: lpr_custom_size=%s\n",lpr_custom_size);
-				
+
 				ret = parse_custom_size( lpr_custom_size , lpr_custom_width , lpr_custom_height , lpr_custom_unit , strlen(lpr_custom_size) );
-	
+
 				fprintf(stderr,"DEBUG: lpr_custom_width=%s lpr_custom_height=%s lpr_custom_unit=%s\n",
 						lpr_custom_width,lpr_custom_height,lpr_custom_unit);
 			}
@@ -964,7 +964,7 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 	/*              - p_cups_opt includes "media" option, */
 	/*              - p_cups_opt DOES NOT includes "PageSize" option */
 	/*       --> then, add "PageSize" option with the value of current size to p_cups_opt. */
-	
+
 	p_size = ppdPageSize(p_ppd, NULL);	/* Get "ppd_size_t" of current size by CUPS system (unit of width and height is "point") */
 	fprintf(stderr,"DEBUG: #  p_size->name=%s , p_size_default->name = %s #\n" , p_size->name, p_size_default->name );
 
@@ -974,20 +974,20 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 		short	pagesize_exist = 0;
 		short	i;
 		cups_option_t	*optptr;		/* Current option */
-	
+
 		for (i = num_opt, optptr = p_cups_opt; i > 0; i --, optptr ++)
 		{
 			if (!strcasecmp(optptr->name, "media")) media_exist = 1;
 			if (!strcasecmp(optptr->name, "PageSize")) pagesize_exist = 1;
 		}
 		fprintf(stderr,"DEBUG: # media_exist=%d , pagesize_exist = %d #\n" , media_exist, pagesize_exist );
-		
+
 		if( media_exist && (!pagesize_exist) )
 		{
 	        num_opt = cupsAddOption( "PageSize" , p_size->name , num_opt, &p_cups_opt );
 		}
 	}
-	
+
 
 	/* (2)Mark options from lpr parameters(p_cups_opt). */
 	cupsMarkOptions(p_ppd, num_opt, p_cups_opt);
@@ -1035,7 +1035,7 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 		/* Vender specific options that are not shown application UI are not found in p_ppd.(So, they are not treated here.) */
 		if( p_choice ) fprintf(stderr,"DEBUG: (3)Make cif options : p_choice found in p_ppd (p_choice:%s /  %s)\n",p_choice->text,p_choice->choice);
 		else  fprintf(stderr,"DEBUG: (3)Make cif options : %s is not found in p_ppd\n",p_table->ppd_key);
-		
+
 		if( p_choice != NULL )
 		{
 			char choice[256];
@@ -1052,10 +1052,10 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 				long pw_mm, pl_mm;
 				char pw_ss_S[256];
 				char pl_ss_S[256];
-				
+
 				memset(pw_ss_S , 0x00 , 256);
 				memset(pl_ss_S , 0x00 , 256);
-				
+
 				fprintf(stderr,"DEBUG: p_size->width = %f\n",p_size->width);
 				fprintf(stderr,"DEBUG: p_size->length = %f\n",p_size->length);
 				pw_mm = (long)((double)p_size->width * 2540.0 / 72.0);
@@ -1063,7 +1063,7 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 
 				fprintf(stderr,"DEBUG: pw_mm(ld(before check)) = %ld\n",pw_mm);
 				fprintf(stderr,"DEBUG: pl_mm(ld(before check)) = %ld\n",pl_mm);
-				
+
 				/* Ver.2.70 : If unit is  "mm" or "cm" , replace pw_mm and pl_mm with lpr command option parameter "p_cups_opt" */
 				if( !strcmp( lpr_custom_unit , "mm") && ret >= 0 )		/* unit = mm */
 				{
@@ -1099,7 +1099,7 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 				{
 					sscanf( lpr_custom_width , "%ld.%3s" , &pw_mm ,(char *)&pw_ss_S );
 					sscanf( lpr_custom_height , "%ld.%3s" , &pl_mm , (char *)&pl_ss_S );
-					
+
 					switch( strlen(pw_ss_S) ){
 						case 1:
 							pw_mm = (long)(pw_mm * 1000 + atol(pw_ss_S) * 100 );
@@ -1130,7 +1130,7 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 					}
 					fprintf(stderr,"DEBUG: unit=cm : pw_mm = %ld , pl_mm = %ld\n",pw_mm,pl_mm);
 				}
-				
+
 				if( minw_mm != -1 && pw_mm < minw_mm )
 					pw_mm = minw_mm;
 				if( maxw_mm != -1 && pw_mm > maxw_mm )
@@ -1288,7 +1288,7 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 			param_list_add(&p_list, "--rotate", plx->value, strlen(plx->value) + 1);
 		}
 	}
-	
+
 
 	/* Make "cif command" */
 	flt_cmd_buf = make_filter_param_line(p_product, reso, p_list);
@@ -1302,8 +1302,8 @@ char* make_cmd_param(cups_option_t *p_cups_opt, int num_opt,
 
 	if( flt_cmd_buf )
 	{
-		int buf_len;			
-		
+		int buf_len;
+
 		buf_len = strlen(gs_cmd_buf) + strlen(flt_cmd_buf) + 1;
 
 		if( (cmd_buf = (char*)malloc(buf_len)) != NULL )
@@ -1334,7 +1334,7 @@ int exec_filter(char *cmd_buf, int ofd, int fds[2])
 		{
 
 			setpgid(0, 0);
-			
+
 			close(0);
 			dup2(fds[0], 0);
 			close(fds[0]);
@@ -1359,7 +1359,7 @@ int exec_filter(char *cmd_buf, int ofd, int fds[2])
 				filter_param[3] = NULL;
 
 				execv(shell_buf, filter_param);
-						
+
 				fprintf(stderr, "execl() error\n");
 				status = -1;
 			}
@@ -1530,7 +1530,7 @@ int main(int argc, char *argv[])
 
 	close(fds[1]);
 
-	if( g_filter_pid != -1 ) { 
+	if( g_filter_pid != -1 ) {
 		waitpid(g_filter_pid, NULL, 0); /* Ver.3.80 */
 	}
 

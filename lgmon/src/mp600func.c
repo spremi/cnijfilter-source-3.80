@@ -25,7 +25,7 @@
 
 
 /*
- * mp600func.c 
+ * mp600func.c
  *
  * A processing function group peculiar to a model.
  */

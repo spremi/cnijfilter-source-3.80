@@ -53,7 +53,7 @@ short bjf_get_resource_id( char *rcFname, char *objString, char *rcString )
 	result = (short)atoi( str );
 
 onErr:
-	return result;		
+	return result;
 }
 
 /*-------------------------------------------------------------*/
@@ -108,7 +108,7 @@ static char *bjf_access_resource( char *rcFname, char *objString, char *rcString
 	num = str = strnum = 0;
 	isSpace = 1; isObject = 0;
 	while ( (str = fgetc( fp )) != EOF ){
-		
+
 		if ( str == '[' ){
 			if ( read_tag( &fp, objString ) == 0 )	isObject = 1; /* hit objString */
 			else									isObject = 0; /* not hit objString */
@@ -119,7 +119,7 @@ static char *bjf_access_resource( char *rcFname, char *objString, char *rcString
 
 				if ( str == 0x0A ){
 					nambuf[num] = 0x00;	/* string terminate */
-					
+
 					/*
 						ptr[0] : ptr for parameter string
 						ptr[1] : ptr for id string
@@ -155,28 +155,28 @@ static char *bjf_access_resource( char *rcFname, char *objString, char *rcString
 								fprintf( stderr, "Printer Model : %s\n", ptr[0] );
 #endif
 								/* for bjfilterv230 */
-								if(fileflag == 1){ 
+								if(fileflag == 1){
 									if( strlen(ptr[0]) != strlen(writeString) ) goto onErr;
 									if( (fseek(fp, -(strlen(ptr[0]) + strlen(ptr[1]) + 2) ,SEEK_CUR) ) == -1 ) goto onErr;
 									if( (fputs(writeString, fp) ) == EOF ) goto onErr;
 								}
-	
+
 								strncpy( tmpbuf, ptr[0], sizeof(tmpbuf) ); result = tmpbuf;
 								tmpbuf[sizeof(tmpbuf) - 1] = '\0';
 								goto onErr;
 							}
-							
+
 							else { /* Re Initialize */
 								num = str = strnum = 0;
 								isSpace = 1;
-							}				
+							}
 						}else{
 							/* Re Initialize */
 							num = str = strnum = 0;
 							isSpace = 1;
 						}
 					}
-					
+
 				}
 				else if ( (str == 0x09) || (str == 0x20) ){	/* tab and space */
 					isSpace = 1;
@@ -193,7 +193,7 @@ static char *bjf_access_resource( char *rcFname, char *objString, char *rcString
 						isSpace = 0;
 						nambuf[num] = str;
 						ptr[strnum++]	= &nambuf[num]; num++;
-					
+
 						if ( strnum >= 3 ) {
 							fprintf( stderr, "cif.conf file format error!\n" );
 							goto onErr;
@@ -204,7 +204,7 @@ static char *bjf_access_resource( char *rcFname, char *objString, char *rcString
 					}
 				}
 			}
-		}	 
+		}
 	}
 
 onErr:
@@ -224,11 +224,11 @@ static short read_tag( FILE **fp, char *objString )
 
 	if ( tmpfp == NULL ) goto Exit;
 
-	num = 0;	
+	num = 0;
 	while( (str = fgetc( tmpfp )) != EOF ){
-	
+
 		if ( num > MODELLEN ) goto Exit;
-		
+
 		if ( str == 0x0A ){
 			if ( strcmp( nambuf, objString ) == 0 ){
 				result = 0; goto Exit;		/* hit object */
@@ -247,11 +247,11 @@ static short read_tag( FILE **fp, char *objString )
 		else {
 			nambuf[num++] = str;
 		}
-		
+
 	}
 
 Exit:
-	*fp = tmpfp;	
+	*fp = tmpfp;
 	return result;
 }
 

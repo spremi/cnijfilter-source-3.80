@@ -134,8 +134,8 @@ int PutPrintData(char *cmdsbuf, short length)
 		if ( (cmdLen = strlen( buf )) > IVEC_BUF_SIZE ) cmdLen = IVEC_BUF_SIZE - 1;
 		memcpy( curPtr, buf, cmdLen );
 		curPtr += cmdLen;
-		
-		/* Mode shift */	
+
+		/* Mode shift */
 		if ( CNCL_MakePrintCommand( CNCL_COMMAND_START2 , buf ,IVEC_BUF_SIZE , NULL , NULL ) != CNCL_OK ) goto Err2;
 		if ( (cmdLen = strlen( buf )) > IVEC_BUF_SIZE ) cmdLen = IVEC_BUF_SIZE - 1;
 		memcpy( curPtr, buf, cmdLen );
@@ -161,7 +161,7 @@ int PutPrintData(char *cmdsbuf, short length)
 	else {
 		ipc.cmds.cmdslen = (long)length;
 		memcpy(ipc.cmds.cmds, cmdsbuf, length);
-	}	
+	}
 
 	write(fd, &ipc, sizeof(IPCU));
 	retVal = 0;
@@ -192,7 +192,7 @@ int PutDeviceData(char *cmdsbuf, short length, char *devMode )
 	else {
 		goto Err1;
 	}
-	
+
 	if( (fd = ConnectToServer()) == -1 ) goto Err1;
 
 	// Write "POWEROFF" command first.
@@ -228,7 +228,7 @@ Err1:
 
 }
 
-int PutFileData(char *cmdsbuf, short cmds_length, 
+int PutFileData(char *cmdsbuf, short cmds_length,
 				char *fnamebuf, short fname_length)
 {
 
@@ -255,7 +255,7 @@ int PutFileData(char *cmdsbuf, short cmds_length,
 	return 0;
 }
 
-int PutDoubleData(char *cmdsbuf, short cmds_length, 
+int PutDoubleData(char *cmdsbuf, short cmds_length,
 				  char *fnamebuf, short fname_length)
 {
 

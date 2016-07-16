@@ -90,14 +90,14 @@ int main(int argc, char *argv[])
 	g_keytext_list = NULL;
 	g_keytext_list = LoadKeyTextList(KEYTEXT_FILE);
 	if ( g_keytext_list == NULL ) goto Err;
-	
+
 
 	// Get Printer Status
 	SetMSIPaperSourceSettings();
 
 	// Create main dialog, and realize it.
 	g_main_window = create_ui_window();
-	gtk_button_set_label( GTK_BUTTON(LookupWidget(g_main_window, "cancel_button")), 
+	gtk_button_set_label( GTK_BUTTON(LookupWidget(g_main_window, "cancel_button")),
 			LookupText(g_keytext_list, "LUM_IDD_PHA_GUIDE_IDCANCEL"));
 	gtk_widget_realize(g_main_window);
 
@@ -185,7 +185,7 @@ void InitOption(int argc, char* argv[])
 			break;
 		}
 	}
-	
+
 	if( rc < -1 )
 		g_warning("Unknown switch, %s\n",
 			 poptBadOption(context, POPT_BADOPTION_NOALIAS));

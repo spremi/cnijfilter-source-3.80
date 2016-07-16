@@ -125,9 +125,9 @@ enum {
 	CND_MEDIA_GLOSSYPHOTO,		/* Glossy Photo Paper (GP-201/301) */
 	CND_MEDIA_GLOSSYPHOTOCARD,	/* Glossy Photo Cards (FM-101) */
 	CND_MEDIA_PROPHOTO,			/* Professional Photo Paper */
-	
+
 	CND_MEDIA_INKJET_POST,		/* Inkjet post card */
-	
+
 	CND_MEDIA_OTHER,			/* Other Media */
 	CND_MEDIA_NA,				/* Not Applicable */
 } ;
@@ -313,9 +313,9 @@ enum {
 /* Gamma */
 enum {
 	CND_GAMMA_DEFAULT,		/* Default Gamma */
-	
+
 	CND_GAMMA_10,			/* Gamma 1.0 */
-	
+
 	CND_GAMMA_14,			/* Gamma 1.4 */
 	CND_GAMMA_18,			/* Gamma 1.8 */
 	CND_GAMMA_22,			/* Gamma 2.2 */

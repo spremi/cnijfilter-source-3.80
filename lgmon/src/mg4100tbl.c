@@ -25,7 +25,7 @@
 
 
 /*
- * mg4100tbl.c 
+ * mg4100tbl.c
  *
  * The conversion table for mg4100, and a model dependence function table.
  */

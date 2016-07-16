@@ -29,9 +29,9 @@
 
 /* Model ID (ModelID) */
 #define	CND_BJF360		(1098)	/* BJF360 can use CND_BJINK_BC30/33/34, or CND_BJINK_BK/COLOR/PHOTO */
-#define	CND_BJS600		(1104)	
-#define	CND_BJS6300		(1113)	
-#define	CND_BJS630		(1123)	
+#define	CND_BJS600		(1104)
+#define	CND_BJS6300		(1113)
+#define	CND_BJS630		(1123)
 
 #define	CND_BJF900		(1125)
 #define	CND_BJF9000		(1127)

@@ -25,7 +25,7 @@
 
 
 /*
- * ip2500tbl.c 
+ * ip2500tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */
@@ -137,7 +137,7 @@ ST_BSCC2STS ip2500_hri2destination[]={
   {"ASI","A"},
   {"PAM","P"},
   {"EU","E"},
-  {"ZZZ","Z"}, //Ver.2.90 
+  {"ZZZ","Z"}, //Ver.2.90
   {ENDTAG,ENDTAG}
 };
 
@@ -171,7 +171,7 @@ ST_BSCC2STS ip2500_doc2operate[]={
   {"1684","e"},
   {"1686","w"},
   {"1687","T"}, //06 1660 --> 1687
-  {"1688","C"}, 
+  {"1688","C"},
   {"1700","x"},
   {"1701","k"},
   {"1710","x"},

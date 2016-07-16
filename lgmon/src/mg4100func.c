@@ -25,7 +25,7 @@
 
 
 /*
- * mg4100func.c 
+ * mg4100func.c
  *
  * A processing function group peculiar to a model.
  */

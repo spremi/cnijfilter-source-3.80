@@ -25,7 +25,7 @@
 
 
 /*
- * pixusip4100tbl.c 
+ * pixusip4100tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */

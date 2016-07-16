@@ -69,9 +69,9 @@ static void char_lower( char *string, short len )
 	short	count;
 	short	dis;
 	char	*current_char = string;
-	
+
 	dis='a'-'A';
-	
+
 	for( count = 0; count < len ; count++ )
 	{
 		if( (*current_char >= 'A') && (*current_char <= 'Z') ) *current_char += dis;
@@ -106,7 +106,7 @@ static short check_entry_name(const char *printer_name)
 	strncpy( target_name , printer_name , target_name_len );
 	char_lower( target_name , target_name_len );
 
-	
+
 	pHTTP = httpConnectEncrypt(cupsServer(), ippPort(), cupsEncryption());
 	if( pHTTP == NULL){
 		fputs("ERROR: IPP ERROR\n", stderr);
@@ -125,7 +125,7 @@ static short check_entry_name(const char *printer_name)
 				strncpy( compare_name , current_dests->name , strlen( current_dests->name ) );
 				char_lower( compare_name , strlen( compare_name ) );
 
-	
+
 				if( !strncmp( target_name , compare_name , target_name_len ) )
 				{
 					result = 0;		/* exist */
@@ -138,11 +138,11 @@ static short check_entry_name(const char *printer_name)
 			current_dests++;
 		}
 	}
-	
+
 onErr:
 	if( pHTTP != NULL ) httpClose(pHTTP);
 	if( dests != NULL ) cupsFreeDests(num,dests);
-	
+
 	return result;
 }
 
@@ -259,7 +259,7 @@ char *get_product_name(const char *printer_name, char *product_name, int len)
 			ppdClose(p_ppd);
 		}
 		unlink( ppd_name );	/* Ver.3.00 : You should remove the copy of the PPD file. */
-		
+
 	}
 	return p_product;
 }
@@ -287,14 +287,14 @@ void exec_lpr(char **lpr_param)
 static cups_lang_t * bjcupsLangDefault( )
 {
 	cups_lang_t	*pLanguage;
-	char		*tLang;	
-	
+	char		*tLang;
+
 	if( (tLang = getenv("LC_ALL"))==NULL)
 			tLang = getenv("LANG");
-	
+
 	pLanguage = cupsLangDefault();
 	setlocale(LC_ALL,tLang);
-	
+
 	return pLanguage;
 }
 
@@ -312,7 +312,7 @@ static short getDeviceURI( const char *pDestName, char *pDeviceURI, short bufSiz
 	char			*pDUri = NULL;				// Pointer to Device uri.
 	short			retVal = -1;	// Return value.
 /*** Parameters end ***/
-	
+
 	// CUPS http connect.
 	if ((pHTTP = httpConnectEncrypt(cupsServer(), ippPort(), cupsEncryption())) == NULL) {
 		fputs("ERROR: IPP ERROR\n", stderr);
@@ -320,16 +320,16 @@ static short getDeviceURI( const char *pDestName, char *pDeviceURI, short bufSiz
 	}
 	else {
 		pRequest = ippNew();
-		
+
 		pRequest->request.op.operation_id = CUPS_GET_PRINTERS;
 		pRequest->request.op.request_id   = 1;
-		
+
 		pLanguage = bjcupsLangDefault();	// cupsLangDefault() -> bjcupsLangDefault() for cups-1.1.19
-		
+
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_CHARSET, "attributes-charset", NULL, cupsLangEncoding(pLanguage));
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_LANGUAGE, "attributes-natural-language", NULL, pLanguage->language);
 		ippAddString(pRequest, IPP_TAG_OPERATION, IPP_TAG_URI, "printer-uri", NULL, NULL);
-		
+
 		if ((pResponse = cupsDoRequest(pHTTP, pRequest, "/")) != NULL) {
 			if (pResponse->request.status.status_code > IPP_OK_CONFLICT) {
 				fputs("ERROR: IPP ERROR\n", stderr);
@@ -345,7 +345,7 @@ static short getDeviceURI( const char *pDestName, char *pDeviceURI, short bufSiz
 					if (pAttribute == NULL) {
 						break;
 					}
-					
+
 					while (pAttribute != NULL && pAttribute->group_tag == IPP_TAG_PRINTER) {
 						if (strcmp(pAttribute->name, "printer-name") == 0 && pAttribute->value_tag == IPP_TAG_NAME) {
 							pPrinter = pAttribute->values[0].string.text;
@@ -360,23 +360,23 @@ static short getDeviceURI( const char *pDestName, char *pDeviceURI, short bufSiz
 						strncpy(pDeviceURI, pDUri, bufSize);
 						break;
 					}
-					
+
 					if (pAttribute != NULL)
 						 pAttribute = pAttribute->next;
 				}
 			}
-			
+
 			ippDelete(pResponse);
 		}
 		else {
 			pDeviceURI = '\0';
 			goto onErr;
 		}
-		
+
 		cupsLangFree(pLanguage);
 		httpClose(pHTTP);
 	}
-	
+
 onErr:
 	return(retVal);
 }// End getDeviceURI
@@ -412,7 +412,7 @@ static int ParseCNPpdOption( int *value, char *key )
 	int result = -1;
 
 	if ( (value == NULL) || (key == NULL) ) goto onErr1;
-	*value = 0;	
+	*value = 0;
 
 	if ( (fp = fopen( p_ppd_name, "r" )) == NULL ) goto onErr1;
 
@@ -425,7 +425,7 @@ static int ParseCNPpdOption( int *value, char *key )
 					if ( !strcmp(keyStr, key) ){
 						*value = 1;
 						break;
-					}								
+					}
 					keyStr = strtok(NULL, " ");
 				}
 			}
@@ -522,7 +522,7 @@ int main(int argc, char* argv[])
 	ppd_file_t	*p_ppd;
 
 	/* Ver.3.70 */
-	int arg_num;	
+	int arg_num;
 
 	if( argc > 2 )
 	{
@@ -574,11 +574,11 @@ int main(int argc, char* argv[])
 			fputs("ERROR: Can't get device URI.\n", stderr);
 			exit(1);
 		}
-		
+
 		if( !strncmp( device_uri_buf , canon_usb_backend_str , strlen( canon_usb_backend_str ) ) ) canon_backend_flag = 1;
 		else if( !strncmp( device_uri_buf , canon_net_backend_str , strlen( canon_net_backend_str ) ) ) canon_backend_flag = 1;
-		
-		
+
+
 		/* PPD open and check cupsModelNumber */
 		p_ppd_name = cupsGetPPD( g_printer_name );
 		if( p_ppd_name ==NULL ){
@@ -591,16 +591,16 @@ int main(int argc, char* argv[])
 			unlink( p_ppd_name );	/* You should remove the copy of the PPD file. */
 			exit(1);
 		}
-		
+
 		add_bidi = canon_backend_flag;
 		if( p_ppd->model_number < 356 ) add_bidi = 0;
-		
+
 		ppdClose(p_ppd);
 		unlink( p_ppd_name );	/* You should remove the copy of the PPD file. */
-		
+
 	}
 
-	
+
 	ui_path = (char *)malloc(strlen(UI_PATH) + strlen(UI_SLASH) + strlen(UI_NAME) + strlen(product_name) + 1);
 	strcpy(ui_path, UI_PATH);
 	strcat(ui_path, UI_SLASH);
@@ -657,15 +657,15 @@ int main(int argc, char* argv[])
 		execv(ui_path, ui_arg);
 	}
 	else
-	{		
+	{
 		while(1){
 			IPCU ipc;
 			int ret;
 			memset(&ipc, 0, sizeof(IPCU));
-			
+
 			ret = GetIPCData(&ipc, socket_name);
 
-#if 0			
+#if 0
 			if( ret == RET_PRINT )
 			{
 				char **lpr_param
@@ -686,7 +686,7 @@ int main(int argc, char* argv[])
 				else add_direct = 1;
 
 				lpr_param = make_pdata_lpr_param( g_printer_name, &ipc, add_direct );
-					
+
 				if( lpr_param )
 				{
 					exec_lpr(lpr_param);
@@ -696,12 +696,12 @@ int main(int argc, char* argv[])
 			}
 			else if( ret == RET_FDATA ){	// For Maintenance i250/i255
 				char **lpr_param
-						= make_fdata_lpr_param( g_printer_name, &ipc );	
+						= make_fdata_lpr_param( g_printer_name, &ipc );
 
 				if( lpr_param )
 				{
 					exec_lpr(lpr_param);
-					free_util_cmd_param(lpr_param); 
+					free_util_cmd_param(lpr_param);
 					lpr_param = NULL;
 				}
 			}
@@ -711,7 +711,7 @@ int main(int argc, char* argv[])
 				if( lpr_param )
 				{
 					exec_lpr(lpr_param);
-					free_util_cmd_param(lpr_param); 
+					free_util_cmd_param(lpr_param);
 					lpr_param = NULL;
 				}
 			}
@@ -719,7 +719,7 @@ int main(int argc, char* argv[])
 			else if( ret == RET_POWEROFF ){
 				char **lpr_param
 						= make_pdata_lpr_param( g_printer_name, &ipc, 1);	/* PowerOFF -> always add "--CNBjDirect" */
-					
+
 				if( lpr_param )
 				{
 					exec_lpr(lpr_param);
@@ -727,15 +727,15 @@ int main(int argc, char* argv[])
 				}
 			}
 			else if( ret == RET_CANCEL ){
-				break;	
-	
+				break;
+
 			}
 			else if ( ret == RET_ERROR ){
 				break;
 			}
 		}
 
-#if 0	
+#if 0
 		if( p_list != NULL )
 			param_list_free(p_list);
 #endif

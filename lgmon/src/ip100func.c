@@ -25,7 +25,7 @@
 
 
 /*
- * ip100func.c 
+ * ip100func.c
  *
  * A processing function group peculiar to a model.
  */

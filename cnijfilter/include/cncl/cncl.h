@@ -39,7 +39,7 @@ extern "C"
 /*
  *  Interface Data
  */
-typedef struct		
+typedef struct
 {
 	CPKByte CPKPTR		buf ;
 	CPKUInt32			size ;
@@ -56,7 +56,7 @@ typedef struct
 	CPKByte			Sec ;			/* Seconds, 0 - 59 */
 } CNCL_Time, CPKPTR CNCL_TimePtr ;
 
-typedef struct		
+typedef struct
 {
 	/* The following information has to be set before calling CNCL_StartJob */
 	CPKInt16			ModelID ;
@@ -126,23 +126,23 @@ typedef struct
 
 	/* Pointer to raster data output area */
 	RasterDataPtr		rasterDataPtr ;
-	
+
 	CPKInt16			MarginType ;
 	CPKInt16			PaperGap ;
-	
+
 	CPKChar CPKPTR		CommandParamPtr ;
 	CPKInt32			CommandParamSize ;
-	
+
 	CPKInt32			ierr2;
-	
+
 	CPKInt16			DuplexPrinting ;
 	CPKInt16			InkCartridgeSettings ;
 	CPKInt16			DuplexCommand ;
 
 	CPKInt16			Contrast ;
-	
+
 	CPKInt16			MonochromeTone ;
-	
+
 	CPKInt16			ImageRotate;
 
 

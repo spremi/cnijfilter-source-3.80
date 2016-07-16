@@ -25,7 +25,7 @@
 
 
 /*
- * ip3100func.c 
+ * ip3100func.c
  *
  * A processing function group peculiar to a model.
  */
@@ -101,7 +101,7 @@ int pixusip3100_setoperate(ST_STORESET *p_s, ST_BSCC2STS *p_ct, bscc2sts_tbl *p_
 			break;
 		}
   	}
-  	
+
   }
   return(OK);
 }

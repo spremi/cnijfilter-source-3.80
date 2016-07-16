@@ -82,7 +82,7 @@ if test "x$GCC" = "xyes"; then
 fi
 changequote([,])dnl
 
-AC_OUTPUT([  
+AC_OUTPUT([
 Makefile
 src/Makefile
 include/Makefile

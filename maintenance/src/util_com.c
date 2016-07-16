@@ -35,7 +35,7 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>			
+#include <time.h>
 #include <string.h>
 #include <ctype.h>
 #include <unistd.h>
@@ -113,7 +113,7 @@ short ExecCommonDialogType001_002( char *dialogName ){ return ExecCommonDialogTy
 short ExecCommonDialogType001_003( char *dialogName ){ return ExecCommonDialogType001( (void *)&commonDialogType001[3], dialogName ); }
 
 
-/* 
+/*
 	short ExecCommonDialogType001( void *lpWork, char *dialogName )
 */
 static short ExecCommonDialogType001( void *lpWork, char *dialogName )
@@ -121,7 +121,7 @@ static short ExecCommonDialogType001( void *lpWork, char *dialogName )
 	LPCOMMONDIALOGTYPE001RES lpRes = (LPCOMMONDIALOGTYPE001RES)lpWork;
 	LPCOMMONDIALOGTYPE001WORK lpWk = NULL;
 	short status;
-	
+
 	short result = -1;
 
 	/* confirm data type */
@@ -147,12 +147,12 @@ Err:
 int KeyToIndex(char **Keytbl, int n, char *type)
 {
 	int			i;
-	
+
 	for (i=0; i < n; i++) {
 		if (!strcmp(LookupText(g_keytext_list, Keytbl[i]), type))
-			return i;		
+			return i;
 	}
-	return 0;		
+	return 0;
 }
 
 
@@ -197,7 +197,7 @@ void SetComboBoxItems(GtkWidget *combo, const char **Keytbl, int n, int index)
 
 
 static gboolean message_box_delete_event
-(GtkWidget *widget, GdkEvent *event, gpointer data) 
+(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	gUtilCommonStatus = US_CANCEL;
 	gtk_window_set_modal(data,FALSE);
@@ -207,7 +207,7 @@ static gboolean message_box_delete_event
 }
 
 static gboolean message_box_delete_event_set_ok_status
-(GtkWidget *widget, GdkEvent *event, gpointer data) 
+(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	gUtilCommonStatus = US_OK;
 	gtk_window_set_modal(data,FALSE);
@@ -217,14 +217,14 @@ static gboolean message_box_delete_event_set_ok_status
 }
 
 static gboolean message_box_delete_event_no_destroy
-(GtkWidget *widget, GdkEvent *event, gpointer data) 
+(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	return TRUE;
 }
 
 static void message_box_destroy(GtkWidget *widget, gpointer data)
 {
-	gtk_main_quit();						
+	gtk_main_quit();
 	gtk_window_set_modal(data, FALSE);
 }
 
@@ -233,7 +233,7 @@ static void message_box_ok(GtkWidget *widget, gpointer data)
 {
 	gUtilCommonStatus = US_OK;
 	gtk_window_set_modal(data, FALSE);
-	gtk_widget_destroy(GTK_WIDGET(data));	
+	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 
@@ -241,7 +241,7 @@ static void message_box_cancel(GtkWidget *widget, gpointer data)
 {
 	gUtilCommonStatus = US_CANCEL;
 	gtk_window_set_modal(data, FALSE);
-	gtk_widget_destroy(GTK_WIDGET(data));	
+	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 
@@ -249,7 +249,7 @@ static void message_box_yes(GtkWidget *widget, gpointer data)
 {
 	gUtilCommonStatus = US_YES;
 	gtk_window_set_modal(data, FALSE);
-	gtk_widget_destroy(GTK_WIDGET(data));	
+	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 
@@ -257,7 +257,7 @@ static void message_box_no(GtkWidget *widget, gpointer data)
 {
 	gUtilCommonStatus = US_NO;
 	gtk_window_set_modal(data, FALSE);
-	gtk_widget_destroy(GTK_WIDGET(data));	
+	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 
@@ -265,7 +265,7 @@ static void message_box_abort(GtkWidget *widget, gpointer data)
 {
   	gUtilCommonStatus = US_ABORT;
 	gtk_window_set_modal(data, FALSE);
-	gtk_widget_destroy(GTK_WIDGET(data));	
+	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 
@@ -273,20 +273,20 @@ static void message_box_ignore(GtkWidget *widget, gpointer data)
 {
   	gUtilCommonStatus = US_IGNORE;
 	gtk_window_set_modal(data, FALSE);
-	gtk_widget_destroy(GTK_WIDGET(data));	
+	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 
 static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int flag, unsigned int default_flag, GtkWidget *parent )
 {
-	GtkWidget	*dialog;				
-	GtkWidget	*dialog_action_area1;   
-	GtkWidget	*dialog_vbox1;          
-	GtkWidget	*hbox1;                 
-	GtkWidget	*pixmap;                
-	GtkWidget	*label;                 
-	GtkWidget	*hbuttonbox1;           
-	GtkWidget	*button;                
+	GtkWidget	*dialog;
+	GtkWidget	*dialog_action_area1;
+	GtkWidget	*dialog_vbox1;
+	GtkWidget	*hbox1;
+	GtkWidget	*pixmap;
+	GtkWidget	*label;
+	GtkWidget	*hbuttonbox1;
+	GtkWidget	*button;
 	GdkPixmap	*icon = NULL;
 	GdkPixmap	*iconMask = NULL;
 	GtkStyle	*style;
@@ -294,14 +294,14 @@ static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int fl
 	short		icon_exist = 1;	//Ver.3.00
 
 	gUtilCommonStatus = US_DEFAULT;
-	
-	dialog = gtk_dialog_new();				
-	gtk_widget_realize(dialog);				
-	gtk_window_set_title(GTK_WINDOW(dialog), title);	
-	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);	
-	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);	
-	
-	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",	
+
+	dialog = gtk_dialog_new();
+	gtk_widget_realize(dialog);
+	gtk_window_set_title(GTK_WINDOW(dialog), title);
+	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
+	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+
+	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			      GTK_SIGNAL_FUNC(message_box_destroy), dialog);
 
 	// If dialog has YSE and  NO button, disable close button.
@@ -317,31 +317,31 @@ static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int fl
 		gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
 				GTK_SIGNAL_FUNC (message_box_delete_event_set_ok_status), dialog);
 	}
-		
-	dialog_action_area1 = GTK_DIALOG(dialog)->action_area;	
-	dialog_vbox1 = GTK_DIALOG(dialog)->vbox;	
 
-	hbox1 = gtk_hbox_new(FALSE, 0);	
-	gtk_widget_show(hbox1);			
-	gtk_box_pack_start(GTK_BOX(dialog_vbox1), hbox1, TRUE, TRUE, 5);	
-	
+	dialog_action_area1 = GTK_DIALOG(dialog)->action_area;
+	dialog_vbox1 = GTK_DIALOG(dialog)->vbox;
+
+	hbox1 = gtk_hbox_new(FALSE, 0);
+	gtk_widget_show(hbox1);
+	gtk_box_pack_start(GTK_BOX(dialog_vbox1), hbox1, TRUE, TRUE, 5);
+
 	style = gtk_widget_get_style(dialog);
-	switch (flag & 0x0000000f) {	
-		case MB_ICON_INFORMATION:	
+	switch (flag & 0x0000000f) {
+		case MB_ICON_INFORMATION:
  			icon = gdk_pixmap_create_from_xpm_d(dialog->window,
   										  &iconMask,
   										  &style->bg[GTK_STATE_NORMAL],
   										  info_xpm);
   			break;
-		
-		case MB_ICON_EXCLAMATION:	
+
+		case MB_ICON_EXCLAMATION:
  			icon = gdk_pixmap_create_from_xpm_d(dialog->window,
   										  &iconMask,
   										  &style->bg[GTK_STATE_NORMAL],
   										  exclam_xpm);
 			break;
 
-		case MB_ICON_SYSERR:	
+		case MB_ICON_SYSERR:
  			icon = gdk_pixmap_create_from_xpm_d(dialog->window,
   										  &iconMask,
   										  &style->bg[GTK_STATE_NORMAL],
@@ -358,43 +358,43 @@ static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int fl
 		default:	/* Ver.3.00 */
 			icon_exist = 0;
 			break;
-			
+
 	}
 
 	if( icon_exist ){
-		pixmap = gtk_pixmap_new(icon, iconMask);			
-		gtk_box_pack_start(GTK_BOX(hbox1), pixmap, FALSE, FALSE, 10);	
-		if( icon_exist ) gtk_widget_show(pixmap);			
+		pixmap = gtk_pixmap_new(icon, iconMask);
+		gtk_box_pack_start(GTK_BOX(hbox1), pixmap, FALSE, FALSE, 10);
+		if( icon_exist ) gtk_widget_show(pixmap);
 	}
 	//else gtk_widget_hide(pixmap);
 
-	label = gtk_label_new(message);	
-	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);		
-	gtk_widget_show(label);			
-	gtk_box_pack_start(GTK_BOX(hbox1), label, TRUE, TRUE, 10);	
+	label = gtk_label_new(message);
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+	gtk_widget_show(label);
+	gtk_box_pack_start(GTK_BOX(hbox1), label, TRUE, TRUE, 10);
 
 
-	hbuttonbox1 = gtk_hbutton_box_new();		
+	hbuttonbox1 = gtk_hbutton_box_new();
 	gtk_box_pack_start(
-		GTK_BOX(dialog_action_area1), hbuttonbox1, TRUE, FALSE, 0);	
-	gtk_widget_show(hbuttonbox1);		
-	
+		GTK_BOX(dialog_action_area1), hbuttonbox1, TRUE, FALSE, 0);
+	gtk_widget_show(hbuttonbox1);
+
 	/* Ver.2.80 */
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area1), GTK_BUTTONBOX_SPREAD);
 	gtk_button_box_set_layout (GTK_BUTTON_BOX (hbuttonbox1), GTK_BUTTONBOX_SPREAD);
 	gtk_box_set_spacing (GTK_BOX (hbuttonbox1), 7);
-	
-	
-	i = 0;			
-	
-	if (flag & MB_OK) {		
+
+
+	i = 0;
+
+	if (flag & MB_OK) {
 		button = gtk_button_new_with_label(
-					LookupText(g_keytext_list, "message_button_ok"));	
-		gtk_widget_show(button);					
-		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);	
+					LookupText(g_keytext_list, "message_button_ok"));
+		gtk_widget_show(button);
+		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);
 		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-		
-  		gtk_signal_connect(GTK_OBJECT(button), "clicked",	
+
+  		gtk_signal_connect(GTK_OBJECT(button), "clicked",
 					     GTK_SIGNAL_FUNC(message_box_ok),
 					     dialog);
 		if( default_flag & MB_OK ){
@@ -403,31 +403,31 @@ static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int fl
 		}
 		i++;
 	}
-	
-	if (flag & MB_CANCEL) {		
+
+	if (flag & MB_CANCEL) {
 		button = gtk_button_new_with_label(
-					LookupText(g_keytext_list, "message_button_cancel"));	
-		gtk_widget_show(button);					
-		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);	
+					LookupText(g_keytext_list, "message_button_cancel"));
+		gtk_widget_show(button);
+		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);
 		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  		gtk_signal_connect(GTK_OBJECT(button), "clicked",	
+  		gtk_signal_connect(GTK_OBJECT(button), "clicked",
 					     GTK_SIGNAL_FUNC(message_box_cancel),
 					     dialog);
 		if( default_flag & MB_CANCEL ){
 			gtk_widget_grab_focus(button);
 			gtk_widget_grab_default(button);
 		}
-		
+
 		i++;
 	}
-	
-	if (flag & MB_YES) {		
+
+	if (flag & MB_YES) {
 		button = gtk_button_new_with_label(
-					LookupText(g_keytext_list, "message_button_yes"));	
-		gtk_widget_show(button);					
+					LookupText(g_keytext_list, "message_button_yes"));
+		gtk_widget_show(button);
 		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);
 		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  		gtk_signal_connect(GTK_OBJECT(button), "clicked",	
+  		gtk_signal_connect(GTK_OBJECT(button), "clicked",
 					     GTK_SIGNAL_FUNC(message_box_yes),
 					     dialog);
 		if( default_flag & MB_YES ){
@@ -436,14 +436,14 @@ static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int fl
 		}
 		i++;
 	}
-	
-	if (flag & MB_NO) {		
+
+	if (flag & MB_NO) {
 		button = gtk_button_new_with_label(
-					LookupText(g_keytext_list, "message_button_no"));	
-		gtk_widget_show(button);					
+					LookupText(g_keytext_list, "message_button_no"));
+		gtk_widget_show(button);
 		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);
 		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  		gtk_signal_connect(GTK_OBJECT(button), "clicked",	
+  		gtk_signal_connect(GTK_OBJECT(button), "clicked",
 					     GTK_SIGNAL_FUNC(message_box_no),
 					     dialog);
 		if( default_flag & MB_NO ){
@@ -454,13 +454,13 @@ static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int fl
 		i++;
 	}
 
-	if (flag & MB_ABORT) {		
+	if (flag & MB_ABORT) {
 		button = gtk_button_new_with_label(
-					LookupText(g_keytext_list, "message_button_abort"));	
-		gtk_widget_show(button);					
-		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);	
+					LookupText(g_keytext_list, "message_button_abort"));
+		gtk_widget_show(button);
+		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);
 		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  		gtk_signal_connect(GTK_OBJECT(button), "clicked",	
+  		gtk_signal_connect(GTK_OBJECT(button), "clicked",
 					     GTK_SIGNAL_FUNC(message_box_abort),
 					     dialog);
 		if( default_flag & MB_ABORT ){
@@ -470,13 +470,13 @@ static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int fl
 		i++;
 	}
 
-	if (flag & MB_IGNORE) {		
+	if (flag & MB_IGNORE) {
 		button = gtk_button_new_with_label(
-					LookupText(g_keytext_list, "message_button_ignore"));	
-		gtk_widget_show(button);					
-		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);	
+					LookupText(g_keytext_list, "message_button_ignore"));
+		gtk_widget_show(button);
+		gtk_container_add(GTK_CONTAINER(hbuttonbox1), button);
 		GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  		gtk_signal_connect(GTK_OBJECT(button), "clicked",	
+  		gtk_signal_connect(GTK_OBJECT(button), "clicked",
 					     GTK_SIGNAL_FUNC(message_box_ignore),
 					     dialog);
 		if( default_flag & MB_IGNORE ){
@@ -486,7 +486,7 @@ static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int fl
 		i++;
 	}
 
-	
+
 	if ( parent == NULL ){
 		gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(g_main_window) );
 	}
@@ -495,21 +495,21 @@ static int UtilMessageBoxSetDefault( char *message, char *title, unsigned int fl
 			 GTK_WINDOW(GTK_WINDOW(parent)) );
 	}
 	gtk_widget_show(dialog);
-	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);	
+	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 
 	gtk_main();
-	
+
 	if( icon_exist ){
 		gdk_pixmap_unref(icon);
-	}		
-	return gUtilCommonStatus;				
+	}
+	return gUtilCommonStatus;
 }
 
 int UtilMessageBox(
-	char *message,				
-	char *title,                
+	char *message,
+	char *title,
 	unsigned int flag,
-	GtkWidget *parent )          
+	GtkWidget *parent )
 {
 	return(UtilMessageBoxSetDefault(message, title, flag, MB_OK|MB_YES, parent) );
 }
@@ -537,24 +537,24 @@ static gboolean connect_printer( gpointer user_data )
 
 	gtk_window_set_modal(GTK_WINDOW(wk->dialog), FALSE);
 	gtk_widget_hide( GTK_WIDGET(wk->dialog) );
-	gtk_widget_destroy(GTK_WIDGET(wk->dialog));	
+	gtk_widget_destroy(GTK_WIDGET(wk->dialog));
 
 onErr:
 	return TRUE;
 }
 
 static int UtilMessageBoxWithConnection(
-	char *message,				
-	char *title,                
+	char *message,
+	char *title,
 	unsigned int flag,
 	int (*callback)(void)
 )
 {
-	GtkWidget	*dialog;				
-	GtkWidget	*dialog_action_area1;   
-	GtkWidget	*dialog_vbox1;          
-	GtkWidget	*hbox1;                 
-	GtkWidget	*pixmap;                
+	GtkWidget	*dialog;
+	GtkWidget	*dialog_action_area1;
+	GtkWidget	*dialog_vbox1;
+	GtkWidget	*hbox1;
+	GtkWidget	*pixmap;
 	GtkWidget	*label;
 	GdkPixmap	*icon = NULL;
 	GdkPixmap	*iconMask = NULL;
@@ -569,34 +569,34 @@ static int UtilMessageBoxWithConnection(
 	if ( (message == NULL) || (title == NULL) || (callback == NULL) ) goto onErr;
 
 	/* create dialog */
-	dialog = gtk_dialog_new();				
-	gtk_widget_realize(dialog);				
-	gtk_window_set_title(GTK_WINDOW(dialog), title);	
-	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);	
-	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);	
+	dialog = gtk_dialog_new();
+	gtk_widget_realize(dialog);
+	gtk_window_set_title(GTK_WINDOW(dialog), title);
+	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
+	gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",	GTK_SIGNAL_FUNC(message_box_destroy), dialog);
 	//gtk_signal_connect (GTK_OBJECT (dialog), "delete_event", GTK_SIGNAL_FUNC (message_box_delete_event), dialog);
 	gtk_signal_connect (GTK_OBJECT (dialog), "delete_event", GTK_SIGNAL_FUNC (message_box_delete_event_no_destroy), dialog);
 
-	dialog_action_area1 = GTK_DIALOG(dialog)->action_area;	
-	dialog_vbox1 = GTK_DIALOG(dialog)->vbox;	
+	dialog_action_area1 = GTK_DIALOG(dialog)->action_area;
+	dialog_vbox1 = GTK_DIALOG(dialog)->vbox;
 
-	hbox1 = gtk_hbox_new(FALSE, 0);	
-	gtk_widget_show(hbox1);			
-	gtk_box_pack_start(GTK_BOX(dialog_vbox1), hbox1, TRUE, TRUE, 5);	
+	hbox1 = gtk_hbox_new(FALSE, 0);
+	gtk_widget_show(hbox1);
+	gtk_box_pack_start(GTK_BOX(dialog_vbox1), hbox1, TRUE, TRUE, 5);
 
   	style = gtk_widget_get_style(dialog);
-	switch (flag & 0x0000000f) {	
-		case MB_ICON_INFORMATION:	
+	switch (flag & 0x0000000f) {
+		case MB_ICON_INFORMATION:
  			icon = gdk_pixmap_create_from_xpm_d(dialog->window, &iconMask, &style->bg[GTK_STATE_NORMAL], info_xpm);
   			break;
-		
-		case MB_ICON_EXCLAMATION:	
+
+		case MB_ICON_EXCLAMATION:
  			icon = gdk_pixmap_create_from_xpm_d(dialog->window, &iconMask, &style->bg[GTK_STATE_NORMAL], exclam_xpm);
 			break;
 
-		case MB_ICON_SYSERR:	
+		case MB_ICON_SYSERR:
  			icon = gdk_pixmap_create_from_xpm_d(dialog->window, &iconMask, &style->bg[GTK_STATE_NORMAL], syserr_xpm);
 			break;
 
@@ -607,23 +607,23 @@ static int UtilMessageBoxWithConnection(
 		default:	/* Ver.3.00 */
 			icon_exist = 0;
 			break;
-			
+
 	}
 
 	if( icon_exist ){
-		pixmap = gtk_pixmap_new(icon, iconMask);			
-		gtk_box_pack_start(GTK_BOX(hbox1), pixmap, FALSE, FALSE, 10);	
-		if( icon_exist ) gtk_widget_show(pixmap);			
+		pixmap = gtk_pixmap_new(icon, iconMask);
+		gtk_box_pack_start(GTK_BOX(hbox1), pixmap, FALSE, FALSE, 10);
+		if( icon_exist ) gtk_widget_show(pixmap);
 	}
 
-	label = gtk_label_new(message);	
-	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);		
-	gtk_widget_show(label);			
-	gtk_box_pack_start(GTK_BOX(hbox1), label, TRUE, TRUE, 10);	
+	label = gtk_label_new(message);
+	gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
+	gtk_widget_show(label);
+	gtk_box_pack_start(GTK_BOX(hbox1), label, TRUE, TRUE, 10);
 
 	gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(g_main_window) );
 	gtk_widget_show(dialog);
-	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);	
+	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
 
 	connectWork.dialog = dialog;
 	connectWork.callback = callback;
@@ -636,7 +636,7 @@ onErr:
 	if( icon_exist ){
 		gdk_pixmap_unref(icon);
 	}
-	return gUtilCommonStatus;				
+	return gUtilCommonStatus;
 }
 
 static int SetBJLStart( char *buf )
@@ -680,9 +680,9 @@ static int	SetCurrentTime(char *buf)
 	int		n;
 	char	*p = buf;
 	char 	localBuf[CMD_BUF_MAX_SIZE];
-	
-	memcpy(p, BJLSETTIME, BJLSETTIMELEN); p+=BJLSETTIMELEN;				
-	time (&t_time);									
+
+	memcpy(p, BJLSETTIME, BJLSETTIMELEN); p+=BJLSETTIMELEN;
+	time (&t_time);
 	ltime = localtime(&t_time);
 
 	/* Ver.3.60 */
@@ -715,7 +715,7 @@ void OutputCmdType001( char *cmdPtr, long cmdLen )
 	/* Output SetTime */
 	n = SetBJLStart(p); p += n;
 	n = SetControlMode(p); p += n;
-	n = SetCurrentTime(p); p+=n; 
+	n = SetCurrentTime(p); p+=n;
 	n = SetBJLEnd(p); p += n;
 
 	/* Output Command */
@@ -742,7 +742,7 @@ void OutputCmdType002( char *cmdPtr, long cmdLen, short isSetTime )
 	n = SetControlMode(p); p += n;
 
 	if ( isSetTime ) {
-		n = SetCurrentTime(p); p+=n; 
+		n = SetCurrentTime(p); p+=n;
 	}
 
 	memcpy( p, cmdPtr, cmdLen ); p += cmdLen;
@@ -786,7 +786,7 @@ void OutputCmdType004( char *cmdPtr, long cmdLen, short num )
 	/* Output SetTime */
 	n = SetBJLStart(p); p += n;
 	n = SetControlMode(p); p += n;
-	n = SetCurrentTime(p); p+=n; 
+	n = SetCurrentTime(p); p+=n;
 	n = SetBJLEnd(p); p += n;
 
 	/* Output Command */
@@ -851,7 +851,7 @@ Err:
 	return result;
 }
 
-short ShowCommonUtilDialog( char *dialogName, unsigned int flag, short *retVal ) 
+short ShowCommonUtilDialog( char *dialogName, unsigned int flag, short *retVal )
 {
 	LPDIALOGSTRCOMP lpDialogStrComp = NULL;
 	char resName[NAME_BUF_MAX_SIZE];
@@ -868,14 +868,14 @@ short ShowCommonUtilDialog( char *dialogName, unsigned int flag, short *retVal )
 		}
 		lpDialogStrComp = lpDialogStrComp->next;
 	}
-		
+
 	FreeDialogStrCompList( lpDialogStrComp );
 	result = 0;
 Err:
 	return result;
 }
 
-short ShowCommonUtilDialogWithConnection( char *dialogName, unsigned int flag, short *retVal, int (*callback)(void) ) 
+short ShowCommonUtilDialogWithConnection( char *dialogName, unsigned int flag, short *retVal, int (*callback)(void) )
 {
 	LPDIALOGSTRCOMP lpDialogStrComp = NULL;
 	char resName[NAME_BUF_MAX_SIZE];
@@ -892,7 +892,7 @@ short ShowCommonUtilDialogWithConnection( char *dialogName, unsigned int flag, s
 		}
 		lpDialogStrComp = lpDialogStrComp->next;
 	}
-		
+
 	FreeDialogStrCompList( lpDialogStrComp );
 	result = 0;
 Err:
@@ -970,7 +970,7 @@ static short OutputUtilityCommand( char *cmdName )
 			break;
 		}
 		pCurrentTbl++;
-	}	
+	}
 	if ( pCurrentTbl->name == NULL ) goto Err;
 
 	/* search proc function */
@@ -1011,7 +1011,7 @@ short ExecMaintenance( short funcType )
 	modelName = GetModelName();
 
 	for ( current = 0; current < 3; current++ ){
-		memset( flowidNameTable[current], 0, NAME_BUF_MAX_SIZE );	
+		memset( flowidNameTable[current], 0, NAME_BUF_MAX_SIZE );
 	}
 
 	snprintf( resName, NAME_BUF_MAX_SIZE, "%s/%s", MAINTENANCE_RESPATH, MAINTENANCE_RESFILE );
@@ -1078,7 +1078,7 @@ short ExecMaintenance( short funcType )
 				if ( OutputUtilityCommand( cmdName ) != 0 ) goto Err2;
 			}
 
-			/* Get next status */	
+			/* Get next status */
 			if ( GetNextIdFromFlowList( list, flowidNameTable[current], status, action, &next ) != 0 ) goto Err2;
 #ifdef _PRINTUI_DEBUG_
 			printf( "next : %d\n", next );
@@ -1118,7 +1118,7 @@ static short CopyFlowName( char (*dstName)[NAME_BUF_MAX_SIZE], char *src, short 
 	const char terminateStr[][NAME_BUF_MAX_SIZE] = { "END", "NEXT" };
 	short cnt, current, index;
 	short result = -1;
-	
+
 	if (  (dstName == NULL) || (src == NULL) || (dstNameNum == NULL) ) goto Err;
 
 	index = 0;
@@ -1190,11 +1190,11 @@ gchar *GetMaintenanceFuncName( short type )
 	/* Get Maintenance Function Name */
 	if ( ParseDialogStringListTag( buf, dialogName, &lpDialogComp ) != 0 ) goto Err3;
 	retPtr = LookupText( g_keytext_list, lpDialogComp->strid );
-	
+
 	FreeDialogStrCompList( lpDialogComp );
 Err3:
 	FreeFlowCompList( list );
-Err2:	
+Err2:
 	FreeFunctionCompList( lpFuncComp );
 Err1:
 	return retPtr;
@@ -1250,7 +1250,7 @@ void ShowUtilButton(GtkWidget* main_window, char* button_name)
 }
 
 /* Ver.1.00 */
-static 
+static
 void ShowUtilButtonLabel(GtkWidget* main_window, char* label_name, short util_type )
 {
 	GtkWidget* label = LookupWidget(main_window, label_name);
@@ -1387,7 +1387,7 @@ GtkWidget* LookupWidget(GtkWidget* window, const gchar* name)
 }
 
 /* Ver.1.00 */
-GtkWidget* GetTopWidget(GtkWidget* widget) 
+GtkWidget* GetTopWidget(GtkWidget* widget)
 {
 	return gtk_widget_get_toplevel(widget);
 }

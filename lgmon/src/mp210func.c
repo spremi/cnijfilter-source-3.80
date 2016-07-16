@@ -25,7 +25,7 @@
 
 
 /*
- * mp210func.c 
+ * mp210func.c
  *
  * A processing function group peculiar to a model.
  */

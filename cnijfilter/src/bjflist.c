@@ -42,7 +42,7 @@
 LPBJF_ROOT bjf_create_root(void)
 {
 	LPBJF_ROOT root = NULL;
-	
+
 	if( ( root = (LPBJF_ROOT)malloc( sizeof( BJF_ROOT ) ) ) == NULL )
 		goto onErr;
 
@@ -66,11 +66,11 @@ short bjf_init_root( LPBJF_ROOT root, short copies, short collate, short reverse
 
 	if( root == NULL )
 		goto onErr;
-	
+
 	root->Copies = copies;
 	root->isCollate = collate;
 	root->isRPrint = reverse;
-	
+
 	ret = 0;
 
 onErr:
@@ -127,7 +127,7 @@ LPBJF_NODE bjf_put_q( LPBJF_ROOT root, LPBJF_NODE node )
 
 	if( root->head == NULL )
 		root->head = node; /* first node */
-	
+
 	if( root->tail != NULL ) {
 		node->prev = root->tail;
 		root->tail->next = node;
@@ -143,39 +143,39 @@ onErr:
 
 /*---------------------------------------------------------------
 	bjf_dispose_q
-		dispose queue. 
+		dispose queue.
 		before call this function, must unlink tempfile.
 ---------------------------------------------------------------*/
 short bjf_dispose_q( LPBJF_ROOT root, short type )
 {
 	short	ret = -1;
 	LPBJF_NODE node = NULL;
-	
+
 	if ( root == NULL )
 		goto onErr;
-	
+
 	if ( root->tail == NULL || root->head == NULL )
 		goto onErr; /* no node */
-	
+
 	switch(type)
 	{
 		case BJF_TAIL_NODE :
 			/* remove node. */
 			node = root->tail;
 			root->tail = node->prev;
-			
+
 			if( node->prev == NULL)
 				root->head = NULL; /* removed last node. */
 			else
 				node->prev->next = NULL;
 
 			break;
-			
+
 		case BJF_HEAD_NODE :
 			/* remove node. */
 			node = root->head;
 			root->head = node->next;
-			
+
 			if( node->next == NULL)
 				root->tail = NULL; /* removed last node. */
 			else
@@ -186,7 +186,7 @@ short bjf_dispose_q( LPBJF_ROOT root, short type )
 
 	free(node);
 	ret = 0;
-	
+
 onErr:
 	return ret;
 }

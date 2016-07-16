@@ -143,7 +143,7 @@ int pixusip8600_setoperate(ST_STORESET *p_s, ST_BSCC2STS *p_ct, bscc2sts_tbl *p_
 			break;
 		}
   	}
-  	
+
   }
   return(OK);
 }

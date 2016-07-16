@@ -99,7 +99,7 @@ main(int  argc,		/* I - Number of command-line arguments (6 or 7) */
 	FILE	*fp;					/* Print file 						*/
 	int		copies;					/* Number of copies to print 		*/
 	int 	rtn=0;
-	
+
  /*
   * Make sure status messages are not buffered...
   */
@@ -182,13 +182,13 @@ main(int  argc,		/* I - Number of command-line arguments (6 or 7) */
 	/*
 	* Open the Network port device...
 	*/
-	
+
 	rtn = _net_canon_bj( argc, CNNET_MODE_PRINT, fp, copies, argv[5], resource, argv[2], argv[3]) ;
 
 	/*
 	* Close the socket connection and input file and return...
 	*/
-	
+
 	if	( fp != stdin )
 	fclose( fp ) ;
 

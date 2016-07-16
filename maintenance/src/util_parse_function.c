@@ -89,10 +89,10 @@ static short FreeFunctionComp( FUNCTIONCOMP *current )
 
 	result = 0;
 Err:
-	return result;	
+	return result;
 }
 
-short FreeFunctionCompList( FUNCTIONCOMP *list ) 
+short FreeFunctionCompList( FUNCTIONCOMP *list )
 {
 	FUNCTIONCOMP *current, *prev = NULL;
 	short result = -1;
@@ -136,7 +136,7 @@ static short ParseFunctionTag( xmlNodePtr ptr, char *modelName, LPFUNCTIONCOMP l
 		if ( !xmlStrcmp( current->name, (const xmlChar *)"function" ) ){
 			type = (short)atoi( (char *)xmlGetProp( current, (const xmlChar *)"type" ) );
 			flow = (char *)xmlGetProp( current, (const xmlChar *)"flow" );
-			
+
 			if ( NewFunctionComp( &lpComp, type, flow ) != 0 ) goto Err;
 			AppendFunctionComp( lpRootComp, lpComp );
 		}
@@ -206,7 +206,7 @@ EXIT:
 	return result;
 
 Err2:
-	FreeFunctionCompList( rootComp.next );	
+	FreeFunctionCompList( rootComp.next );
 Err1:
 	goto EXIT;
 }

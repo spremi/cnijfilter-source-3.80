@@ -105,7 +105,7 @@ static short FreeFlowComp( FLOWCOMP *current )
 	short result = -1;
 
 	if ( current == NULL ) goto Err;
-	
+
 	if ( current->funcName != NULL ){
 		free( current->funcName );
 		current->funcName = NULL;
@@ -118,7 +118,7 @@ static short FreeFlowComp( FLOWCOMP *current )
 
 	result = 0;
 Err:
-	return result;	
+	return result;
 }
 
 
@@ -256,7 +256,7 @@ EXIT:
 	return result;
 
 Err2:
-	FreeFlowCompList( rootComp.next );	
+	FreeFlowCompList( rootComp.next );
 Err1:
 	goto EXIT;
 }
@@ -290,10 +290,10 @@ short GetNextIdFromFlowList( void *list, char *flowName, short id, short action,
 
 	lpFlowComp = (LPFLOWCOMP)list;
 	while( lpFlowComp != NULL ){
-		if ( (!strcmp( lpFlowComp->flowName, flowName )) && (lpFlowComp->id == id) 
+		if ( (!strcmp( lpFlowComp->flowName, flowName )) && (lpFlowComp->id == id)
 			&& (lpFlowComp->action == action) ){
 			*next_id = lpFlowComp->next_id;
-			break;	
+			break;
 		}
 		lpFlowComp = lpFlowComp->next;
 	}
@@ -313,7 +313,7 @@ short GetCommandNameFromFLowList( void *list, char *flowName, short id, short ac
 	while( lpFlowComp != NULL ){
 		if ( (!strcmp( lpFlowComp->flowName, flowName )) && (lpFlowComp->id == id) && (lpFlowComp->action == action) ){
 			*cmdName = lpFlowComp->cmdName;
-			break;	
+			break;
 		}
 		lpFlowComp = lpFlowComp->next;
 	}

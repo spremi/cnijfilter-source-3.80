@@ -55,7 +55,7 @@ int translatePrinterStatus(char *pstatusStr, ST_PrinterStatus *pStatus)
 static const SETSTATUSFUNC
 setstatusfunctable[]={
   set_cartridgeClass,
-  set_Destination,  
+  set_Destination,
   set_leverPosition,
   set_serviceCall,
   set_cartridgeStatus,
@@ -138,7 +138,7 @@ static int set_printInterface(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
     if (memcmp(p_tbl->dev, p_dev_tbl->dev, DEV_CHARSIZE) == 0) break;
     p_dev_tbl++;
   }
-   
+
   p_sts->printInterface=p_dev_tbl->id;
 
   return(ID_ERR_NO_ERROR);
@@ -184,7 +184,7 @@ chkmessagefunctable[]={
 static void check_ST_PrinterStatus(ST_CUPSSTS *p_tbl)
 {
   int i,j;
-  
+
   char header[5];
   char dev[5];
   char pr_name[17];
@@ -227,8 +227,8 @@ static void check_ST_PrinterStatus(ST_CUPSSTS *p_tbl)
   for(i=0; i<sizeof(busy_stat); i++)	busy_stat[i] = '\0';
   for(i=0; i<sizeof(job_stat); i++)	job_stat[i] = '\0';
   for(i=0; i<2; i++)	cartridge[i].dummy = '\0';
-  for(j=0; j<8; j++)	
-	  for(i=0; i<4; i++)	
+  for(j=0; j<8; j++)
+	  for(i=0; i<4; i++)
 	  	ink[j].fill[i] = '\0';
   for(i=0; i<sizeof(ink_check); i++)	ink_check[i] = '\0';
   for(i=0; i<sizeof(destination); i++)	destination[i] = '\0';
@@ -243,7 +243,7 @@ static void check_ST_PrinterStatus(ST_CUPSSTS *p_tbl)
 //Ver.3.10
   for(i=0; i<sizeof(service_call2); i++)	service_call2[i] = '\0';
   /* Ver.3.80 */
-  for(j=0; j<8; j++)	
+  for(j=0; j<8; j++)
 	  memset(ink2[j].ifnumber, 0, sizeof(ink2[j].ifnumber));
 
   strncpy( header, p_tbl->header, sizeof(p_tbl->header) );
@@ -313,7 +313,7 @@ static int set_messageID(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 {
   int i;
   int ret;
-  
+
 #ifdef _CHECK_ST_CUPSSTS_
   check_ST_PrinterStatus(p_tbl);
 #endif

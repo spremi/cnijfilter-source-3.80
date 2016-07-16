@@ -85,15 +85,15 @@ static long round_up( double );
 
 
 static short check_imagesize( double defwidth, double defheight, double inwidth, double inheight )
-{ 
+{
 	short result = 0;
-	
+
 	if ( inwidth > defwidth )
 		result += 1;
-	
+
 	if ( inheight > defheight )
 		result += 2;
-		
+
 	return result;
 }
 
@@ -101,17 +101,17 @@ static short check_imagesize( double defwidth, double defheight, double inwidth,
 static long round_up( double target )
 {
 	long	tmp_down,tmp_up;
-	
+
 	tmp_down = (long)target;
-	
+
 	if( target == (double)tmp_down ){
 		tmp_up = tmp_down;
 	}else{
 		tmp_up = (long)(target + 1 );
 	}
-	
+
 	return tmp_up;
-	
+
 }
 
 
@@ -187,7 +187,7 @@ short MarginInit(
 {
 	long				rightmargin,bottommargin;
 	short				result = -1;
-	
+
 	rightmargin = lpmargininfo->PaperWidth - lpprninfo->prn_width - lpprninfo->leftmargin;
 	bottommargin = lpmargininfo->PaperLength - lpprninfo->prn_height - lpprninfo->topmargin;
 
@@ -224,8 +224,8 @@ short SetExtMargin(
 	short				extension;
 
 	short				result = -1;
-	
-	
+
+
 	extension = lpmargininfo->extension;
 
 	/*--- current margin [1/100mm] ---*/
@@ -311,13 +311,13 @@ short SetBbox(
 	lpmargininfo->bbox[1] = bbox[1];
 	lpmargininfo->bbox[2] = bbox[2];
 	lpmargininfo->bbox[3] = bbox[3];
-	
+
 	/*--- bbox data [pixel(72dpi) -> pixel(image resolution)] ---*/
 	tmp_left = (double)(lpmargininfo->bbox[0] * img_xresolution / 72.0);
 	tmp_bottom = (double)(lpmargininfo->bbox[1] * img_yresolution / 72.0);
 	tmp_right = (double)(lpmargininfo->bbox[2] * img_xresolution / 72.0);
 	tmp_top = (double)(lpmargininfo->bbox[3] * img_yresolution / 72.0);
-	
+
 	/* in */
 	left = round_up(tmp_left);
 	bottom = round_up(tmp_bottom);
@@ -327,7 +327,7 @@ short SetBbox(
 	/* extracted area size */
 	width = right - left;
 	height = top - bottom;
-	
+
 
 	if( (width <=0)||(height <=0) ){
 	  result=0;
@@ -335,19 +335,19 @@ short SetBbox(
 	}
 
 	/* Check if the extracted area is within the input data. */
-	if( (right > img_width ) || (top > img_height) ){	
+	if( (right > img_width ) || (top > img_height) ){
 	  /* continue */
 	  result=0;
 	  goto onErr;
 	}
-	
+
 	/* Exchange top margin and bottom margin when duplex is ON, stapleside is LONG and page number is even.  */
 	if (lpbjfoption->stapleside == STAPLESIDE_LONG && isDuplex == ON && pageNum % 2 == 0){
 		double tmp = top;
 		top = img_height - bottom;
 		bottom = img_height - tmp;
 	}
-	
+
 	/*--- set parameter ---*/
 	lpposinfo->width_offset = (double)left;
 	lpposinfo->height_offset = (double)(img_height - top);
@@ -355,7 +355,7 @@ short SetBbox(
 	lpimginfo->img_width = width;
 	lpimginfo->img_height = height;
 
-	
+
 	result = 0;
 
  onErr:
@@ -387,7 +387,7 @@ short ImageFitShort(
 	/*--- target image data [pixel] ---*/
 	img_width = lpimginfo->img_width;
 	img_height = lpimginfo->img_height;
-	
+
 	/*--- printer resolution [dpi] ---*/
 	prn_xresolution = lpprninfo->prn_xresolution;
 	prn_yresolution = lpprninfo->prn_yresolution;
@@ -399,15 +399,15 @@ short ImageFitShort(
 	/*--- Set output image size Max [pixel] ---*/
 	out_width = prnarea_width * prn_xresolution;
 	out_height = prnarea_height * prn_yresolution;
-	
-	
+
+
 	/* --- At first, expand image so as to fit to printable area width.[pixel] ---*/
 	tmp_height = 0.0; tmp_width =0.0;
 
 	alpha =out_width / (double)img_width;
 	tmp_height = alpha * (double)img_height;
-	
-	/*--- If height exceeds the printable area, 
+
+	/*--- If height exceeds the printable area,
 		expand image so as to fit to printable area height ---*/
 	if ( tmp_height > out_height ){	 	/* height is over */
 		alpha = out_height / (double)img_height;
@@ -418,11 +418,11 @@ short ImageFitShort(
 		out_height = tmp_height;
 	}
 
-	
+
 	/*--- set parameter ---*/
 	lpposinfo->out_width = out_width;
 	lpposinfo->out_height = out_height;
-	
+
 	result = 0;
 	return result;
 }
@@ -449,7 +449,7 @@ short ImageFitLong(
 	/*--- target image data [pixel] ---*/
 	img_width = lpimginfo->img_width;
 	img_height = lpimginfo->img_height;
-	
+
 	/*--- printer resolution [dpi] ---*/
 	prn_xresolution = lpprninfo->prn_xresolution;
 	prn_yresolution = lpprninfo->prn_yresolution;
@@ -461,14 +461,14 @@ short ImageFitLong(
 	/*--- Set output image size Max [pixel] ---*/
 	out_width = prnarea_width * prn_xresolution;
 	out_height = prnarea_height * prn_yresolution;
-	
-	
+
+
 	/* --- At first, expand image so as to fit to printable area width. ---*/
 	tmp_height = 0.0; tmp_width =0.0;
 	alpha = out_width / (double)img_width;
 	tmp_height = alpha * (double)img_height;
-	
-	/*--- If height doesn't exceed the printable area, 
+
+	/*--- If height doesn't exceed the printable area,
 		expand image so as to fit to printable area height ---*/
 	if ( tmp_height < out_height ){
 		alpha = out_height / (double)img_height;
@@ -476,13 +476,13 @@ short ImageFitLong(
 		out_width = tmp_width;
 	}
 	else{
-		out_height = tmp_height;		
+		out_height = tmp_height;
 	}
-	
+
 	/*--- set parameter ---*/
 	lpposinfo->out_width = out_width;
 	lpposinfo->out_height = out_height;
-	
+
 	result = 0;
 	return result;
 
@@ -503,14 +503,14 @@ short SetImageSize(
 	double				prn_xresolution, prn_yresolution;
 	double				out_width, out_height;
 	short				result = -1;
-	
+
 
 	/*--- image data ---*/
 	img_width = lpimginfo->img_width;
 	img_height = lpimginfo->img_height;
 	img_xresolution = lpimginfo->xresolution;
 	img_yresolution = lpimginfo->yresolution;
-	
+
 	/*--- printer data ---*/
 	prn_xresolution = lpprninfo->prn_xresolution;
 	prn_yresolution = lpprninfo->prn_yresolution;
@@ -549,11 +549,11 @@ short ImageScaling(
 
 	out_width = out_width * (double)scale / 100.0;
 	out_height = out_height * (double)scale / 100.0;
-	
+
 	/*--- set parameter ---*/
 	lpposinfo->out_width = out_width;
 	lpposinfo->out_height = out_height;
-	
+
 	result = 0;
 	return result;
 }
@@ -579,7 +579,7 @@ short ImageCenter(
 	double 				tmp_leftskip,tmp_topskip;
 	short				result = -1;
 
-	
+
 	/*--- target image data [pixel] ---*/
 	img_width = lpimginfo->img_width;
 	img_height = lpimginfo->img_height;
@@ -587,7 +587,7 @@ short ImageCenter(
 	/*--- image resolution [dpi] ---*/
 	img_xresolution = lpimginfo->xresolution;
 	img_yresolution = lpimginfo->yresolution;
-	
+
 	/*--- printer resolution [dpi] ---*/
 	prn_xresolution = lpprninfo->prn_xresolution;
 	prn_yresolution = lpprninfo->prn_yresolution;
@@ -595,16 +595,16 @@ short ImageCenter(
 	/*--- current printable area ( 1/100[mm] to inch ) [inch] ---*/
 	prnarea_width = lpmargininfo->curprn_width / 2540.0;
 	prnarea_height = lpmargininfo->curprn_height / 2540.0;
-	
+
 	/*--- current printable area [ pixel (printer resolution) ] ---*/
 	prn_width = prnarea_width * prn_xresolution;
 	prn_height = prnarea_height * prn_yresolution;
-	
+
 	/*--- output image size [ pixel (printer resolution) ] ---*/
 	out_width  = lpposinfo->out_width;
 	out_height = lpposinfo->out_height;
-	
-	
+
+
 	/*--- calculate blank ---*/
 	width_blnk  = prn_width - out_width;
 	height_blnk = prn_height - out_height;
@@ -624,7 +624,7 @@ short ImageCenter(
 	}else{
 	  lpposinfo->topskip += tmp_topskip;
 	}
-	
+
 	result = 0;
 
 	return result;
@@ -651,12 +651,12 @@ short ImageCut(
 	double				mask_width, mask_height;
 	double				out_width, out_height;
 	short				result = -1;
-	
+
 
 	/*--- target image data [pixel] ---*/
 	img_width = lpimginfo->img_width;
 	img_height = lpimginfo->img_height;
-	
+
 	/*--- printer resolution [dpi] ---*/
 	prn_xresolution = lpprninfo->prn_xresolution;
 	prn_yresolution = lpprninfo->prn_yresolution;
@@ -667,7 +667,7 @@ short ImageCut(
 	/*--- current printable area ( 1/100[mm] to inch ) [inch] ---*/
 	prnarea_width = lpmargininfo->curprn_width / 2540.0;
 	prnarea_height = lpmargininfo->curprn_height / 2540.0;
-	
+
 	/*--- current printable area [pixel] (with printer resolution)---*/
 	prn_width = prnarea_width * prn_xresolution;
 	prn_height = prnarea_height * prn_yresolution;
@@ -676,7 +676,7 @@ short ImageCut(
 	out_width = 	lpposinfo->out_width ;
 	out_height = 	lpposinfo->out_height;
 
-	
+
 	/*--- Init mask with whole target image ---*/
 	/*--- [pixel] with image resolution ---*/
 	mask_width = (double)img_width;
@@ -692,14 +692,14 @@ short ImageCut(
 		mask_height = (double)img_height * prn_height / out_height;
 		out_height = prn_height;
 	}
-		
-		
+
+
 	/*--- set parameter ---*/
 	lpposinfo->mask_width = mask_width;
 	lpposinfo->mask_height = mask_height;
 	lpposinfo->out_width = out_width;
 	lpposinfo->out_height = out_height;
-	lpposinfo->page_width = prn_xresolution * prnarea_width_org; 
+	lpposinfo->page_width = prn_xresolution * prnarea_width_org;
 
 
 	result = 0;
@@ -730,13 +730,13 @@ short bjf_pos_imageresolution(
 	long				out_width, out_height;
 	short				areacheck;
 	short				result = -1;
-	
+
 	/*--- image data ---*/
 	img_width = lpimginfo->img_width;
 	img_height = lpimginfo->img_height;
 	img_xresolution = lpimginfo->xresolution;
 	img_yresolution = lpimginfo->yresolution;
-	
+
 	/*--- printer data ---*/
 	prn_xresolution = lpprninfo->prn_xresolution;
 	prn_yresolution = lpprninfo->prn_yresolution;
@@ -748,38 +748,38 @@ short bjf_pos_imageresolution(
 	/*--- area size which priner can print ( 1/1000[mm] to dpi ) ---*/
 	prnarea_width = (double)((double)lpprninfo->prn_width / 2540.0);
 	prnarea_height = (double)((double)lpprninfo->prn_height / 2540.0);
-	
+
 	/*--- printer margin size ( 1/1000[mm] to dpi ) ---*/
 	topmargin = (double) ((double)lpprninfo->topmargin / 2540.0 );
 	leftmargin = (double) ((double)lpprninfo->leftmargin / 2540.0 );
-	
+
 	/*--- output pixel ---*/
 	out_width = (long) ( prn_xresolution * imgarea_width );
 	out_height = (long) ( prn_yresolution * imgarea_height );
-	
+
 	/*--- set mask and offset ---*/
 	mask_width = img_width;
 	mask_height = img_height;
 	width_offset = 0;
 	height_offset = 0;
-	
-	
+
+
 	/*
 		in this position define mode,
 			when out_width or out_height is bigger than prnarea,
 				we cut off top or left area
 	*/
-	
+
 	if ( (areacheck = check_imagesize( prnarea_width, prnarea_height,
 		imgarea_width, imgarea_height )) > 0 ){
-		
+
 		switch( areacheck ){
 			case 1:		/* width is over */
 				width_offset = (long)( leftmargin * img_xresolution );
 				out_width = (long)( prnarea_width * prn_xresolution );
 
 				if ( (imgarea_width - prnarea_width - leftmargin) > 0 ){
-					mask_width = (long)( prnarea_width * img_xresolution + 0.5 );	
+					mask_width = (long)( prnarea_width * img_xresolution + 0.5 );
 				}
 				else{
 					mask_width = img_width - width_offset;
@@ -790,7 +790,7 @@ short bjf_pos_imageresolution(
 				height_offset = (long)( topmargin * img_yresolution );
 				out_height = (long)( prnarea_height * prn_yresolution );
 
-				if ( (imgarea_height - prnarea_height - topmargin) > 0 ){	
+				if ( (imgarea_height - prnarea_height - topmargin) > 0 ){
 					mask_height = (long)( prnarea_height * img_yresolution + 0.5 );
 				}
 				else{
@@ -802,16 +802,16 @@ short bjf_pos_imageresolution(
 				out_width = (long)( prnarea_width * prn_xresolution );
 
 				if ( (imgarea_width - prnarea_width - leftmargin) > 0 ){
-					mask_width = (long)( prnarea_width * img_xresolution + 0.5 );	
+					mask_width = (long)( prnarea_width * img_xresolution + 0.5 );
 				}
 				else{
 					mask_width = img_width - width_offset;
 				}
-				
+
 				height_offset = (long)( topmargin * img_yresolution + 0.5 );
 				out_height = (long)( prnarea_height * prn_yresolution + 0.5 );
 
-				if ( (imgarea_height - prnarea_height - topmargin) > 0 ){	
+				if ( (imgarea_height - prnarea_height - topmargin) > 0 ){
 					mask_height = (long)( prnarea_height * img_yresolution + 0.5 );
 				}
 				else{
@@ -830,7 +830,7 @@ short bjf_pos_imageresolution(
 	lpposinfo->height_offset = height_offset;
 	lpposinfo->out_width = out_width;
 	lpposinfo->out_height = out_height;
-	lpposinfo->page_width = prn_xresolution * prnarea_width; 
+	lpposinfo->page_width = prn_xresolution * prnarea_width;
 
 
 	result = 0;
@@ -861,7 +861,7 @@ short bjf_pos_imageresolution_fit(
 	img_height = lpimginfo->img_height;
 	img_xresolution = lpimginfo->xresolution;
 	img_yresolution = lpimginfo->yresolution;
-	
+
 	/*--- printer data [dpi] ---*/
 	prn_xresolution = lpprninfo->prn_xresolution;
 	prn_yresolution = lpprninfo->prn_yresolution;
@@ -871,33 +871,33 @@ short bjf_pos_imageresolution_fit(
 	prnarea_height = (double)((double)lpprninfo->prn_height / 2540.0);
 
 	/*--- determine X scaling ---*/
-	
+
 	/*
 		printable area [pixel]
 	*/
 	out_width = (long)( prnarea_width * prn_xresolution );
 	out_height = (long)( prnarea_height * prn_yresolution );
-	
+
 	/*
 		at first, make print image width prn_X_area
 	*/
 	tmp_height = 0; tmp_width =0;
 	alpha = ( prnarea_width * prn_xresolution ) / (long)img_width;
 	tmp_height = (long)( alpha * img_height );
-	
+
 	if ( tmp_height > out_height ){	/* height is over */
 		/*
 			if Height is over, make print image height prn_Y_area
 		*/
 		alpha = ( prnarea_height * prn_yresolution ) / (long)img_height;
 		tmp_width = (long)( alpha * img_width );
-		
+
 		out_width = tmp_width;
 	}
 	else{								/* height is OK */
 		out_height = tmp_height;
 	}
-	
+
 	/*--- set parameter ---*/
 	lpposinfo->mask_width = img_width;
 	lpposinfo->mask_height = img_height;
@@ -905,8 +905,8 @@ short bjf_pos_imageresolution_fit(
 	lpposinfo->height_offset = 0;
 	lpposinfo->out_width = out_width;
 	lpposinfo->out_height = out_height;
-	lpposinfo->page_width = prn_xresolution * prnarea_width; 
-	
+	lpposinfo->page_width = prn_xresolution * prnarea_width;
+
 	result = 0;
 	return result;
 }
@@ -927,13 +927,13 @@ short bjf_pos_imageresolution_center(
 	long				out_width, out_height;
 	long				width_blnk, height_blnk;
 	short				result = -1;
-	
+
 	/*--- image data [pixel] ---*/
 	img_width = lpimginfo->img_width;
 	img_height = lpimginfo->img_height;
 	img_xresolution = lpimginfo->xresolution;
 	img_yresolution = lpimginfo->yresolution;
-	
+
 	/*--- printer data [dpi] ---*/
 	prn_xresolution = lpprninfo->prn_xresolution;
 	prn_yresolution = lpprninfo->prn_yresolution;
@@ -941,26 +941,26 @@ short bjf_pos_imageresolution_center(
 	/*--- area size which priner can print ( 1/1000[mm] to dpi ) [inch] ---*/
 	prnarea_width = (double)((double)lpprninfo->prn_width / 2540.0);
 	prnarea_height = (double)((double)lpprninfo->prn_height / 2540.0);
-	
+
 	/* printable area [pixel] */
 	prn_width = (long)( prnarea_width * prn_xresolution );
 	prn_height = (long)( prnarea_height * prn_yresolution );
-	
+
 	/*--- now print out image size ---*/
 	out_width  = lpposinfo->out_width;
 	out_height = lpposinfo->out_height;
-	
+
 	/*--- calucurate blank ---*/
 	width_blnk  = prn_width - out_width;
 	height_blnk = prn_height - out_height;
-	
+
 	/*--- parameter check ---*/
 	if ( ( width_blnk < 0 ) || ( height_blnk < 0 ) ) goto onErr;
-	
+
 	/*--- set parameter ---*/
 	lpposinfo->leftskip = (long)( width_blnk / 2 );
 	lpposinfo->topskip  = (long)( height_blnk / 2 );
-	
+
 	result = 0;
 onErr:
 	return result;
@@ -1009,16 +1009,16 @@ short bjf_pos_height_offset( LPBJF_POSINFO lpposinfo, long	*height_offset )
 short bjf_pos_out_width( LPBJF_POSINFO lpposinfo, long *out_width )
 {
 	long	tmp_out_width;
-	
+
 	/* round up */
 	tmp_out_width = round_up(lpposinfo->out_width);
-	
+
 	if( (tmp_out_width + (long)lpposinfo->leftskip) > (long)lpposinfo->page_width ){
 		*out_width = (long)lpposinfo->page_width - (long)lpposinfo->leftskip;
 	}else{
 		*out_width = tmp_out_width;
 	}
-	
+
 	return 0;
 }
 

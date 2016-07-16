@@ -1,4 +1,4 @@
-INCLUDES = 
+INCLUDES =
 
 bin_PROGRAMS=cnijnpr
 

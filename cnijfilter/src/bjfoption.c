@@ -173,7 +173,7 @@ static short GetPaperSize( short id, long *width, long *height )
 
 	result = 0;
 onErr:
-	return result;	
+	return result;
 }
 
 
@@ -464,16 +464,16 @@ static short ConvExtToID( short value )
 		  current++;
 		}
 	}
-	
+
 onErr:
-	return result; 
+	return result;
 
 }
 
 /*-------------------------------------------------------------*/
 /* Option analization entry function                           */
 /*-------------------------------------------------------------*/
-short SetCmdOption( 
+short SetCmdOption(
 	int 				cargc,
 	char 				*cargv[],
 	LPBJF_OPTINFO		lpbjfoption,
@@ -542,9 +542,9 @@ short SetCmdOption(
 
 	/*--- Analyze command line ---*/
 	init_optioninfo( lpbjfoption );
-	
+
 	optcon = poptGetContext( NULL, cargc, (const char **)cargv, optionsTable, 0 );
-	
+
 	memset(confname , 0x00 , sizeof(confname));
 	MakeModelnameConfname( cargv[0], modelname, confname, BJFILTERXXXXRCPATH, BJFILTERDOTCONF );
 	first_modelstrnum = strlen(modelname);
@@ -562,14 +562,14 @@ short SetCmdOption(
 
 	if( optcon ) poptFreeContext( optcon );
 	return (first_modelstrnum);
-	
+
 onErr:
 	if( optcon ) poptFreeContext( optcon );
 
 	return -1;
 
 
-}	
+}
 
 
 
@@ -600,7 +600,7 @@ int cmdlinesw(
 	short			ret;
 	short			is_grayscale_mode = 0;
 	short			confirm_return_code = -1;
-	
+
 	/* automatic quality selection */
 	int 			cur_quality_id;
 	int 			def_quality_id;
@@ -610,8 +610,8 @@ int cmdlinesw(
 	int 			opt_quality_id;
 	int				quality_idx_span;
 	int 			opt_quality_decided = 0;
-	
-	
+
+
 	for(i=0;i<4;i++){
 		setopt[i]=0;
 	}
@@ -644,7 +644,7 @@ int cmdlinesw(
 		internalversion();
 		goto onError;
 	}
-	
+
 	/* Display Support Network */
 	if (setopt[OPTINDEX(OPTSUPPORTNETWORK)] & OPTBIT(OPTSUPPORTNETWORK)) {
 		if (bjf_get_resource_id( confname, OPTSTRSUPPORTNETWORK, modelname ) == BJFRCACCESSERROR ){
@@ -654,8 +654,8 @@ int cmdlinesw(
 		}
 		goto onError;
 	}
-	
-	
+
+
 	/* check if filename is specified, or not (stdin mode) */
 	if (poptPeekArg(*optcon) == 0) {
 		lpbjf_optinfo->stdswitch = ON;
@@ -690,7 +690,7 @@ int cmdlinesw(
 		lpbjf_optinfo->imageres = (short)opt->imageres;
 	}
 
-	/* -- Check --bbox option */ 
+	/* -- Check --bbox option */
 	if (setopt[OPTINDEX(OPTBBOX)] & OPTBIT(OPTBBOX)) {
 		if( ParseBbox(opt->bbox , lpbjf_optinfo) < 0){
 			fprintf(stderr,"Error:invalid bbox value\n");
@@ -752,7 +752,7 @@ int cmdlinesw(
 		if ( (DefaultGamma = GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_INPUT_GAMMA)) > 0 ){
 			uidb.bjcolor.bjfltGamma = DefaultGamma;
 		}
-	
+
 		uidb.bjcolor.bjfltBalanceC = 0;
 		uidb.bjcolor.bjfltBalanceM = 0;
 		uidb.bjcolor.bjfltBalanceY = 0;
@@ -788,11 +788,11 @@ int cmdlinesw(
 	if (FindValue(uidb.lpdbTop, uidb.dbsize, CNCL_VIVID, CND_VIVID_SUPPORT) >= 0) {	/* Ver.2.70 */
 		vivid_support = 1;
 	}
-	
+
 	if (FindValue(uidb.lpdbTop, uidb.dbsize, CNCL_BLACK_ADJUSTMENT, CND_BLACK_ADJUSTMENT) >= 0) {
 		tone_support = 1;
 	}
-	
+
 	/* Check --help option */
 	/* if "--help", then return here */
 	if (setopt[OPTINDEX(OPTHELP)] & OPTBIT(OPTHELP)) {
@@ -810,12 +810,12 @@ int cmdlinesw(
 
 		lpbjf_optinfo->copies = opt->copies;
 	}
-	
+
 	/* revprint */
 	if (setopt[OPTINDEX(OPTREVPRINT)] & OPTBIT(OPTREVPRINT)) {
 		lpbjf_optinfo->revprint = ON;
 	}
-	
+
 	/* collate */
 	if (setopt[OPTINDEX(OPTCOLLATE)] & OPTBIT(OPTCOLLATE)) {
 		lpbjf_optinfo->collate = ON;
@@ -915,7 +915,7 @@ int cmdlinesw(
 		if (QueryValue(uidb.lpdbTop, uidb.dbsize, CNCL_GRAYSCALE, CND_BJGRAYSCALE_ON) >= 0) {
 			SetTemporaryFlag(uidb.lpdbTop, uidb.dbsize, CNCL_GRAYSCALE, CND_BJGRAYSCALE_ON, 1);
 			CNCL_GetMenulink( &uidb.nominfo, (void *)bjlibdir, uidb.lpdbTop, uidb.dbsize);
-			
+
 			is_grayscale_mode = 1;
 		}
 		else {
@@ -948,14 +948,14 @@ int cmdlinesw(
 	}
 
 
-	/* -- Check --extension option */ 
+	/* -- Check --extension option */
 	if (setopt[OPTINDEX(OPTEXTENSION)] & OPTBIT(OPTEXTENSION)) {
 		if (!(setopt[OPTINDEX(OPTBORDERLESS)] & OPTBIT(OPTBORDERLESS))) {
 			fprintf(stderr, "Error: Cannot select \"--extension\" option without \"--borderless\" \n");
 			goto onError;
 		}
 
-		
+
 		if( formattype == CND_FORMATTYPE_4 ){	/* DB supports extension_level info */
 			/* check value and convert value to CNCL_ID */
 			opt->extension = ConvExtToID( opt->extension );
@@ -1004,37 +1004,37 @@ int cmdlinesw(
 
 	/* PrintQuality (change to appropriate quality automatically(from ver.3.80)) */
 	if (setopt[OPTINDEX(OPTQUALITY)] & OPTBIT(OPTQUALITY)) {
-		
+
 		// high quality
 		if ((opt_quality_max = bjf_get_resource_id( confname, OPTSTRQUALITY, "1" )) == BJFRCACCESSERROR ){
 			fprintf(stderr, "Error: invalid print quality\n");
 			ret = OPT_ERR_QUA - 50;
 			goto onErrorMessage;
 		}
-		
+
 		// high speed
 		if ((opt_quality_min = bjf_get_resource_id( confname, OPTSTRQUALITY, "5" )) == BJFRCACCESSERROR ){
 			fprintf(stderr, "Error: invalid print quality\n");
 			ret = OPT_ERR_QUA - 50;
 			goto onErrorMessage;
 		}
-		
+
 		// specified quality
 		if ((opt_quality_id = bjf_get_resource_id( confname, OPTSTRQUALITY, opt->quality )) == BJFRCACCESSERROR ){
 			fprintf(stderr, "Error: invalid print quality\n");
 			ret = OPT_ERR_QUA - 50;
 			goto onErrorMessage;
 		}
-		
+
 		// default quality
 		def_quality_id = GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_PRINTQUALITY);
-		
+
 		// direction
 		opt_quality_direction = (def_quality_id > opt_quality_id)? 1:-1;
-		
+
 		// decide quality
 		for (quality_idx_span = 0; quality_idx_span < 5; quality_idx_span++){
-			
+
 			// high priority
 			cur_quality_id = opt_quality_id + (quality_idx_span * opt_quality_direction);
 			if (QueryValue(uidb.lpdbTop, uidb.dbsize, CNCL_PRINTQUALITY, cur_quality_id) >= 0) {
@@ -1043,7 +1043,7 @@ int cmdlinesw(
 				opt_quality_decided = 1;
 				break;
 			}
-			
+
 			// low priority
 			cur_quality_id = opt_quality_id - (quality_idx_span * opt_quality_direction);
 			if (QueryValue(uidb.lpdbTop, uidb.dbsize, CNCL_PRINTQUALITY, cur_quality_id) >= 0) {
@@ -1080,7 +1080,7 @@ int cmdlinesw(
 			id = CND_SUPPLY_ASF;
 			change_paperload = 1;
 		}
-		
+
 		if (QueryValue(uidb.lpdbTop, uidb.dbsize, CNCL_MEDIASUPPLY, id) >= 0) {
 			SetTemporaryFlag(uidb.lpdbTop, uidb.dbsize, CNCL_MEDIASUPPLY, id, 1);
 			CNCL_GetMenulink( &uidb.nominfo, (void *)bjlibdir, uidb.lpdbTop, uidb.dbsize);
@@ -1125,7 +1125,7 @@ int cmdlinesw(
 				/* inappropriate selection error. */
 				goto onError;
 			}
-		
+
 		}else{	/* not support duplex */
 			fprintf(stderr, "Error: \"--duplex\" option is not supported by this printer\n");
 			/* inappropriate selection error. */
@@ -1157,14 +1157,14 @@ int cmdlinesw(
 
 	/* Dither Pattern */
 	if (setopt[OPTINDEX(OPTHALFTONE)] & OPTBIT(OPTHALFTONE)) {
-		
+
 		/* halftoning is not supported (from ver.3.60) */
 		if ( formattype >= CND_FORMATTYPE_12 ){
 			fprintf(stderr, "Error: \"--halftoning\" option is not supported by this printer\n");
 			/* inappropriate selection error. */
 			goto onError;
 		}
-		
+
 		if ((id = bjf_get_resource_id( confname, OPTSTRHALFTONE, opt->halftoning )) == BJFRCACCESSERROR ){
 			fprintf(stderr, "Error: invalid halftoning mode\n");
 			ret = OPT_ERR_HAL - 50;
@@ -1192,7 +1192,7 @@ int cmdlinesw(
 				ret = OPT_ERR_GAP - 50;
 				goto onErrorMessage;
 			}
-	
+
 			if (QueryValue(uidb.lpdbTop, uidb.dbsize, CNCL_PAPERGAP_COMMAND, id) >= 0) {
 				SetTemporaryFlag(uidb.lpdbTop, uidb.dbsize, CNCL_PAPERGAP_COMMAND, id, 1);
 				CNCL_GetMenulink( &uidb.nominfo, (void *)bjlibdir, uidb.lpdbTop, uidb.dbsize);
@@ -1202,7 +1202,7 @@ int cmdlinesw(
 				/* inappropriate selection error. */
 				goto onError;
 			}
-		
+
 		}else{	/* not support PaperGap */
 			fprintf(stderr, "Error: \"--papergap\" option is not supported by this printer\n");
 			/* inappropriate selection error. */
@@ -1218,7 +1218,7 @@ int cmdlinesw(
 			ret = OPT_ERR_INT - 50;
 			goto onErrorMessage;
 		}
-		
+
 		if ( id == CND_INTENT_VIVID ){	/* vivid */
 			if( !vivid_support ){	/* "vivid support"check */
 				fprintf(stderr, "Error: inappropriate rendering intent\n");
@@ -1300,22 +1300,22 @@ int cmdlinesw(
 			uidb.bjcolor.bjfltBalanceK = opt->balance_k;
 		}
 	}
-	
+
 	/* Tone (from ver.3.40) */
 	if (setopt[OPTINDEX(OPTTONE)] & OPTBIT(OPTTONE)) {
 		if( formattype < CND_FORMATTYPE_11 || !tone_support){	/* not support tone */
 			fprintf(stderr, "Error: \"--tone\" option is not supported by this printer\n");
 			/* inappropriate selection error. */
 			goto onError;
-			
+
 		} else if ( CNCL_ConfirmBlackAdjMedia( &uidb.nominfo, (void *)bjlibdir, uidb.lpdbTop, uidb.dbsize) <= 0){	/* invalid media */
-			
+
 			/* ignore error, and tone has no change.(from ver.3.80) */
-			
+
 		} else if ( !is_grayscale_mode ){	/* not grayscale mode */
-			
+
 			/* ignore error, and tone has no change.(from ver.3.80) */
-			
+
 		} else {	/* support tone */
 			if ((opt->tone < -50) || (opt->tone > 50)) {
 				fprintf(stderr, "Error: invalid tone value \n");
@@ -1325,7 +1325,7 @@ int cmdlinesw(
 			uidb.bjcolor.bjfltMonochromeTone = opt->tone;
 		}
 	}
-	
+
 	/* contrast */
 	if (setopt[OPTINDEX(OPTCONTRAST)] & OPTBIT(OPTCONTRAST)) {
 		if( formattype >= CND_FORMATTYPE_6 ){	/* support contrast */
@@ -1358,7 +1358,7 @@ int cmdlinesw(
 	if(bjdevice->bjfltPaperSize == CND_SIZE_USER) {
 		psize->nSelPaperWidth = -1;
 		psize->nSelPaperLength = -1;
-		
+
 		/* paperwidth */
 		if (setopt[OPTINDEX(OPTPAPERWIDTH)] & OPTBIT(OPTPAPERWIDTH)) {
 			psize->nSelPaperWidth = convert_str_to_long(opt->paperwidth);
@@ -1375,7 +1375,7 @@ int cmdlinesw(
 				goto onError;
 			}
 		}
-		
+
 		/* if user is set, need to set both paperwidth and paperheight.  */
 		if(psize->nSelPaperWidth == -1 || psize->nSelPaperLength == -1) {
 			fprintf(stderr, "Error: if \"--papersize\" is \"user\",\n");
@@ -1390,7 +1390,7 @@ int cmdlinesw(
 				fprintf(stderr, "Error: Cannot select \"--paperwidth\" and \"--paperheight\" without \"--papersize user\" \n");
 				goto onError;
 		}
-		
+
 		if ( (ret = GetPaperSize( bjdevice->bjfltPaperSize,
 			&bjdevice->bjfltPaperWidth, &bjdevice->bjfltPaperHeight) ) < 0 ) goto onError;
 	}
@@ -1420,7 +1420,7 @@ int cmdlinesw(
 				ret = OPT_ERR_INKCAR - 50;
 				goto onErrorMessage;
 			}
-			
+
 			if (QueryValue(uidb.lpdbTop, uidb.dbsize, CNCL_INKCARTRIDGESETTINGS, id) >= 0) {
 				SetTemporaryFlag(uidb.lpdbTop, uidb.dbsize, CNCL_INKCARTRIDGESETTINGS, id, 1);
 				CNCL_GetMenulink( &uidb.nominfo, (void *)bjlibdir, uidb.lpdbTop, uidb.dbsize);
@@ -1430,14 +1430,14 @@ int cmdlinesw(
 				/* inappropriate selection error. */
 				goto onError;
 			}
-		
+
 		}else{	/* not support inkcartridgesettings */
 			fprintf(stderr, "Error: \"--inkcartridgesettings\" option is not supported by this printer\n");
 			/* inappropriate selection error. */
 			goto onError;
 		}
 	}
-	
+
 	/* Rotate (Ver.3.80) */
 	if (FindValue(uidb.lpdbTop, uidb.dbsize, CNCL_IMG_DIRECTION_CMD, CND_IMG_DIRECTION_CMD_TYPEA) >= 0) {
 		if (setopt[OPTINDEX(OPTROTATE)] & OPTBIT(OPTROTATE)) {
@@ -1465,8 +1465,8 @@ int cmdlinesw(
 	} else {
 		lpbjf_optinfo->rotate = CNCL_IMAGEROTATE_UNDEFINED;
 	}
-	
-	
+
+
 	/* bidi (Ver.3.20) */
 	lpbjf_optinfo->is_ivec = 0;
 	if (formattype >= CND_FORMATTYPE_9){
@@ -1482,7 +1482,7 @@ int cmdlinesw(
 			/* printer does not support ivec */
 		}
 	}
-	
+
 	/* Ver.3.00 */
 	if (formattype >= CND_FORMATTYPE_8){
 		/* Confirm combination of MediaSupply and PaperSize */
@@ -1497,7 +1497,7 @@ int cmdlinesw(
 			fprintf(stderr, "Error: INTERNAL ERROR(%d)\n", __LINE__);
 			goto onError;
 		}
-		
+
 		/* Confirm combination of PaperSize and Duplex */
 		if( duplex_support ){
 			if ((confirm_return_code = CNCL_ConfirmSizeDuplex( &uidb.nominfo, (void *)bjlibdir, uidb.lpdbTop, uidb.dbsize)) == 1){
@@ -1522,7 +1522,7 @@ int cmdlinesw(
 
 	/* Convert "frontplain" to "asf" or "front" */
 	if ( change_paperload ) {
-		if( ( bjdevice->bjfltMediaType == CND_MEDIA_PLAIN ) && 
+		if( ( bjdevice->bjfltMediaType == CND_MEDIA_PLAIN ) &&
 			( ( bjdevice->bjfltPaperSize == CND_SIZE_A4 ) || ( bjdevice->bjfltPaperSize == CND_SIZE_LETTER ) || ( bjdevice->bjfltPaperSize == CND_SIZE_B5 ) ) )
 		{
 			bjdevice->bjfltMediaSupply = CND_SUPPLY_CASSETTE_04;
@@ -1535,21 +1535,21 @@ int cmdlinesw(
 
 	/* bjdevice->bjfltPaperSize is set already. */
 	/*bjdevice->bjfltPaperSize		= GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_PAPERSIZE);*/
-	
+
 	bjdevice->bjfltBinMethod		= GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_DITHER_PAT);
 	if ( bjdevice->bjfltBinMethod == CND_UIBIN_PATTERN_HS  )
 		bjdevice->bjfltBinMethod = CND_UIBIN_PATTERN;
-		
+
 	bjdevice->bjfltBanner			= GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_BANNER);
 	bjdevice->bjfltInkType			= GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_CARTRIDGE);
 	bjdevice->bjfltGrayScale		= GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_GRAYSCALE);
 
 	bjdevice->bjfltMarginType		= GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_MARGINTYPE);
 	if( bjdevice->bjfltMarginType == -1 ) bjdevice->bjfltMarginType = CND_MARGIN_NORMAL;
-	
+
 	bjdevice->bjfltDuplex		= GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_DUPLEX_PRINTING);
 	if( bjdevice->bjfltDuplex == -1 ) bjdevice->bjfltDuplex = CND_DUPLEX_OFF;	/* for models not support duplex */
-	
+
 	bjdevice->bjfltInkcartridgesettings	= GetCurrentnValue(uidb.lpdbTop, uidb.dbsize, CNCL_INKCARTRIDGESETTINGS);
 	if( bjdevice->bjfltInkcartridgesettings == -1 ) bjdevice->bjfltInkcartridgesettings = CND_CARTRIDGE_NA;	/* for models not support inkcartridgesettings */
 
@@ -1592,7 +1592,7 @@ void init_optioninfo( LPBJF_OPTINFO lpbjfoption )
 	lpbjfoption->revprint = REVPRINT_OFF;
 	lpbjfoption->collate = COLLATE_OFF;
 	lpbjfoption->stapleside = STAPLESIDE_LONG;
-	
+
 }
 
 
@@ -1683,17 +1683,17 @@ short CheckSettings( LPBJFLTDEVICE bjdevice , char *confname )
 				fprintf(stderr, "Error: INTERNAL ERROR(%d)\n", __LINE__);
 				goto onError;
 			}
-			
+
 			if( SetCurrentFlag( uidb.lpdbTop, uidb.dbsize, CNCL_MEDIATYPE, bjdevice->bjfltMediaType) < 0) {
 				fprintf(stderr, "Error: INTERNAL ERROR(%d)\n", __LINE__);
 				goto onError;
 			}
-			
+
 			if( SetCurrentFlag( uidb.lpdbTop, uidb.dbsize, CNCL_MARGINTYPE, bjdevice->bjfltMarginType) < 0) {
 				fprintf(stderr, "Error: INTERNAL ERROR(%d)\n", __LINE__);
 				goto onError;
 			}
-			
+
 			short result = CNCL_ConfirmCartrigeMediaMinus( &uidb.nominfo, (void *)bjlibdir, uidb.lpdbTop, uidb.dbsize);
 			if (result == 0){
 				// not supports BK (changes to default value)
@@ -1721,7 +1721,7 @@ short CheckSettings( LPBJFLTDEVICE bjdevice , char *confname )
 			}
 		}
 	}
-	
+
 	/* Check mismatch between fineart media and size */
 	/* for Ver.3.80 fineartsize spec change */
 	if( bjdevice->bjfltModelID >= CND_MG6300 ){
@@ -1735,7 +1735,7 @@ short CheckSettings( LPBJFLTDEVICE bjdevice , char *confname )
 			}
 		}
 	}
-	
+
 	/* to Ver.3.70 */
 	else{
 		if ( ( bjdevice->bjfltMediaType == CND_MEDIA_FINE_ART_PAPER ) || (  bjdevice->bjfltMediaType == CND_MEDIA_OTHER_FINE_ART_PAPER ) ){
@@ -1747,7 +1747,7 @@ short CheckSettings( LPBJFLTDEVICE bjdevice , char *confname )
 				goto onError;
 			}
 		}
-	
+
 		if (( bjdevice->bjfltPaperSize == CND_SIZE_A4_FINE_ART ) || ( bjdevice->bjfltPaperSize == CND_SIZE_LETTER_FINE_ART )){
 			if ( ( bjdevice->bjfltMediaType != CND_MEDIA_FINE_ART_PAPER ) && (  bjdevice->bjfltMediaType != CND_MEDIA_OTHER_FINE_ART_PAPER ) ){
 				fprintf(stderr, "Error: You cannot print with following combination\n\tpapersize: %s\n",
@@ -1758,7 +1758,7 @@ short CheckSettings( LPBJFLTDEVICE bjdevice , char *confname )
 			}
 		}
 	}
-	
+
 
 
 	result = 0;
@@ -1783,10 +1783,10 @@ static short ParseBbox(char *bbox , LPBJF_OPTINFO lpbjf_optinfo)
 	short			i=0,j=0;
 	char			param[24];
 	short			result=-1;
-	
-	
+
+
 	if(!bbox) return result;
-	
+
 	do{
 		j=0;
 
@@ -1799,20 +1799,20 @@ static short ParseBbox(char *bbox , LPBJF_OPTINFO lpbjf_optinfo)
 		if( (*bbox!=',') && (*bbox!='\0')){
 			return result;
 		}
-		
+
 		if( i > 3 ) return result;
 		param[j]=0x00;
 		lpbjf_optinfo->bbox.value[i] = atol(param);
-		
+
 		if( (lpbjf_optinfo->bbox.value[i]) < 0) return result;
-		
+
 		i++;
 	}while( *bbox++ );
-	
+
 	if( i !=4 ) return result;
-	
+
 	return 0;
-		
+
 }
 
 
@@ -1823,12 +1823,12 @@ static long convert_str_to_long(char *str)
 {
 	long	value = 0L;
 	char	c;
-	
+
 	while(c = *str)
 	{
 		if(c < '0' || '9' < c)
 			return -2; /* invalid value */
-		
+
 		value = value * 10 + ( c - '0' );
 		str++;
 	}

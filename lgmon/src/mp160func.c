@@ -25,7 +25,7 @@
 
 
 /*
- * mp160func.c 
+ * mp160func.c
  *
  * A processing function group peculiar to a model.
  */

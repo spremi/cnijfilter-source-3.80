@@ -25,7 +25,7 @@
 
 
 /*
- * mg5400tbl.c 
+ * mg5400tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */

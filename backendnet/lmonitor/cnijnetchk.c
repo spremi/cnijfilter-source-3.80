@@ -68,7 +68,7 @@ static int isPrinterWorking(CNNLHANDLE h, const int retry, const unsigned long t
 unsigned long get_packet_size(CNNLHANDLE h, int model){
 	int support_type=0;
 	unsigned long data_size=0;
-	
+
 	if (CNNL_GetExtensionSupport(h, &support_type, 5, 15000) == CNNL_RET_SUCCESS){
 		if (support_type == CNNL_COMMAND_SUPPORT){
 			/* supports */
@@ -86,7 +86,7 @@ unsigned long get_packet_size(CNNLHANDLE h, int model){
 				{367,	10},
 				{-1,	-1}
 			};
-			
+
 			for (p=size_table; p->model>0; p++){
 				if (p->model == model){
 					return p->packet_size*1024;
@@ -103,19 +103,19 @@ unsigned long get_packet_size(CNNLHANDLE h, int model){
 int parse_options(OPTIONTABLE *start, int argc, char **argv){
 	int i=0;
 	OPTIONTABLE *current = start;
-	
+
 	memset(start, 0x00, sizeof(OPTIONTABLE));
-	
+
 	for (i=0; i<argc; i++){
 		char *p = argv[i];
-		
+
 		if (strlen(p) > 3 && p[0] == '-' && p[1] == '-'){
 			char *option = &p[0];
-			
+
 			current->next = (OPTIONTABLE *)malloc(sizeof(OPTIONTABLE));
 			if (current->next != NULL){
 				memset(current->next, 0x00, sizeof(OPTIONTABLE));
-			
+
 				current = current->next;
 				strncpy(current->key, option, sizeof(current->key)-1);
 			} else {
@@ -136,7 +136,7 @@ int parse_options(OPTIONTABLE *start, int argc, char **argv){
 ********************************************************************************/
 int get_options(OPTIONTABLE *start, const char *key, char *val, const int size){
 	OPTIONTABLE *current;
-	
+
 	for (current=start; current!=NULL; current=current->next){
 		//fprintf(stderr, "MATCH: %s <=> %s\n",current->key, key);
 		if (strcmp(current->key, key)==0){
@@ -156,7 +156,7 @@ int get_options(OPTIONTABLE *start, const char *key, char *val, const int size){
 ********************************************************************************/
 void release_options(OPTIONTABLE *start){
 	OPTIONTABLE *current, *p;
-	
+
 	for (current=start; current->next!=NULL; ){
 		p = current->next;
 		if (current != start) free(current);
@@ -171,12 +171,12 @@ int sendData(CNNLHANDLE hnd, void *buffer, unsigned long size, int sendmode, FIL
 	unsigned long wsize=0, res_size=0, req_size=0;
 	int ret, status;
 	time_t lastchecktime=0;
-	
+
 	while (!(mode & CNNL_JOB_ERROR) && !(mode & CNNL_JOB_CANCELLED) && wsize < size){
-		
+
 		req_size = (size - wsize > packet_size)? packet_size: (size - wsize);
 		ret = CNNL_DataWrite(hnd, buffer+wsize, req_size, &res_size, 5, 30000);
-		
+
 		if (ret == CNNL_RET_SUCCESS){
 			wsize += res_size;
 		} else if (ret == CNNL_RET_FAILURE){
@@ -186,7 +186,7 @@ int sendData(CNNLHANDLE hnd, void *buffer, unsigned long size, int sendmode, FIL
 			wsize += res_size;
 			usleep(40*1000);
 		}
-		
+
 		/* check power off */
 		if (time(NULL) - lastchecktime > 4){
 			if (sendmode != SEND_IVEC){
@@ -199,7 +199,7 @@ int sendData(CNNLHANDLE hnd, void *buffer, unsigned long size, int sendmode, FIL
 			lastchecktime = time(NULL);
 		}
 		usleep(40*1000);
-		
+
 		CheckParentProcess(hnd);
 	}
 	return 0;
@@ -212,12 +212,12 @@ int dispatchCommandIVEC(CNNLHANDLE hnd, int type){
 	char command_buffer[CNCL_MAKECOMMAND_BUF_LEN];
 	char read_buffer[4096];
 	static char job_id[16];
-	
+
 	unsigned long timeout = 6000;
 	int error_count=0;
-	
+
 	memset(command_buffer, 0x00, sizeof(command_buffer));
-	
+
 	switch (type){
 		case CNCL_COMMAND_START1:
 			memset(job_id, 0x00, sizeof(job_id));
@@ -247,25 +247,25 @@ int dispatchCommandIVEC(CNNLHANDLE hnd, int type){
 		default:
 			return -1;
 	}
-	
+
 	/* send */
 	if (sendData(hnd, command_buffer, strlen(command_buffer), SEND_IVEC, NULL) < 0){
 		fprintf(stderr, "DEBUG: [cnijnetprn] dispatchCommandIVEC failed(%d)\n", __LINE__);
 		return -1;
 	}
-	
+
 	/* poweron command is not need to check response */
 	if (type == CNCL_CHECK_POWERON){
 		return 0;
 	}
-	
+
 	/* receive */
 	while (!(mode & CNNL_JOB_ERROR) && !(mode & CNNL_JOB_CANCELLED)){
 		unsigned long rsize = 0;
 		memset(read_buffer, 0x00, sizeof(read_buffer));
-		
+
 		usleep(1000*1000);
-		
+
 		int result = CNNL_DataRead(hnd, read_buffer, &rsize, sizeof(read_buffer), 3, timeout);
 		fprintf(stderr, "DEBUG: [cnijnetprn] dispatchCommandIVEC Receive(type=%d, result=%d, err=%d)\n", type, result, error_count);
 
@@ -299,10 +299,10 @@ int dispatchCommandIVEC(CNNLHANDLE hnd, int type){
 static int getPrinterStatus(CNNLHANDLE hnd, char *buf, unsigned long size){
 	char read_buffer[4096], status_buffer[4096];
 	unsigned long rsize = 0, ssize=0, copysize=0;
-	
+
 	memset(read_buffer, 0x00, sizeof(read_buffer));
 	memset(buf, 0x00, sizeof(size));
-	
+
 	fprintf(stderr, "DEBUG: [cnijnetprn] getPrinterStatus starts.\n");
 	if (CNNL_DataRead(hnd, read_buffer, &rsize, sizeof(read_buffer), 3, 6000) == CNNL_RET_SUCCESS){
 		short short_ssize = (short)ssize;
@@ -313,7 +313,7 @@ static int getPrinterStatus(CNNLHANDLE hnd, char *buf, unsigned long size){
 			memcpy(buf, status_buffer, copysize);
 			return 0;
 		} else {
-			
+
 			return 0;
 		}
 	}
@@ -328,30 +328,30 @@ static int getPrinterStatus(CNNLHANDLE hnd, char *buf, unsigned long size){
 static int getStatusCode(const char *src, const char *key, const char *val, const int index){
 	int i, j, start=-1;
 	int len = 0, keylen=0;
-	unsigned long bufsize=0; 
+	unsigned long bufsize=0;
 	char result[1024];
 	char tmp[1024], *buf=NULL;
-	
+
 	if (src==NULL) return CNNL_RET_FAILURE;
 	if (key==NULL) return CNNL_RET_FAILURE;
-	
-	bufsize = (src[0] << 8) + src[1]; 
+
+	bufsize = (src[0] << 8) + src[1];
 	buf = (char*)&(src[2]);
 
 	len = strlen(buf);
 	if (len > 1023) len = 1023;
-	
+
 	keylen = strlen(key);
-	
+
 	memset(tmp, 0, sizeof(tmp));
 	memset(result, 0, sizeof(result));
 	memcpy(tmp, buf, len);
-	
+
 	// split string
 	for (i=0; i<len; i++){
 		if (tmp[i] == ';') tmp[i]='\0';
 	}
-	
+
 	for (i=0; i<len; i++){
 		if (strncmp((char *)&tmp[i], key, keylen) == 0){
 			start = i+keylen;
@@ -360,7 +360,7 @@ static int getStatusCode(const char *src, const char *key, const char *val, cons
 		if (start>=0 && tmp[i] == '\0'){
 			len = i - start;
 			if (len > 1023) len=1023;
-			
+
 			if (index < 0){
 				strncpy(result, (char *)(tmp+start), len);
 				goto success;
@@ -377,13 +377,13 @@ static int getStatusCode(const char *src, const char *key, const char *val, cons
 					}
 					if (*(char *)(tmp+start+j) == ',') tmp_idx++;
 				}
-				
+
 				goto success;
 			}
 		}
 	}
 	return CNNL_RET_FAILURE;
-	
+
 success:
 	if (strncmp((char *)&result, val, sizeof(result)) == 0){
 		return CNNL_RET_SUCCESS;
@@ -400,10 +400,10 @@ static int isPrinterWorking(CNNLHANDLE h, const int retry, const unsigned long t
 	char *buf;
 	char buffer[512];
 	unsigned long readsz = 0;
-	
+
 	fprintf(stderr, "DEBUG: [cnijnetprn] IsPrinterWorking starts.\n");
 	CheckParentProcess(h);
-	
+
 	if (CNNL_GetDeviceID(h, buffer, &readsz, sizeof(buffer), 3, 6000) != CNNL_RET_SUCCESS){
 		return CNNL_RET_FAILURE;
 	} else {
@@ -418,7 +418,7 @@ static int isPrinterWorking(CNNLHANDLE h, const int retry, const unsigned long t
 		return CNNL_RET_FAILURE;
 	} else {
 		buf = buffer+2;
-		
+
 		// check wether job is cancelled by cancel button
 		if (getStatusCode((char *)buf, "DJS:", "CC", 1) == CNNL_RET_SUCCESS){
 			mode |= CNNL_JOB_CANCELLED;
@@ -428,27 +428,27 @@ static int isPrinterWorking(CNNLHANDLE h, const int retry, const unsigned long t
 			mode |= CNNL_JOB_CANCELLED;
 			return CNNL_RET_SUCCESS;
 		}
-		
+
 		// check wether printer is work
 		if (getStatusCode((char *)buf, "DBS:", "DS", 1) == CNNL_RET_SUCCESS) return CNNL_RET_NOT_WORKING;
-		
+
 		// check wether printer is poweroff
 		if (getStatusCode((char *)buf, "DBS:", "SL", 1) == CNNL_RET_SUCCESS) return CNNL_RET_POWEROFF;
 		if (getStatusCode((char *)buf, "DBS:", "SD", 1) == CNNL_RET_SUCCESS) return CNNL_RET_POWEROFF;
-		
+
 		// check wether printer is work
 		if (getStatusCode((char *)buf, "DBS:", "NO", 1) != CNNL_RET_SUCCESS
 		 && getStatusCode((char *)buf, "DBS:", "UK", 1) != CNNL_RET_SUCCESS) return CNNL_RET_SUCCESS;
-			
+
 		// check pid
 		if (getStatusCode((char *)buf, "PID:", "00", 2) != CNNL_RET_SUCCESS) return CNNL_RET_SUCCESS;
-		
+
 		// check doc
 		if (getStatusCode((char *)buf, "DOC:", "NO", 3) != CNNL_RET_SUCCESS) return CNNL_RET_SUCCESS;
-			
+
 		// check dsc
 		if (getStatusCode((char *)buf, "DSC:", "NO", 1) != CNNL_RET_SUCCESS) return CNNL_RET_SUCCESS;
-		
+
 		return CNNL_RET_NOT_WORKING;
 	}
 }
@@ -493,7 +493,7 @@ int CheckParentProcess(CNNLHANDLE h){
 	if (getppid() == 1){
 		CNNL_Abort(h);
 		mode |= CNNL_JOB_CANCELLED;
-	}	
+	}
 	return 0;
 }
 

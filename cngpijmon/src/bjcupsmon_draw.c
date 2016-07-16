@@ -180,7 +180,7 @@ PRIVATE GdkBitmap	**gpMask[CARTRIDGE_PIXMAP_NUM];	// Set of masks.
 
 PRIVATE gchar		gPixmapDirectory[MAX_BUF_SIZE];	// Directory path pixmap file exists
 
-PRIVATE guint		gCartridgeWidth[CARTRIGE_TYPE_NUM] = {108, 57, 0, 74, 82, 40, 40, 108, 99, 125, 142, 41, 41, 41, 41, 103, 114, 141, 84, 89, 41, 41, 52, 52, 103, 103, 122, 0, 41, 103, 122  };	
+PRIVATE guint		gCartridgeWidth[CARTRIGE_TYPE_NUM] = {108, 57, 0, 74, 82, 40, 40, 108, 99, 125, 142, 41, 41, 41, 41, 103, 114, 141, 84, 89, 41, 41, 52, 52, 103, 103, 122, 0, 41, 103, 122  };
                                                          /* ip2200(black), ip2200(color), ip2200(black_hc), ip2200(color_hc), ip4200, ip6600D, ip7500, ip3300, ip100, ip2200(black_mn), ip2200(color_mn), ip90, ip90(CIL:OFF) */
                                                          /* iP4600, iP3600, MG8100, dummy, ip2200(black_ex), MG5400, MG6300 */
 /*PRIVATE guint		gCartridgeWidth[CARTRIGE_TYPE_NUM] = {108, 57, 0, 74, 82, 40, 40, 108, 99, 125, 142, 41, 41, 41, 41, 103, 114, 141, 84, 89, 41, 41, 52, 52, 103, 103, 122, 0, 41  };	*/
@@ -2245,7 +2245,7 @@ PRIVATE ST_CartridgeXPMFileInfo	gCartridgeXPMFileInfo[] = {
 	{STR_PIXMAP_FILE_NAME_ICON_LOW_D2,		&gpIconLowD2,	&gpMaskIconLowD2},
 	{STR_PIXMAP_FILE_NAME_ICON_OUT_D2,		&gpIconOutD2,	&gpMaskIconOutD2},
 	{STR_PIXMAP_FILE_NAME_ICON_REFILL_D,	&gpIconRefillD,	&gpMaskIconRefillD},
-	
+
 	{STR_PIXMAP_FILE_NAME_BLACK_INK15,		&gpInk15,		&gpMaskInk15},
 	{STR_PIXMAP_FILE_NAME_BLACK_INK16,		&gpInk16,		&gpMaskInk16},
 	{STR_PIXMAP_FILE_NAME_BLACK_INK15UNDER,	&gpInk15Under,	&gpMaskInk15Under},
@@ -2269,12 +2269,12 @@ PRIVATE ST_CartridgeXPMFileInfo	gCartridgeXPMFileInfo[] = {
 
 /*** Functions ***/
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PUBLIC void initDrawing(void)
 // IN     : None.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PUBLIC void initDrawing(void)
 {
 	gpInk[ID_PIXMAP_BK] = &gpInkBK;
@@ -2322,26 +2322,26 @@ PUBLIC void initDrawing(void)
 	gpMask[ID_PIXMAP_C2] = &gpMask24C;
 	gpMask[ID_PIXMAP_B0] = &gpMaskInk15;
 	gpMask[ID_PIXMAP_C0] = &gpMaskInk16;
-	
+
 	// Get pixmap directory.
 	memset(gPixmapDirectory,0,MAX_BUF_SIZE);
-	strncpy(gPixmapDirectory, STR_SHARE_DIRECTORY_NAME, 
+	strncpy(gPixmapDirectory, STR_SHARE_DIRECTORY_NAME,
 	(MAX_BUF_SIZE<(strlen(STR_SHARE_DIRECTORY_NAME)+strlen(STR_PIXMAP_DIRECTORY_NAME)+1))? MAX_BUF_SIZE:strlen(STR_SHARE_DIRECTORY_NAME)+strlen(STR_PIXMAP_DIRECTORY_NAME)+1);
 	strcat(gPixmapDirectory, "/");
 	strncat(gPixmapDirectory, STR_PIXMAP_DIRECTORY_NAME, strlen(STR_PIXMAP_DIRECTORY_NAME));
-	
+
 	return;
 }// End initDrawing
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PUBLIC void updateCartridgePictArea(ST_PrinterStatus *pPrinterStatus, gboolean draw)
 // IN     : ST_PrinterStatus *pPrinterStatus : Information of printer status.
 //          gboolean draw : Re-draw pictures of cartridge drawing area or not.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PUBLIC void updateCartridgePictArea(ST_PrinterStatus *pPrinterStatus, gboolean draw)
 {
 /*** Parameters start ***/
@@ -2356,14 +2356,14 @@ extern gint pictDrawFlg;
 
 	if (pPrinterStatus != NULL) {
 		widget = lookupWidget((const gchar*)STR_MAIN_DRAW_CARTRIDGE);
-		
+
 		if (!(widget->window))
 			return;
-		
+
 		drawPixmaps(widget, pPrinterStatus);
 
 //		printf("draw : %d \n",draw);
-		
+
 		if (draw == TRUE) {
 			updateRect.x = 0;
 			updateRect.y = 0;
@@ -2378,47 +2378,47 @@ extern gint pictDrawFlg;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PUBLIC void clearCartridgePictArea(void)
 // IN     : None.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PUBLIC void clearCartridgePictArea(void)
 {
 /*** Parameters start ***/
 	GtkWidget		*widget = NULL;	// Temporary pointer to widget.
 	GdkRectangle	updateRect;		// Area to re-draw,
 /*** Parameters end ***/
-	
+
 	freePixmaps();
-	
+
 	widget = lookupWidget((gchar*)STR_MAIN_DRAW_CARTRIDGE);
 
 	if (!widget->window)
 		return;
-	
+
 	gpPixmap = gdk_pixmap_new(widget->window, widget->allocation.width, widget->allocation.height, -1);
 	gdk_draw_rectangle(gpPixmap, widget->style->bg_gc[GTK_WIDGET_STATE(widget)], TRUE, 0, 0, widget->allocation.width, widget->allocation.height);
-	
+
 	updateRect.x = 0;
 	updateRect.y = 0;
 	updateRect.width = widget->allocation.width;
 	updateRect.height = widget->allocation.height;
 	gtk_widget_draw(widget, &updateRect);
-	
+
 	return;
 }// End clearCartrigePictArea
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE void drawPixmaps(GtkWidget *widget, ST_PrinterStatus *pPrinterStatus)
 // IN     : GtkWidget *widget : Pointer to widget of drawing area.
 //          ST_PrinterStatus *pPrinterStatus : Information of printer status.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PRIVATE void drawPixmaps(GtkWidget *widget, ST_PrinterStatus *pPrinterStatus)
 {
 /*** Parameters start ***/
@@ -2427,12 +2427,12 @@ PRIVATE void drawPixmaps(GtkWidget *widget, ST_PrinterStatus *pPrinterStatus)
 	gint	index[2];		// Cartridge index.
 	gint	i, j;			// Counter.
 /*** Parameters end ***/
-	
+
 	freePixmaps();
 
 	gpPixmap = gdk_pixmap_new(widget->window, widget->allocation.width, widget->allocation.height, -1);
 	gdk_draw_rectangle(gpPixmap, widget->style->bg_gc[GTK_WIDGET_STATE(widget)], TRUE, 0, 0, widget->allocation.width, widget->allocation.height);
-	
+
 	for (i = 0; i < 2; i++) {
 		if (pPrinterStatus->cartridgeClass[i].type >= ID_CARTRIDGE_TYPE_PHOTO ) {
 			index[i] = pPrinterStatus->cartridgeClass[i].type - ID_CARTRIDGE_TYPE_PHOTO;
@@ -2446,23 +2446,23 @@ PRIVATE void drawPixmaps(GtkWidget *widget, ST_PrinterStatus *pPrinterStatus)
 			index[i] = -1;
 		}
 	}
-	
+
 	gDW = (widget->allocation.width - totalWidth) >> 1;
 	gDH = (widget->allocation.height - MAX_PIXMAP_HEIGHT) >> 1;
-	
+
 	for (i = 0; i < 2; i++) {
 		if (index[i] != -1) {
 			loadPixmaps(widget, &(pPrinterStatus->cartridgeClass[i]));
-			
+
 			for (j = 0; j < MAX_PIXMAP_NUM; j++) {
 				if (gPatternTable[index[i]][j].pixmapID == -1) {
 					break;
 				}
 
 				gdk_gc_set_clip_mask(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], *gpMask[gPatternTable[index[i]][j].pixmapID]);
-				
+
 				gdk_gc_set_clip_origin(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], gDW + xoffset, gDH + PIXMAP_Y_OFFSET);
-				
+
 				gdk_draw_pixmap(gpPixmap,
 								widget->style->bg_gc[GTK_WIDGET_STATE(widget)],
 								*gpInk[gPatternTable[index[i]][j].pixmapID],
@@ -2489,21 +2489,21 @@ PRIVATE void drawPixmaps(GtkWidget *widget, ST_PrinterStatus *pPrinterStatus)
 						drawInkLevelPixmap(widget, &(pPrinterStatus->cartridgeClass[i]), gPatternTable[index[i]][j].pixmapID, pPrinterStatus->cartridgeStatus[gPatternTable[index[i]][j].pixmapID].level, gDW + xoffset, gDH );
 					}
 				}
-				
+
 				xoffset += gPatternTable[index[i]][j].width;
 			}
-			
+
 			//Ver.2.70 Delete space CL and Bk
 			//xoffset += 6;
 		}
 	}
-	
+
 	return;
 }// End drawPixmaps
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE void drawInkLevelPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClass, ENUM_CartridgePixmapID colorID, ENUM_InkLevelID inkLevel, guint xoffset)
 // IN     : GtkWidget *widget : Pointer to widget of drawing area.
 //          ST_PrinterStatus *pPrinterStatus : Information of printer status.
@@ -2512,7 +2512,7 @@ PRIVATE void drawPixmaps(GtkWidget *widget, ST_PrinterStatus *pPrinterStatus)
 //          guint xoffset : X offset.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PRIVATE void drawInkLevelPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClass, ENUM_CartridgePixmapID colorID, ENUM_InkLevelID inkLevel, guint xoffset, guint yoffset)
 {
 /*** Parameters start ***/
@@ -2601,9 +2601,9 @@ PRIVATE void drawInkLevelPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridge
 		}
 	}
 	else if (colorID == ID_PIXMAP_C) {
-		if( pCartridgeClass->type == ID_CARTRIDGE_TYPE_BLACK_ip2200 
-		 || pCartridgeClass->type == ID_CARTRIDGE_TYPE_COLOR_ip2200 
-		 || pCartridgeClass->type == ID_CARTRIDGE_TYPE_BLACK_MN_ip2200 
+		if( pCartridgeClass->type == ID_CARTRIDGE_TYPE_BLACK_ip2200
+		 || pCartridgeClass->type == ID_CARTRIDGE_TYPE_COLOR_ip2200
+		 || pCartridgeClass->type == ID_CARTRIDGE_TYPE_BLACK_MN_ip2200
 		 || pCartridgeClass->type == ID_CARTRIDGE_TYPE_COLOR_MN_ip2200
 		 || pCartridgeClass->type == ID_CARTRIDGE_TYPE_BLACK_HC_ip2200
 		 || pCartridgeClass->type == ID_CARTRIDGE_TYPE_COLOR_HC_ip2200
@@ -2706,7 +2706,7 @@ PRIVATE void drawInkLevelPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridge
 		}
 	}
 
-	else if ((pCartridgeClass->type == ID_CARTRIDGE_TYPE_PHOTO 
+	else if ((pCartridgeClass->type == ID_CARTRIDGE_TYPE_PHOTO
 			  || pCartridgeClass->type == ID_CARTRIDGE_TYPE_PHOTO2
 			  || pCartridgeClass->type == ID_CARTRIDGE_TYPE_PHOTO_990i
 			  || pCartridgeClass->type == ID_CARTRIDGE_TYPE_PHOTO_ip8600i)
@@ -2797,11 +2797,11 @@ PRIVATE void drawInkLevelPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridge
 			bmp = &gpMaskOut;
 		}
 	}
-	
+
 	if (pix != NULL && bmp != NULL) {
 		gdk_gc_set_clip_mask(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], *bmp);
 		gdk_gc_set_clip_origin(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], xoffset, yoffset);
-		
+
 		gdk_draw_pixmap(gpPixmap,
 						widget->style->bg_gc[GTK_WIDGET_STATE(widget)],
 						*pix,
@@ -2811,16 +2811,16 @@ PRIVATE void drawInkLevelPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridge
 						yoffset, /* gDH, */
 						widget->allocation.width,
 						widget->allocation.height);
-		
+
 		gdk_gc_set_clip_mask(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], NULL);
 	}
-	
+
 	return;
 }// End drawInkLevelPixmap
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE void drawIconPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClass, ENUM_CartridgePixmapID colorID, ENUM_InkStatusID stat, ST_PrinterStatus *pPrinterStatus, guint xoffset, guint yoffset)
 // IN     : GtkWidget *widget : Pointer to widget of drawing area.
 //          ST_PrinterStatus *pPrinterStatus : Information of printer status.
@@ -2829,14 +2829,14 @@ PRIVATE void drawInkLevelPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridge
 //          guint xoffset : X offset.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PRIVATE void drawIconPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClass, ENUM_CartridgePixmapID colorID, ENUM_InkStatusID stat, ENUM_STSMessageID *msgid, gint msgnum, ST_PrinterStatus *pPrinterStatus, guint xoffset, guint yoffset )
 {
 	GdkPixmap 			**pix = NULL;	// Pointer to pixmap.
 	GdkBitmap 			**bmp = NULL;	// Pointer to mask.
 	int					draw_flg = 0;
 	//int				noticondraw_flg = 0;
-	
+
 	if( pCartridgeClass->type < ID_CARTRIDGE_TYPE_BLACK_ip2200 )
 		return;
 
@@ -2873,7 +2873,7 @@ PRIVATE void drawIconPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClas
 				pix = &gpIconLowW;
 				bmp = &gpMaskIconLowW;
 			}
-			else if(   colorID == ID_PIXMAP_C 
+			else if(   colorID == ID_PIXMAP_C
 					|| colorID == ID_PIXMAP_B ) {
 				pix = &gpIconLowD;
 				bmp = &gpMaskIconLowD;
@@ -2966,13 +2966,13 @@ PRIVATE void drawIconPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClas
 			/* B-36 CIR:UK,CTK:RUK (independent) */
 			/* B-38 CIR:UK,CTK:IUK2 (Dispo) */
 			if( pPrinterStatus->unknownicon_drawflag == 1 )
-				draw_flg = 1;		// unknown icon 
+				draw_flg = 1;		// unknown icon
 			if( draw_flg ) {
 				if( colorID == ID_PIXMAP_BB ) {
 					pix = &gpIconRefillW;
 					bmp = &gpMaskIconRefillW;
 				}
-				else if(   colorID == ID_PIXMAP_C 
+				else if(   colorID == ID_PIXMAP_C
 						|| colorID == ID_PIXMAP_B ) {
 					pix = &gpIconRefillD;
 					bmp = &gpMaskIconRefillD;
@@ -3005,17 +3005,17 @@ PRIVATE void drawIconPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClas
 						yoffset, /* gDH, */
 						widget->allocation.width,
 						widget->allocation.height);
-		
+
 		gdk_gc_set_clip_mask(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], NULL);
 	}
-	
+
 	return;
 
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE void drawBottomPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClass, ENUM_CartridgePixmapID colorID, ENUM_InkLevelID inkLevel, guint xoffset, guint yoffset )
 // IN     : GtkWidget *widget : Pointer to widget of drawing area.
 //          ST_PrinterStatus *pPrinterStatus : Information of printer status.
@@ -3024,7 +3024,7 @@ PRIVATE void drawIconPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClas
 //          guint xoffset : X offset.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PRIVATE void drawBottomPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeClass, ENUM_CartridgePixmapID colorID, ENUM_InkLevelID inkLevel, guint xoffset, guint yoffset )
 {
 	GdkPixmap 			**pix = NULL;	// Pointer to pixmap.
@@ -3056,23 +3056,23 @@ PRIVATE void drawBottomPixmap(GtkWidget *widget, ST_CartridgeClass *pCartridgeCl
 						yoffset, /* gDH, */
 						widget->allocation.width,
 						widget->allocation.height);
-		
+
 		gdk_gc_set_clip_mask(widget->style->bg_gc[GTK_WIDGET_STATE(widget)], NULL);
 	}
-	
+
 	return;
 
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE gchar* checkFileExists(const gchar *pDirectory, const gchar *pFileName)
 // IN     : const gchar *pDirectory : Directory name of XPM file exists.
 //          const gchar *pFileName : XPM file name.
 // OUT    : None.
 // RETURN : Full pathname of XPM file. If NULL, XPM file not exist.
-// 
+//
 PRIVATE gchar* checkFileExists(const gchar *pDirectory, const gchar *pFileName)
 {
 /*** Parameters start ***/
@@ -3080,27 +3080,27 @@ PRIVATE gchar* checkFileExists(const gchar *pDirectory, const gchar *pFileName)
 	struct stat	fileInfo;				// File information.
 	gint		retVal;					// Return value.
 /*** Parameters start ***/
-	
+
 	pFullFileName = (gchar*)g_malloc(strlen(pDirectory) + 1 + strlen(pFileName) + 1);
 	memset(pFullFileName, 0, (strlen(pDirectory) + 1 + strlen(pFileName) + 1));
 	if (pFullFileName != NULL) {
 		strncpy(pFullFileName, pDirectory, strlen(pDirectory));
 		strcat(pFullFileName, "/");
 		strncat(pFullFileName, pFileName, strlen(pFileName));
-		
+
 		retVal = stat(pFullFileName, &fileInfo);
 		if (retVal != 0 || S_ISREG(fileInfo.st_mode) == 0) {
 			g_free(pFullFileName);
 			pFullFileName = NULL;
 		}
 	}
-	
+
 	return(pFullFileName);
 }// End checkFileExists
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE gint loadPixmap(GdkPixmap **gdkpixmap, GtkWidget *widget, GdkBitmap **mask, const gchar *pDirectory, const gchar *pFileName)
 // IN     : GtkWidget *widget : Pointer to widget of drawing area.
 //          const gchar *pDirectory : Directory name of XPM file exists.
@@ -3109,14 +3109,14 @@ PRIVATE gchar* checkFileExists(const gchar *pDirectory, const gchar *pFileName)
 //          GdkBitmap **mask : Pointer to mask.
 // RETURN : ID_ERR_NO_ERROR : No error.
 //          ID_ERR_LOAD_PIXMAP_FAILED : Load pixmap failed.
-// 
+//
 PRIVATE gint loadPixmap(GdkPixmap **gdkpixmap, GtkWidget *widget, GdkBitmap **mask, const gchar *pDirectory, const gchar *pFileName)
 {
 /*** Parameters start ***/
 	gchar	*pFullFileName = NULL;		// Pointer to full file name.
 	gint	retVal = ID_ERR_NO_ERROR;	// Return value.
 /*** Parameters end ***/
-	
+
 	if (*gdkpixmap == NULL) {
 		// Check file exists.
 		pFullFileName = checkFileExists(pDirectory, pFileName);
@@ -3132,19 +3132,19 @@ PRIVATE gint loadPixmap(GdkPixmap **gdkpixmap, GtkWidget *widget, GdkBitmap **ma
 			retVal = ID_ERR_LOAD_PIXMAP_FAILED;
 		}
 	}
-	
+
 	return(retVal);
 }// End loadPixmap
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE void loadPixmaps(GtkWidget *widget, ST_CartridgeClass *pCartridge)
 // IN     : GtkWidget *widget : Pointer to widget of drawing area.
 //          ST_CartridgeClass *pCartridge : Information of cartridge classfication.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PRIVATE void loadPixmaps(GtkWidget *widget, ST_CartridgeClass *pCartridge)
 {
 /*** Parameters start ***/
@@ -3152,7 +3152,7 @@ PRIVATE void loadPixmaps(GtkWidget *widget, ST_CartridgeClass *pCartridge)
 	gint					XPMFileID = -1;	// XPM file ID.
 	gint					i = 0;			// Counter.
 /*** Parameters end ***/
-	
+
 	if (pCartridge->type >= ID_CARTRIDGE_TYPE_PHOTO) {
 		if (pCartridge->type == ID_CARTRIDGE_TYPE_COLOR_S300) {
 			XPMFileID = (pCartridge->type - ID_CARTRIDGE_TYPE_PHOTO) * 2;
@@ -3167,7 +3167,7 @@ PRIVATE void loadPixmaps(GtkWidget *widget, ST_CartridgeClass *pCartridge)
 			}
 		}
 	}
-	
+
 	if (XPMFileID > -1) {
 		while (gCartridgeXPMFileSet[XPMFileID][i] != NULL && i < CARTRIDGE_XPM_SET_NUM) {
 			memset(&XPMFileInfo, 0, sizeof(ST_CartridgeXPMFileInfo));
@@ -3178,25 +3178,25 @@ PRIVATE void loadPixmaps(GtkWidget *widget, ST_CartridgeClass *pCartridge)
 			i++;
 		}
 	}
-	
+
 	return;
 }// End loadPixmaps
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE void getXPMFileInfo(gchar *pXPMFileName, ST_CartridgeXPMFileInfo *pXPMFileInfo)
 // IN     : gchar *pXPMFileName : XPM file name.
 // OUT    : ST_CartridgeXPMFileInfo *pXPMFileInfo : XPM file information.
 // RETURN : None.
-// 
+//
 PRIVATE void getXPMFileInfo(gchar *pXPMFileName, ST_CartridgeXPMFileInfo *pXPMFileInfo)
 {
 /*** Parameters start ***/
 	gint	tableSize = sizeof(gCartridgeXPMFileInfo) / sizeof(ST_CartridgeXPMFileInfo);	// Size of XPM file info table.
 	gint	i = 0;		// Counter.
 /*** Parameters start ***/
-	
+
 	if (pXPMFileInfo != NULL) {
 		while (i < tableSize) {
 			if (strcmp(gCartridgeXPMFileInfo[i].pXPMFileName, pXPMFileName) == 0) {
@@ -3206,19 +3206,19 @@ PRIVATE void getXPMFileInfo(gchar *pXPMFileName, ST_CartridgeXPMFileInfo *pXPMFi
 			i++;
 		}
 	}
-	
+
 	return;
 }// End getXPMFileInfo
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PRIVATE void freePixmap(GdkPixmap **gdkpixmap, GdkBitmap **mask)
 // IN     : GdkPixmap **gdkpixmap : Pointer to pixmap.
 //          GdkBitmap **mask : Pointer to mask.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PRIVATE void freePixmap(GdkPixmap **gdkpixmap, GdkBitmap **mask)
 {
 	if (gdkpixmap != NULL) {
@@ -3237,25 +3237,25 @@ PRIVATE void freePixmap(GdkPixmap **gdkpixmap, GdkBitmap **mask)
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// 
+//
 // CS     : PUBLIC void freePixmaps(void)
 // IN     : None.
 // OUT    : None.
 // RETURN : None.
-// 
+//
 PUBLIC void freePixmaps(void)
 {
 /*** Parameters start ***/
 	gint	tableSize = sizeof(gCartridgeXPMFileInfo) / sizeof(ST_CartridgeXPMFileInfo);	// Size of XPM file info table.
 	gint	i = 0;		// Counter.
 /*** Parameters end ***/
-	
+
 	freePixmap(&gpPixmap, NULL);
-	
+
 	while (i < tableSize) {
 		freePixmap(gCartridgeXPMFileInfo[i].pPixmap, gCartridgeXPMFileInfo[i].pMask);
 		i++;
 	}
-	
+
 	return;
 }// End freePixmaps

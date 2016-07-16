@@ -63,7 +63,7 @@
 // Header of status string.
 #define STR_HEADER_STATUS_STRING	"STS:"
 
-// Time interval for 
+// Time interval for
 #define TIMEOUT_CALL_UPDATE_UI_FUNC	1000
 
 /* for Network Ver.3.10 */
@@ -134,7 +134,7 @@ typedef enum {
 	ID_CARTRIDGE_TYPE_BLACK_EX_ip2200	= ']',	// MG4100 type Black(extra)
 	ID_CARTRIDGE_TYPE_COLOR_mg5400		= '^',	// MG5400 type
 	ID_CARTRIDGE_TYPE_COLOR_mg6300		= '_',	// MG6300 type
-	
+
 	ID_CARTRIDGE_TYPE_INVALID		= 0x2a,	// Invalid value
 } ENUM_CartridgeTypeID;
 
@@ -226,12 +226,12 @@ typedef enum {
 	ID_STS_MESSAGE_OC_USEDTANK_ALMOSTJP_START,	// Used tank almost full. (Operator call) for Ver.2.70
 	ID_STS_MESSAGE_OC_COVER_OPEN,				// Cover open. (Operator call)
 	ID_STS_MESSAGE_OC_COVER_OPEN2,				// Cover open. (Operator call)	v2.5
-	ID_STS_MESSAGE_OC_COVER_CLOSE,				// Cover close. (Operator call)	v2.5 
-	ID_STS_MESSAGE_OC_COVER_CLOSE2,				// Cover close. (Operator call)	v2.5 
-	ID_STS_MESSAGE_OC_COVER_CLOSE3,				// Cover close. (Operator call)	v3.5 
+	ID_STS_MESSAGE_OC_COVER_CLOSE,				// Cover close. (Operator call)	v2.5
+	ID_STS_MESSAGE_OC_COVER_CLOSE2,				// Cover close. (Operator call)	v2.5
+	ID_STS_MESSAGE_OC_COVER_CLOSE3,				// Cover close. (Operator call)	v3.5
 	ID_STS_MESSAGE_BUSY_CLEANING,				// Cleaning. (Busy status)
 	ID_STS_MESSAGE_BUSY_CARTRIDGE_CHANGE,		// Cartridge replacement. (Busy status) Dispo
-	ID_STS_MESSAGE_BUSY_CARTRIDGE_CHANGE2,		// Cartridge replacement. (Busy status) 
+	ID_STS_MESSAGE_BUSY_CARTRIDGE_CHANGE2,		// Cartridge replacement. (Busy status)
 	ID_STS_MESSAGE_BUSY_TEST_PRINTING,			// Test printing. (Busy status)
 	ID_STS_MESSAGE_BUSY_PRINTER_USED,			// Printer using nother interface. (Busy status)
 	ID_STS_MESSAGE_BUSY_TANK_CHANGE,			// Tank Change. (Busy status)
@@ -346,8 +346,8 @@ typedef enum {
 	ID_STS_MESSAGE_JOB_JOBCANCEL_RESUME,		// Job Cancel
 	ID_STS_MESSAGE_JOB_JOBCANCEL_STOPRESET,		// Job Cancel
 	ID_STS_MESSAGE_JOB_PREPARE,					// Prepare for Printing
-	ID_STS_MESSAGE_JOB_DELAY,					// Print Delay 
-	ID_STS_MESSAGE_BUSY_PRINTER,				// Printer Busy 
+	ID_STS_MESSAGE_JOB_DELAY,					// Print Delay
+	ID_STS_MESSAGE_BUSY_PRINTER,				// Printer Busy
 	ID_STS_MESSAGE_OC_PAPER_OUT21RT,			// Paper out. (Operator call)	v2.8
 	ID_STS_MESSAGE_OC_PAPER_OUT42FT,			// Paper out. (Operator call)	v2.8
 	ID_STS_MESSAGE_OC_PAPER_JAM03_2ndFT,		// Paper jam. (Operator call)	v2.8
@@ -579,7 +579,7 @@ typedef enum {
 	ID_STS_MESSAGE_OC_HEADALIGNMENT_TAP,
 	ID_STS_MESSAGE_CDR_GUIDE_PRINT_3rd_TAP,
 	ID_STS_MESSAGE_OC_EJECTCOVERCLOSE12,
-	
+
 	ID_STS_MESSAGE_NON = -1000,
 	ID_STS_MESSAGE_COLOR,
 	ID_STS_MESSAGE_COLOR_CARTRIDGE,
@@ -606,7 +606,7 @@ typedef enum {
 	ID_OTHER_MESSAGE_ARGUMENT_ERROR,		// Argument error.
 } ENUM_OtherMessageID;
 
-// Printer Interface 
+// Printer Interface
 #define ID_DEV_1284	1
 #define ID_DEV_USB	2
 #define ID_DEV_1394	3

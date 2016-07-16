@@ -112,7 +112,7 @@
 #define OPTSTRDISPLAY		"display"
 #define OPTSTRFIT			"fit"
 #define OPTSTRFULL			"full"
-#define OPTSTRINTVER		"internalversion"	
+#define OPTSTRINTVER		"internalversion"
 #define OPTSTRBORDERLESS	"borderless"
 #define OPTSTREXTENSION		"extension"
 #define OPTSTRPERCENT		"percent"
@@ -217,13 +217,13 @@ typedef struct {
 } BJF_OPTINFO, *LPBJF_OPTINFO;
 
 /* over margin */
-static short ExtensionTbl[][2] = 
+static short ExtensionTbl[][2] =
 {
 	{0, CND_OVERMARGINLEVEL_00},
 	{1, CND_OVERMARGINLEVEL_01},
 	{2, CND_OVERMARGINLEVEL_02},
 	{3, CND_OVERMARGINLEVEL_03},
-	{-1, -1}			/* Max indicator */	
+	{-1, -1}			/* Max indicator */
 };
 
 
@@ -283,7 +283,7 @@ static char usage_err_mes[OPT_ERR_CODE_MAX][256]={
 	"Allowed argument of \"--contrast\" : -50  -   50\n",
 	"Allowed argument of \"--tone\" : -50  -   50\n",
 	"Allowed argument of \"--rotate\" : 0  -  3\n",
-	
+
 };
 
 

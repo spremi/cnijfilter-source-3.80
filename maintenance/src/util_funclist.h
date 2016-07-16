@@ -115,9 +115,9 @@ DIALOGCOMPTABLE utilDialogTable[] ={
 	{ "LUI_UTD_13_0001",  ExecSetConfigType001_000 },
 	{ "LUI_UTD_13_0002",  ExecSetConfigType001_000 }, /* Ver.3.60 */
 	{ "LUI_UTD_13_0003",  ExecSetConfigType001_000 }, /* Ver.3.60 */
-	{ "LUI_UTL_14_0000",  ExecRegiType000_000 }, 
-	{ "LUI_UTL_14_0001",  ExecRegiType000_001 }, 
-	{ "LUI_UTL_14_0002",  ExecRegiType000_002 }, 
+	{ "LUI_UTL_14_0000",  ExecRegiType000_000 },
+	{ "LUI_UTL_14_0001",  ExecRegiType000_001 },
+	{ "LUI_UTL_14_0002",  ExecRegiType000_002 },
 	{ "LUI_UTL_14_0003",  ExecRegiType000_003 },  /* Ver.3.80 */
 	{ "LUI_UTD_14M_0002", ExecCommonDialogType001_002 },
 	{ "LUI_UTD_14M_0003", ExecCommonDialogType001_000 },

@@ -58,10 +58,10 @@ char **make_pdata_lpr_param( char *printer,	IPCU* p_ipc ,short direct_flag)	/* V
 
 		snprintf(cmd_filename, 255, "%s%d", BJ_UTILFILE, getpid());
 		snprintf(utilbyte, 31, UTILBYTESTR, p_ipc->cmds.cmdslen );
-		if( (cmd_fd=open(cmd_filename, O_WRONLY|O_CREAT|O_TRUNC,0644 )) 
+		if( (cmd_fd=open(cmd_filename, O_WRONLY|O_CREAT|O_TRUNC,0644 ))
 			== -1 )
 			goto open_error;
-	
+
 		ptr = p_ipc->cmds.cmds;
 		total_size = p_ipc->cmds.cmdslen;
 		while( 1 ){
@@ -70,7 +70,7 @@ char **make_pdata_lpr_param( char *printer,	IPCU* p_ipc ,short direct_flag)	/* V
 			if ( w_size == -1 ){
 				goto write_error;
 			}
-			
+
 			if ( w_size < total_size ){
 				total_size -= w_size;
 				ptr    += w_size;
@@ -119,30 +119,30 @@ char **make_pdata_lpr_param( char *printer,	IPCU* p_ipc ,short direct_flag)	/* V
 	unlink(cmd_filename);
  open_error:
 	free( cmd_buf );
-	return NULL;	
+	return NULL;
 
 }
 
 char **make_fdata_lpr_param( char *printer, IPCU *p_ipc )
 {
-	
+
 	char **cmd_buf;
 	int cmd_fd, pfile_fd;
 	int total_size, w_size, r_size;
 	char *ptr;
 	static char cmd_filename[256];
 	char r_buf[RBUFSIZ];
-	
+
 	cmd_buf = (char**)malloc( 9 * sizeof(char*) );
-	
+
 	if( cmd_buf ){
-	
+
 		snprintf(cmd_filename, 255, "%s%d", BJ_UTILFILE, getpid());
 
-		if( (cmd_fd=open(cmd_filename, O_WRONLY|O_CREAT|O_TRUNC, 0644 )) 
+		if( (cmd_fd=open(cmd_filename, O_WRONLY|O_CREAT|O_TRUNC, 0644 ))
 			== -1 )
 			goto open_error;
-	
+
 		ptr = p_ipc->fncmds.cmds;
 		total_size = p_ipc->fncmds.cmdslen;
 		while( 1 ){
@@ -151,18 +151,18 @@ char **make_fdata_lpr_param( char *printer, IPCU *p_ipc )
 			if ( w_size == -1 ){
 				goto write_error;
 			}
-			
+
 			if ( w_size < total_size ){
 				total_size -= w_size;
 				ptr    += w_size;
 			}
 			else break;
 		}
-		
+
 		if( (pfile_fd=open(p_ipc->fncmds.filename, O_RDONLY)) == -1 )
 			goto pfile_error;
-		
-		
+
+
 		while( (r_size=read(pfile_fd,r_buf,RBUFSIZ)) > 0 ){
 			ptr = r_buf;
 			while( 1 ){
@@ -192,7 +192,7 @@ char **make_fdata_lpr_param( char *printer, IPCU *p_ipc )
 		close( cmd_fd );
 		close( pfile_fd );
 	}
-	
+
 	return cmd_buf;
 
  pfile_error:
@@ -201,7 +201,7 @@ char **make_fdata_lpr_param( char *printer, IPCU *p_ipc )
 	unlink(cmd_filename);
  open_error:
 	free( cmd_buf );
-	return NULL;	
+	return NULL;
 
 }
 
@@ -219,16 +219,16 @@ char **make_wdata_lpr_param( char *printer, IPCU *p_ipc )
 	char id_buf[3];
 	int bscc_id;
 	char* p_top=NULL;
-	
+
 	cmd_buf = (char**)malloc( 11 * sizeof(char*) );
-	
+
 	if( cmd_buf ){
 
 		snprintf(cmd_filename, 255, "%s%d", BJ_UTILFILE, getpid());
-		if( (cmd_fd=open(cmd_filename, O_WRONLY|O_CREAT|O_TRUNC, 0644 )) 
+		if( (cmd_fd=open(cmd_filename, O_WRONLY|O_CREAT|O_TRUNC, 0644 ))
 			== -1 )
 			goto open_error;
-	
+
 		ptr = p_ipc->fncmds.cmds;
 		total_size = p_ipc->fncmds.cmdslen;
 		while( 1 ){
@@ -237,7 +237,7 @@ char **make_wdata_lpr_param( char *printer, IPCU *p_ipc )
 			if ( w_size == -1 ){
 				goto write_error;
 			}
-			
+
 			if ( w_size < total_size ){
 				total_size -= w_size;
 				ptr    += w_size;
@@ -246,7 +246,7 @@ char **make_wdata_lpr_param( char *printer, IPCU *p_ipc )
 		}
 		if( (pfile_fd=open(p_ipc->fncmds.filename, O_RDONLY)) == -1 )
 			goto pfile_error;
-				
+
 		while( (r_size=read(pfile_fd,r_buf,RBUFSIZ)) > 0 ){
 			ptr = r_buf;
 			while( 1 ){
@@ -263,13 +263,13 @@ char **make_wdata_lpr_param( char *printer, IPCU *p_ipc )
 				else break;
 			}
 		}
-		
+
 		/* bscc file option  */
 		p_top = strrchr( p_ipc->fncmds.filename, '/');
 		if( p_top )
 			strncpy( id_buf, p_top+1, 2);
 		else
-			strncpy( id_buf, p_ipc->fncmds.filename, 2);	
+			strncpy( id_buf, p_ipc->fncmds.filename, 2);
 
 		id_buf[2] = '\0';
 		bscc_id = atoi(id_buf);
@@ -277,7 +277,7 @@ char **make_wdata_lpr_param( char *printer, IPCU *p_ipc )
 		snprintf(bscc_opt, 255, BSCCOPTSTR, bscc_id );
 		/* utility cmd lenght option */
 		snprintf(utilbyte, 31, UTILBYTESTR, p_ipc->fncmds.cmdslen );
-		
+
 		cmd_buf[0] = "lpr";
 		cmd_buf[1] = "-P";
 		cmd_buf[2] = printer;
@@ -294,7 +294,7 @@ char **make_wdata_lpr_param( char *printer, IPCU *p_ipc )
 		close(pfile_fd);
 		unlink(p_ipc->fncmds.filename);
 	}
-	
+
 	return cmd_buf;
 
  pfile_error:
@@ -303,15 +303,15 @@ char **make_wdata_lpr_param( char *printer, IPCU *p_ipc )
 	unlink(cmd_filename);
  open_error:
 	free( cmd_buf );
-	return NULL;	
+	return NULL;
 }
 
 void free_util_cmd_param( char** cmd_param )
 {
 
-	unlink( cmd_param[5] );	
+	unlink( cmd_param[5] );
 
 	if( cmd_param )
 		free( cmd_param );
-	
+
 }

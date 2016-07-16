@@ -24,15 +24,15 @@
 */
 
 /*
- * bscc2sts.c 
+ * bscc2sts.c
  *
  * bscc2sts library main source.
  *
- * BSCC which is the response from a printer is changed 
+ * BSCC which is the response from a printer is changed
  * into the command corresponding to the status monitor.
  */
- 
- 
+
+
 /*
  * include necessary headers ...
  */
@@ -103,7 +103,7 @@ int bscc2sts(char *printer, char *bscc, output_dev *Odev, bscc2sts_tbl *Pr_sts)
     ret=ERR_BSCCNON;
     return(ret);
   }
-  
+
   while(1){
     /* init, The structure object for bscc string.*/
     for(i=0; i<MAXBSCCCOM; i++){
@@ -111,21 +111,21 @@ int bscc2sts(char *printer, char *bscc, output_dev *Odev, bscc2sts_tbl *Pr_sts)
     }
     memset(Pr_sts, INIT, sizeof(bscc2sts_tbl));
     p_bscc = (char *)malloc( (strlen(bscc)) +1 );
-	
+
     if(p_bscc == NULL){
       ret=ERR_MEMORY;
       break;
     }
 	memset (p_bscc, 0, (strlen(bscc)) +1);
     strncpy(p_bscc, bscc, strlen(bscc));
-    
+
     /* BSCC is divided into a command and status and it stores in a structure object.*/
     ret = parsebscc(p_bscc, &bsccbuf[0]);
     if( ret != OK){
       break;
     }
-    /* 
-     * A table header, device information, and a printer name 
+    /*
+     * A table header, device information, and a printer name
      * are stored in a bscc2sts_tbl.
      */
     ret = firstsetsts(printer, Odev, Pr_sts);
@@ -342,13 +342,13 @@ int parsebscc(char *p_s, ST_BSCCBUF *p_bsccbuf)
   char bscccom_tmp[1024];
 
   memset (&bscccom_tmp[0], 0, 1024);
-  
+
   p_temp=(char *)malloc( strlen(p_s) + 1 );
   if(p_temp == NULL){
     return(ERR_MEMORY);
   }
   memset (p_temp, 0, strlen(p_s) + 1);
-  
+
   strncpy(p_temp, p_s, strlen(p_s));
   p_tok = strtok(p_temp, ":");
 
@@ -382,13 +382,13 @@ int setbsccsts(char *p, char *p_buf, ST_BSCCBUF *p_bsccbuf)
   for(i=0; i < MAXBSCCCOM; i++){
     if( strcmp(p_buf, (p_bsccbuf+i)->p_bscccom) == 0 ){
       (p_bsccbuf+i)->p_bsccsts = (char *)malloc(strlen(p)+1);
-	  
+
       if((p_bsccbuf+i)->p_bsccsts == NULL){
     	return(ERR_MEMORY);
       }
 	  memset ((p_bsccbuf+i)->p_bsccsts, 0, strlen(p)+1);
       strncpy((p_bsccbuf+i)->p_bsccsts, p, strlen(p));
-      
+
     }
   }
   return(OK);

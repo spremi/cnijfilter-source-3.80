@@ -25,7 +25,7 @@
 
 
 /*
- * ip4200tbl.c 
+ * ip4200tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */
@@ -117,8 +117,8 @@ ST_BSCC2STS ip4200_cil2inkchk[]={
  * Position information between papers.
  *
  *	v2.60
- *	The value of HRI is inserted in Lever_position. 
- *	Because the display of Lever position was deleted, it substitutes it. 
+ *	The value of HRI is inserted in Lever_position.
+ *	Because the display of Lever position was deleted, it substitutes it.
  *
  */
 ST_BSCC2STS ip4200_lvr2posit[]={

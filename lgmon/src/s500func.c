@@ -25,7 +25,7 @@
 
 
 /*
- * s500func.c 
+ * s500func.c
  *
  * A processing function group peculiar to a model.
  */

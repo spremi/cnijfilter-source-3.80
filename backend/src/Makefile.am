@@ -2,7 +2,7 @@
 
 backend_bindir = /usr/lib/cups/backend
 backend_bin_PROGRAMS = cnijusb
-transform = 
+transform =
 
 
 cnijusb_SOURCES = cnij_backend_common.c cnij_usb.c

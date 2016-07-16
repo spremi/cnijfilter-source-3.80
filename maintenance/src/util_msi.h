@@ -59,9 +59,9 @@ MSICOMP msiCompTable[] = {
 	{ MSI_TYPE_G, 'G' },
 	{ MSI_TYPE_PLAINPAPERFEEDER, 'H' },
 	{ MSI_TYPE_I, 'I' },
-	{ MSI_TYPE_SILENT, 'J' }, 
-	{ MSI_TYPE_SILENT_TIME, 'K' }, 
-	{ MSI_TYPE_WFEED, 'L' }, 
+	{ MSI_TYPE_SILENT, 'J' },
+	{ MSI_TYPE_SILENT_TIME, 'K' },
+	{ MSI_TYPE_WFEED, 'L' },
 	{ -1, -1 }
 };
 

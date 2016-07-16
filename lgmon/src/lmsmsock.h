@@ -25,7 +25,7 @@
 
 
 #define MAX_COMBUF  512
-#define MAX_STATBUF 1024*4 
+#define MAX_STATBUF 1024*4
 //#define MAX_STATBUF 512
 #define MAX_DATA    (64*1024)
 

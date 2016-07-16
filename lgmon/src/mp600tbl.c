@@ -25,7 +25,7 @@
 
 
 /*
- * mp600tbl.c 
+ * mp600tbl.c
  *
  * The conversion table for xxx, and a model dependence function table.
  */

@@ -25,7 +25,7 @@
 
 
 /*
- * 550ifunc.c 
+ * 550ifunc.c
  *
  * A processing function group peculiar to a model.
  */

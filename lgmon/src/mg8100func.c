@@ -25,7 +25,7 @@
 
 
 /*
- * mg8100func.c 
+ * mg8100func.c
  *
  * A processing function group peculiar to a model.
  */

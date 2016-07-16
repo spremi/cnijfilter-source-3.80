@@ -25,7 +25,7 @@
 
 
 /*
- * mp210tbl.c 
+ * mp210tbl.c
  *
  * The conversion table for s300, and a model dependence function table.
  */
@@ -170,7 +170,7 @@ ST_BSCC2STS mp210_doc2operate[]={
   {"1684","e"},
   {"1686","w"},
   {"1687","T"},
-  {"1688","C"}, 
+  {"1688","C"},
   {"1700","x"},
   {"1701","k"},
   {"1710","x"},

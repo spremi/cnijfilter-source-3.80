@@ -46,7 +46,7 @@
 #ifdef _DEBUG
 #define INIT  0x2E
 #define DEBUG_PRINT(msg) printf msg
-#else 
+#else
 #define INIT  0x20
 #define DEBUG_PRINT(msg)
 #endif
@@ -76,15 +76,15 @@
 #define DJS 2
 #define CHD 3
 #define CIL 4
-//#define LVR 5	// v2.60	The value of HRI is inserted in Lever_position. 
-#define HRI 5	// 			Because the display of Lever position was deleted, it substitutes it. 
+//#define LVR 5	// v2.60	The value of HRI is inserted in Lever_position.
+#define HRI 5	// 			Because the display of Lever position was deleted, it substitutes it.
 #define DWS 6
 #define DOC 7
 #define DSC 8
 #define CIR 9
 #define CTK 10
 #define HCF 11
-#define LVR 12	// v2.70	LVR 
+#define LVR 12	// v2.70	LVR
 #define PDR 13	//Ver.3.00
 #define TNI 14	/* Ver.3.80 */
 
