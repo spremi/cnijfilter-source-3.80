@@ -1,5 +1,6 @@
-AC_INIT(src/cnij_backend_common.c)
-AM_INIT_AUTOMAKE(backend, 3.80-1)
+AC_INIT(backend, 3.80-1, no-define)
+
+AM_INIT_AUTOMAKE
 
 AC_CONFIG_MACRO_DIRS([m4])
 
