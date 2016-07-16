@@ -1,4 +1,4 @@
-INCLUDES =
+AM_CPPFLAGS =
 
 bin_PROGRAMS=cnijnpr
 
