@@ -12,7 +12,20 @@ AM_INIT_AUTOMAKE(maintenance${program_suffix}, 3.80-1)
 AM_CONFIG_HEADER(config.h)
 AM_MAINTAINER_MODE
 
-AC_DEFINE_UNQUOTED(PACKAGE_PRINTER_MODEL, "${program_suffix}")
+AH_TEMPLATE([ENABLE_NLS])
+AH_TEMPLATE([HAVE_CATGETS])
+AH_TEMPLATE([HAVE_GETTEXT])
+AH_TEMPLATE([GETTEXT_PACKAGE])
+AH_TEMPLATE([HAVE_LC_MESSAGES])
+AH_TEMPLATE([HAVE_STPCPY])
+AH_TEMPLATE([HAVE_LIBSM])
+AH_TEMPLATE([PACKAGE_LOCALE_DIR])
+AH_TEMPLATE([PACKAGE_DATA_DIR])
+AH_TEMPLATE([PACKAGE_SOURCE_DIR])
+AH_TEMPLATE([PACKAGE_PRINTER_MODEL])
+AH_TEMPLATE([XBJLIBPATH])
+
+AC_DEFINE_UNQUOTED([PACKAGE_PRINTER_MODEL], ["${program_suffix}"], [PACKAGE_PRINTER_MODEL])
 
 case "${program_suffix}" in
   mp230) CNCL_LIB_ID=401;;
@@ -39,7 +52,7 @@ if test "${enable_libpath}" = ""; then
   enable_libpath="/usr/lib/bjlib"
 fi
 
-AC_DEFINE_UNQUOTED(XBJLIBPATH, $enable_libpath)
+AC_DEFINE_UNQUOTED([XBJLIBPATH], ["${enable_libpath}"], [XBJLIBPATH])
 AC_SUBST(XBJLIBPATH)
 
 
@@ -52,8 +65,9 @@ AM_PATH_GTK_2_0(2.6.0, ,
             AC_MSG_ERROR(Cannot find GTK: Is gtk-config in path?))
 
 GETTEXT_PACKAGE=maintenance${program_suffix}
+
 AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["${GETTEXT_PACKAGE}"], [GETTEXT_PACKAGE])
 
 dnl Add the languages which your application supports here.
 ALL_LINGUAS="cs da de el es fi fr hu it ja ko nl nb pl pt ru sv th tr zh zh_TW id"
@@ -63,23 +77,23 @@ dnl Set PACKAGE_LOCALE_DIR in config.h.
 if test "x${prefix}" = "xNONE"; then
   AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${ac_default_prefix}/${DATADIRNAME}/locale")
 else
-  AC_DEFINE_UNQUOTED(PACKAGE_LOCALE_DIR, "${prefix}/${DATADIRNAME}/locale")
+  AC_DEFINE_UNQUOTED([PACKAGE_LOCALE_DIR], ["${prefix}/${DATADIRNAME}/locale"], [PACKAGE_LOCALE_DIR])
 fi
 
 dnl Set PACKAGE_DATA_DIR in config.h.
 if test "x${datadir}" = 'x${prefix}/share'; then
   if test "x${prefix}" = "xNONE"; then
-    AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${ac_default_prefix}/share/${PACKAGE}")
+    AC_DEFINE_UNQUOTED([PACKAGE_DATA_DIR], ["${ac_default_prefix}/share/${PACKAGE}"], [PACKAGE_DATA_DIR])
   else
-    AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${prefix}/share/${PACKAGE}")
+    AC_DEFINE_UNQUOTED([PACKAGE_DATA_DIR], ["${prefix}/share/${PACKAGE}"], [PACKAGE_DATA_DIR])
   fi
 else
-  AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${datadir}/${PACKAGE}")
+  AC_DEFINE_UNQUOTED([PACKAGE_DATA_DIR], ["${datadir}/${PACKAGE}"], [PACKAGE_DATA_DIR])
 fi
 
 dnl Set PACKAGE_SOURCE_DIR in config.h.
 packagesrcdir=`cd $srcdir && pwd`
-AC_DEFINE_UNQUOTED(PACKAGE_SOURCE_DIR, "${packagesrcdir}")
+AC_DEFINE_UNQUOTED([PACKAGE_SOURCE_DIR], ["${packagesrcdir}"], [PACKAGE_SOURCE_DIR])
 
 dnl Use -Wall if we have gcc.
 changequote(,)dnl
