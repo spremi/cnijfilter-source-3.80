@@ -1,5 +1,8 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(configure.in)
+
+AC_INIT(cif, 3.80-1, no-define)
+
+AM_INIT_AUTOMAKE
 
 AH_TEMPLATE([PACKAGE])
 AH_TEMPLATE([VERSION])
@@ -29,7 +32,6 @@ AC_DEFINE_UNQUOTED([XBINPATH], ["${enable_binpath}"], [XBINPATH])
 AC_SUBST(XBINPATH)
 
 
-AM_INIT_AUTOMAKE(cif${program_suffix}, 3.80-1)
 AM_CONFIG_HEADER(config.h)
 
 dnl Checks for programs.
