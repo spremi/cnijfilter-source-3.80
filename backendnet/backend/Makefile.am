@@ -7,7 +7,7 @@ transform =
 
 cnijnet_SOURCES = cnijnetlm.c cnijnet.c
 
-CFLAGS = -O2 -Wall -I.
+AM_CFLAGS = -O2 -Wall -I.
 
 cnijnet_LDADD = -lcups
 
