@@ -3,13 +3,14 @@ AM_INIT_AUTOMAKE(cnijnpr, 3.80-1)
 
 AM_CONFIG_HEADER(config.h)
 
+AH_TEMPLATE([BJLIB_PATH])
 
 AC_ARG_ENABLE(libpath)
 if test "${enable_libpath}" = "" ; then
    enable_libpath="/usr/lib/bjlib"
 fi
 
-AC_DEFINE_UNQUOTED(BJLIB_PATH, "$enable_libpath")
+AC_DEFINE_UNQUOTED([BJLIB_PATH], ["${enable_libpath}"], [BJLIB_PATH])
 AC_SUBST(BJLIB_PATH)
 
 
