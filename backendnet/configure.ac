@@ -5,12 +5,15 @@ AC_CONFIG_MACRO_DIRS([m4])
 
 AM_CONFIG_HEADER(config.h)
 
+AH_TEMPLATE([PROG_PATH])
+AH_TEMPLATE([BJLIB_PATH])
+
 AC_ARG_ENABLE(progpath)
 if test "${enable_progpath}" = "" ; then
    enable_progpath="${ac_default_prefix}/bin"
 fi
 
-AC_DEFINE_UNQUOTED(PROG_PATH, "$enable_progpath")
+AC_DEFINE_UNQUOTED([PROG_PATH], ["${enable_progpath}"], [PROG_PATH])
 AC_SUBST(PROG_PATH)
 
 AC_ARG_ENABLE(libpath)
@@ -18,7 +21,7 @@ if test "${enable_libpath}" = ""; then
   enable_libpath="/usr/lib/bjlib"
 fi
 
-AC_DEFINE_UNQUOTED(BJLIB_PATH, "$enable_libpath")
+AC_DEFINE_UNQUOTED([BJLIB_PATH], ["${enable_libpath}"], [BJLIB_PATH])
 AC_SUBST(BJLIB_PATH)
 
 ARC=`getconf LONG_BIT`
