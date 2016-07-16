@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-DUSE_LIB_GLASE	\
 	@GTK_CFLAGS@
 
