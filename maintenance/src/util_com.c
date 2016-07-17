@@ -551,7 +551,7 @@ static int UtilMessageBoxWithConnection(
 )
 {
 	GtkWidget	*dialog;
-	GtkWidget	*dialog_action_area1;
+	GtkWidget	__attribute__ ((unused)) *dialog_action_area1;
 	GtkWidget	*dialog_vbox1;
 	GtkWidget	*hbox1;
 	GtkWidget	*pixmap;

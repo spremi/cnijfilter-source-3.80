@@ -1980,9 +1980,9 @@ on_setconfig_type003_button1_clicked   (GtkButton       *button,
 {
 	LPSETCONFIGCOMPTYPE003WORK lpWk = (LPSETCONFIGCOMPTYPE003WORK)gLPSetConfigWork;
 	GtkWidget	*combo;
-  	char		*type;
+	char		*type;
 	int index_num = lpWk->lpInkCartridgeMsgInfo->index_num;
-	int currentIndex;
+	int __attribute__ ((unused)) currentIndex;
 
 	combo = LookupWidget(GTK_WIDGET(button), "setconfig_type003_combobox1");
 	type = (char*)gtk_combo_box_get_active_text( GTK_COMBO_BOX(combo) );	/* Ver.2.80 */

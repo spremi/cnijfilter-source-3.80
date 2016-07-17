@@ -180,7 +180,7 @@ int PutDeviceData(char *cmdsbuf, short length, char *devMode )
 	short cmdType;
 	int retVal = -1;
 	char *curPtr;
-	char *model_name;
+	char __attribute__ ((unused)) *model_name;
 
 	model_name = GetModelName();
 
