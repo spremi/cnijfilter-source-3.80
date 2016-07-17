@@ -44,6 +44,13 @@
 *.l[oa]
 
 #
+# Files related to localization
+#
+**/*/POTFILES
+
+*.gmo
+
+#
 # Automatic backup files
 #
 *~
