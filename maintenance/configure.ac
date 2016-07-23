@@ -29,6 +29,9 @@ AH_TEMPLATE([XBJLIBPATH])
 
 AC_DEFINE_UNQUOTED([PACKAGE_PRINTER_MODEL], ["${program_suffix}"], [PACKAGE_PRINTER_MODEL])
 
+CNIJ_MODEL=${program_suffix}
+AC_SUBST(CNIJ_MODEL)
+
 case "${program_suffix}" in
   mp230) CNCL_LIB_ID=401;;
   mg2200) CNCL_LIB_ID=402;;

@@ -4,17 +4,17 @@ SUBDIRS = po src include
 
 install-data-local:
 	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir); \
+	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)$(CNIJ_MODEL); \
 	for glade in $(srcdir)/*.glade; do \
 	  if test -f $$glade; then \
-	    $(INSTALL_DATA) $$glade $(DESTDIR)$(pkgdatadir); \
+	    $(INSTALL_DATA) $$glade $(DESTDIR)$(pkgdatadir)$(CNIJ_MODEL); \
 	  fi \
 	done
 
 	if test -d $(srcdir)/pixmaps; then \
 	  for pixmap in $(srcdir)/pixmaps/*; do \
 	    if test -f $$pixmap; then \
-	      $(INSTALL_DATA) $$pixmap $(DESTDIR)$(pkgdatadir); \
+	      $(INSTALL_DATA) $$pixmap $(DESTDIR)$(pkgdatadir)$(CNIJ_MODEL); \
 	    fi \
 	  done \
 	fi
@@ -22,7 +22,7 @@ install-data-local:
 	if test -d $(srcdir)/keytext; then \
 	  for keytext in $(srcdir)/keytext/*; do \
 	    if test -f $$keytext; then \
-	      $(INSTALL_DATA) $$keytext $(DESTDIR)$(pkgdatadir); \
+	      $(INSTALL_DATA) $$keytext $(DESTDIR)$(pkgdatadir)$(CNIJ_MODEL); \
 	    fi \
 	  done \
 	fi
@@ -31,7 +31,7 @@ install-data-local:
 	 model=`echo | sed '$(transform)'`; \
 	  for data in $(srcdir)/data/*$$model.utl; do \
 	    if test -f $$data; then \
-	      $(INSTALL_DATA) $$data $(DESTDIR)$(pkgdatadir); \
+	      $(INSTALL_DATA) $$data $(DESTDIR)$(pkgdatadir)$(CNIJ_MODEL); \
 	    fi \
 	  done \
 	fi
@@ -40,7 +40,7 @@ install-data-local:
 	 model=`echo | sed '$(transform)'`; \
 	  for pattern in $(srcdir)/pixmaps/pattern/*$$model.xpm; do \
 	    if test -f $$pattern; then \
-	      $(INSTALL_DATA) $$pattern $(DESTDIR)$(pkgdatadir); \
+	      $(INSTALL_DATA) $$pattern $(DESTDIR)$(pkgdatadir)$(CNIJ_MODEL); \
 	    fi \
 	  done \
 	fi

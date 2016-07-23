@@ -4,12 +4,12 @@ SUBDIRS =  po src
 
 install-data-local:
 	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir); \
-	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)/pixmaps; \
+	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)$(CNIJ_MODEL); \
+	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)$(CNIJ_MODEL)/pixmaps; \
 	if test -d $(srcdir)/pixmaps; then \
 	  for pixmap in $(srcdir)/pixmaps/*; do \
 	    if test -f $$pixmap; then \
-	      $(INSTALL_DATA) $$pixmap $(DESTDIR)$(pkgdatadir)/pixmaps; \
+	      $(INSTALL_DATA) $$pixmap $(DESTDIR)$(pkgdatadir)$(CNIJ_MODEL)/pixmaps; \
 	    fi \
 	  done \
 	fi
