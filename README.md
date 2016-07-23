@@ -1,6 +1,6 @@
 # cnijfilter-source-3.80 (NEW & IMPROVED)
 
-:warning: Current status - Builds cleanly, but rpmbuild fails.
+:sunny: Tested working win IP7200 series printer on Fedora 23.
 
 ## Motivation
 So far, single Window$ machine had served good as 'print-hub' for
@@ -19,17 +19,34 @@ Equivalent commands could, easily, be derived for other Linux flavors.
 ### Install dependencies
 Install these packages as build dependencies:
 ```
-dnf install rpm-build
-dnf install cups-devel
-dnf install popt-devel
-dnf install gtk2-devel
-dnf install libxml2-devel
+$ dnf install rpm-build
+$ dnf install cups-devel
+$ dnf install popt-devel
+$ dnf install gtk2-devel
+$ dnf install libxml2-devel
+$ dnf install libtiff-devel
 ```
 
-### Build the package
+### Get source tree
 
-TODO - Work in progress.
+Clone this repository.
+```
+$ git clone https://github.com/spremi/cnijfilter-source-3.80.git
+```
 
+#### Create source tarball
+```
+$ git archive --format=tar.gz --prefix=cnijfilter-source-3.80-1/ HEAD > ../cnijfilter-source-3.80-1.tar.gz
+```
+
+#### Build RPM
+
+Build RPM packages specific to a printer model. See the original instructions below for details.
+
+For example:
+```
+$ rpmbuild -tb cnijfilter-source-3.80-1.tar.gz --define="MODEL ip7200" --define="MODEL_NUM 406" --with build_common_package
+```
 
 ## Original README Contents
 
