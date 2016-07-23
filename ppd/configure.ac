@@ -2,14 +2,14 @@ AC_INIT([canon.ppd],[1.0.0],[no-define])
 
 AM_INIT_AUTOMAKE
 
-if test "${program_suffix}" = "NONE"; then
+if test "x${program_suffix}" = "xNONE"; then
 	program_suffix="mp230"
 fi
-PPD_SUFFIX=$program_suffix
+PPD_SUFFIX=${program_suffix}
 AC_SUBST(PPD_SUFFIX)
 
 AC_ARG_ENABLE(ppdpath)
-if test "$enable_ppdpath" = ""; then
+if test "x${enable_ppdpath}" = "x"; then
 	enable_ppdpath="${datadir}/cups/model"
 fi
 XPPDPATH=$enable_ppdpath

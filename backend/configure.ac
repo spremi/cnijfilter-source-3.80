@@ -9,7 +9,7 @@ AM_CONFIG_HEADER(config.h)
 AH_TEMPLATE([PROG_PATH])
 
 AC_ARG_ENABLE(progpath)
-if test "${enable_progpath}" = "" ; then
+if test "x${enable_progpath}" = "x" ; then
    enable_progpath="${ac_default_prefix}/bin"
 fi
 

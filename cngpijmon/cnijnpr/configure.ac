@@ -7,7 +7,7 @@ AM_CONFIG_HEADER(config.h)
 AH_TEMPLATE([BJLIB_PATH])
 
 AC_ARG_ENABLE(libpath)
-if test "${enable_libpath}" = "" ; then
+if test "x${enable_libpath}" = "x" ; then
    enable_libpath="/usr/lib/bjlib"
 fi
 

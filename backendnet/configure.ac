@@ -10,7 +10,7 @@ AH_TEMPLATE([PROG_PATH])
 AH_TEMPLATE([BJLIB_PATH])
 
 AC_ARG_ENABLE(progpath)
-if test "${enable_progpath}" = "" ; then
+if test "x${enable_progpath}" = "x" ; then
    enable_progpath="${ac_default_prefix}/bin"
 fi
 
@@ -18,7 +18,7 @@ AC_DEFINE_UNQUOTED([PROG_PATH], ["${enable_progpath}"], [PROG_PATH])
 AC_SUBST(PROG_PATH)
 
 AC_ARG_ENABLE(libpath)
-if test "${enable_libpath}" = ""; then
+if test "x${enable_libpath}" = "x"; then
   enable_libpath="/usr/lib/bjlib"
 fi
 

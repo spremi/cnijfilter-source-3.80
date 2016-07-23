@@ -6,7 +6,7 @@ AM_INIT_AUTOMAKE
 
 AC_ARG_PROGRAM
 
-if test "${program_suffix}" = "NONE"; then
+if test "x${program_suffix}" = "xNONE"; then
   program_suffix="mg6300"
   program_transform_name="s,\$\$,${program_suffix},;"
 fi
@@ -30,7 +30,7 @@ AH_TEMPLATE([PROG_PATH])
 AC_DEFINE_UNQUOTED([PACKAGE_PRINTER_MODEL], ["${program_suffix}"], [PACKAGE_PRINTER_MODEL])
 
 AC_ARG_ENABLE(progpath)
-if test "${enable_progpath}" = "" ; then
+if test "x${enable_progpath}" = "x" ; then
    enable_progpath="${ac_default_prefix}/bin"
 fi
 

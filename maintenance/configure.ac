@@ -6,7 +6,7 @@ AM_INIT_AUTOMAKE
 
 AC_ARG_PROGRAM
 
-if test "${program_suffix}" = "NONE"; then
+if test "x${program_suffix}" = "xNONE"; then
   program_suffix="mp230"
   program_transform_name="s,\$\$,${program_suffix},;"
 fi
@@ -43,14 +43,14 @@ esac
 AC_SUBST(CNCL_LIB_ID)
 
 AC_ARG_ENABLE(uidebug)
-if test "${enable_uidebug}" = "yes"; then
+if test "x${enable_uidebug}" = "xyes"; then
   UI_DFLAGS=-D_PRINTUI_DEBUG_
 fi
 
 AC_SUBST(UI_DFLAGS)
 
 AC_ARG_ENABLE(libpath)
-if test "${enable_libpath}" = ""; then
+if test "x${enable_libpath}" = "x"; then
   enable_libpath="/usr/lib/bjlib"
 fi
 

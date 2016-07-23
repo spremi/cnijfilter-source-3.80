@@ -9,13 +9,13 @@ AH_TEMPLATE([VERSION])
 AH_TEMPLATE([XBJLIBPATH])
 AH_TEMPLATE([XBINPATH])
 
-if test "${program_suffix}" = "NONE"; then
+if test "x${program_suffix}" = "xNONE"; then
   program_suffix="mg6300"
   program_transform_name="s,\$\$,${program_suffix},;"
 fi
 
 AC_ARG_ENABLE(libpath)
-if test "${enable_libpath}" = ""; then
+if test "x${enable_libpath}" = "x"; then
   enable_libpath="/usr/lib/bjlib"
 fi
 
@@ -24,7 +24,7 @@ AC_SUBST(XBJLIBPATH)
 
 
 AC_ARG_ENABLE(binpath)
-if test "${enable_binpath}" = ""; then
+if test "x${enable_binpath}" = "x"; then
   enable_binpath="/usr/local/bin"
 fi
 
