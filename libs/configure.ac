@@ -1,4 +1,4 @@
-AC_INIT(buftool, 1.0.0, no-define)
+AC_INIT([buftool],[1.0.0],[no-define])
 AM_INIT_AUTOMAKE
 
 AM_CONFIG_HEADER(config.h)
@@ -10,7 +10,7 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
-AM_PROG_LIBTOOL
+LT_INIT
 
 # Checks for libraries.
 
@@ -29,6 +29,7 @@ AC_CHECK_FUNCS([dup2 memset])
 
 CFLAGS="-O2"
 
-AC_OUTPUT(Makefile
+AC_CONFIG_FILES([Makefile
                  buftool/Makefile
-                 paramlist/Makefile)
+                 paramlist/Makefile])
+AC_OUTPUT

@@ -13,7 +13,7 @@ DIE=0
   DIE=1
 }
 
-(grep "^AM_PROG_LIBTOOL" $srcdir/configure.ac >/dev/null) && {
+(grep "^LT_INIT" $srcdir/configure.ac >/dev/null) && {
   (libtool --version) < /dev/null > /dev/null 2>&1 || {
     echo
     echo "**Error**: You must have \`libtool' installed."
@@ -106,7 +106,7 @@ do
 	echo "Making $dr/aclocal.m4 writable ..."
 	test -r $dr/aclocal.m4 && chmod u+w $dr/aclocal.m4
       fi
-      if grep "^AM_PROG_LIBTOOL" configure.ac >/dev/null; then
+      if grep "LT_INIT" configure.ac >/dev/null; then
 	echo "Running libtoolize..."
 	libtoolize --force --copy
       fi

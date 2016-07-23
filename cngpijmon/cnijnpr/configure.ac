@@ -1,4 +1,4 @@
-AC_INIT(cnijnpr, 3.80-1, no-define)
+AC_INIT([cnijnpr],[3.80-1],[no-define])
 
 AM_INIT_AUTOMAKE
 
@@ -42,5 +42,6 @@ CFLAGS="-O2"
 ARC=`getconf LONG_BIT`
 AC_SUBST(ARC)
 
-AC_OUTPUT(Makefile
-                 cnijnpr/Makefile)
+AC_CONFIG_FILES([Makefile
+                 cnijnpr/Makefile])
+AC_OUTPUT

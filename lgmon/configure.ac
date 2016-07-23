@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(lgmon, 3.80-1, no-define)
+AC_INIT([lgmon],[3.80-1],[no-define])
 
 AM_INIT_AUTOMAKE
 
@@ -37,7 +37,7 @@ fi
 AC_DEFINE_UNQUOTED([PROG_PATH], ["${enable_progpath}"], [PROG_PATH])
 AC_SUBST(PROG_PATH)
 
-AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix])
 
 case "${program_suffix}" in
   mp230)  CNCL_LIB_ID=401;;
@@ -97,9 +97,10 @@ if test "x$GCC" = "xyes"; then
 fi
 changequote([,])dnl
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 src/Makefile
 include/Makefile
 include/cncl/Makefile
 ])
+AC_OUTPUT

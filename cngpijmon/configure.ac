@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(cngpijmon, 3.80-1, no-define)
+AC_INIT([cngpijmon],[3.80-1],[no-define])
 
 AM_INIT_AUTOMAKE
 
@@ -34,7 +34,7 @@ AH_TEMPLATE([PACKAGE_SOURCE_DIR])
 AH_TEMPLATE([PACKAGE_PRINTER_MODEL])
 AH_TEMPLATE([PROG_PATH])
 
-AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix])
 AC_PROG_CC
 AM_PROG_CC_STDC
 AC_HEADER_STDC
@@ -87,8 +87,9 @@ changequote([,])dnl
 XML2_CFLAGS=`xml2-config --cflags`
 AC_SUBST(XML2_CFLAGS)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 src/Makefile
 po/Makefile.in
 ])
+AC_OUTPUT

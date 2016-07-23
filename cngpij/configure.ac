@@ -1,4 +1,4 @@
-AC_INIT(cngpij, 3.80-1, no-define)
+AC_INIT([cngpij],[3.80-1],[no-define])
 
 AM_INIT_AUTOMAKE
 
@@ -22,7 +22,7 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
-AM_PROG_LIBTOOL
+LT_INIT
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-lcups':
@@ -48,5 +48,6 @@ AC_CHECK_FUNCS([memset socket strdup strrchr])
 
 CFLAGS="-O2"
 
-AC_OUTPUT(Makefile
-                 cngpij/Makefile)
+AC_CONFIG_FILES([Makefile
+                 cngpij/Makefile])
+AC_OUTPUT

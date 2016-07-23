@@ -1,4 +1,4 @@
-AC_INIT(canon.ppd, 1.0.0, no-define)
+AC_INIT([canon.ppd],[1.0.0],[no-define])
 
 AM_INIT_AUTOMAKE
 
@@ -17,4 +17,5 @@ AC_SUBST(XPPDPATH)
 
 AC_PROG_INSTALL
 
-AC_OUTPUT(Makefile)
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT

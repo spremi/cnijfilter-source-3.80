@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(maintenance, 3.80-1, no-define)
+AC_INIT([maintenance],[3.80-1],[no-define])
 
 AM_INIT_AUTOMAKE
 
@@ -58,7 +58,7 @@ AC_DEFINE_UNQUOTED([XBJLIBPATH], ["${enable_libpath}"], [XBJLIBPATH])
 AC_SUBST(XBJLIBPATH)
 
 
-AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix])
 AC_PROG_CC
 AM_PROG_CC_STDC
 AC_HEADER_STDC
@@ -116,7 +116,7 @@ AC_SUBST(XML2_CFLAGS)
 ARC=`getconf LONG_BIT`
 AC_SUBST(ARC)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 src/Makefile
 include/Makefile
@@ -124,3 +124,4 @@ include/cncl/Makefile
 include/misc/Makefile
 po/Makefile.in
 ])
+AC_OUTPUT

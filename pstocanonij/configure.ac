@@ -1,4 +1,4 @@
-AC_INIT(pstocanonij, 1.0.0, no-define)
+AC_INIT([pstocanonij],[1.0.0],[no-define])
 
 AM_INIT_AUTOMAKE
 
@@ -27,7 +27,7 @@ AC_PROG_CPP
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AM_PROG_LIBTOOL
+LT_INIT
 
 LT_INIT
 
@@ -55,6 +55,7 @@ AC_CHECK_FUNCS([dup2 memset socket strdup strrchr])
 
 CFLAGS="-O2"
 
-AC_OUTPUT(Makefile
+AC_CONFIG_FILES([Makefile
                  filter/Makefile
-                 )
+                 ])
+AC_OUTPUT

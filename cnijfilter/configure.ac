@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(cif, 3.80-1, no-define)
+AC_INIT([cif],[3.80-1],[no-define])
 
 AM_INIT_AUTOMAKE
 
@@ -35,7 +35,7 @@ AC_SUBST(XBINPATH)
 AM_CONFIG_HEADER(config.h)
 
 dnl Checks for programs.
-AC_ISC_POSIX
+AC_SEARCH_LIBS([strerror],[cposix])
 
 case "${program_suffix}" in
   mg6300) CNCL_LIB_ID=408;;
@@ -73,10 +73,11 @@ CFLAGS="-O2"
 dnl Checks for library functions.
 AC_CHECK_FUNCS(socket)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 src/Makefile
 include/Makefile
 include/cncl/Makefile
 include/misc/Makefile
 ])
+AC_OUTPUT
