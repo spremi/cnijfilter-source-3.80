@@ -2,7 +2,7 @@
 %bcond_with fastbuild
 %bcond_with build_common_package
 
-%define VERSION 3.80
+%define VERSION 3.85
 %define RELEASE 1
 
 %define _arc  %(getconf LONG_BIT)

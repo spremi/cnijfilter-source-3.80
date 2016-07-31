@@ -41,7 +41,7 @@
 #define mkpath(path)		mkpath2(path)
 
 
-#define INTERNAL_VERSION_STR	"3.80.01.013"
+#define INTERNAL_VERSION_STR	"3.85.01.001"
 
 
 /////////////////////////////////////////////////////////

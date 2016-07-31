@@ -1,4 +1,4 @@
-AC_INIT([canon.ppd],[1.0.0],[no-define])
+AC_INIT([canon.ppd],[3.85-1],[no-define])
 
 AM_INIT_AUTOMAKE
 

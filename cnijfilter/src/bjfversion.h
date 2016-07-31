@@ -30,7 +30,7 @@
 #define COPYRIGHT_STR0	"Copyright CANON INC. 2001-2012"
 #define COPYRIGHT_STR1	"All Rights Reserved."
 
-#define INTERNAL_VERSION_STR	"3.80.01.006"
+#define INTERNAL_VERSION_STR	"3.85.01.001"
 
 #endif
 

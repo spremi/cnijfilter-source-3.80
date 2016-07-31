@@ -42,8 +42,8 @@
 #include "bjcups.h"
 #include "bjutil.h"
 
-#define	BJCUPS_VERSION	"cngpij Ver.3.80  Copyright CANON INC. 2002-2012\n"
-#define BJCUPS_INTVER	"cngpij Internal Version : 3.80.01.001\n"
+#define	BJCUPS_VERSION	"cngpij Ver.3.85  Copyright CANON INC. 2002-2012\n"
+#define BJCUPS_INTVER	"cngpij Internal Version : 3.85.01.001\n"
 
 #define	BJ_SOCKET		"/tmp/ijui"
 

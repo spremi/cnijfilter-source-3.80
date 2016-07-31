@@ -1,4 +1,4 @@
-AC_INIT([buftool],[1.0.0],[no-define])
+AC_INIT([buftool],[3.85-1],[no-define])
 AM_INIT_AUTOMAKE
 
 AM_CONFIG_HEADER(config.h)

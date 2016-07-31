@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([cngpijmon],[3.80-1],[no-define])
+AC_INIT([cngpijmon],[3.85-1],[no-define])
 
 AM_INIT_AUTOMAKE
 

@@ -1,4 +1,4 @@
-AC_INIT([backendnet],[3.80-1],[no-define])
+AC_INIT([backendnet],[3.85-1],[no-define])
 
 AM_INIT_AUTOMAKE
 
