@@ -35,14 +35,14 @@ short bjf_error( char *message, short err_code )
 {
 	if ( err_code == NO_ERROR ) return 0;
 
-	fprintf( stderr, "CIF COMMAND ERROR :" );
+	fprintf( stderr, "Error: " );
 
 	switch( err_code ){
 		case FILE_ERROR:
-			fprintf( stderr, "file access Error!\n" );
+			fprintf( stderr, "error occurred while accessing the specified file or stdin; " );
 			break;
 		case MEMORY_ERROR:
-			fprintf( stderr, "memory allocate Error!\n" );
+			fprintf( stderr, "failed to allocate memory; " );
 			break;
 		default:
 			break;
