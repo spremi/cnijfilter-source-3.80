@@ -388,7 +388,7 @@ ParamList *get_ps_params(int ifd, BufList **ps_data)
 			{
 				if( !IS_BLANK(*p_code)  )
 					break;
-				p_code++;
+				*p_code++;
 			}
 			while( *p_code != '\0' )
 			{
