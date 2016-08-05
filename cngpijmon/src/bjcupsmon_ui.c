@@ -178,7 +178,7 @@ PRIVATE const gchar	*gSTSMessageTable[] = {
 	/* ID_STS_MESSAGE_OC_HEADALIGNMENT */
 	N_("An error occurred during automatic print head alignment.\n\nThe print head nozzles may be clogged. Execute cleaning on the Maintenance tab of the printer driver, and reexecute print head alignment.\n\nIf an error still occurs, refer to the user's guide to check the error or carry out manual alignment.\n\nPress the printer's RESUME button to clear the error.\n"),
 	/* ID_STS_MESSAGE_OC_HEADALIGNMENT2 */
-	N_("An error occurred during automatic print head alignment.\n\nThe print head nozzles may be clogged. Execute cleaning on the Maintenance tab of the printer driver, and reexecute print head alignment.\n\nIf an error still occurs, refer to the user's guide to check the error or carry out manual alignment.\n\nPress the printer's OK button to clear the error.\n"),
+	N_("An error occurred during automatic print head alignment.\n\nThe print head nozzles may be clogged. Execute cleaning on the Maintenance tab of the printer driver, and reexecute print head alignment.\n\nIf an error still occurs, refer to the manual to check the error or carry out manual alignment.\n\nPress the printer's OK button to clear the error.\n"),
 	/* ID_STS_MESSAGE_OC_HARDWAREERROR_TANK */
 	N_("An ink tank cannot be recognized.\nOpen the printer's cover and replace the ink tank on which the ink lamp is off.\n"),
 	/* ID_STS_MESSAGE_OC_PLURALERROR_TANK */
@@ -626,13 +626,13 @@ PRIVATE const gchar	*gSTSMessageTable[] = {
 	/* ID_STS_MESSAGE_SC_SERVICE_ERROR_09COMMON_NUMBER */
 	N_("Support Code : %s\n\n"),
 	/* ID_STS_MESSAGE_SC_SERVICE_ERROR_09COMMON */
-	N_("A printer error has occurred.\nTurn the printer off and then on again.\nIf this doesn't clear the error, the printer needs repair. See the user's guide and contact the service center.\n"),
+	N_("A printer error has occurred.\nTurn the printer off and then on again.\nIf this doesn't clear the error, the printer needs repair. See the manual and contact the service center.\n"),
 	/* ID_STS_MESSAGE_SC_SERVICE_ERROR_09VHMONITOR */
-	N_("An error has occurred. The printer needs repair.\nTurn the printer off and unplug the power cord of the printer from the power supply.\nThen see the user's guide and contact the service center.\n"),
+	N_("An error has occurred. The printer needs repair.\nTurn the printer off and unplug the power cord of the printer from the power supply.\nThen see the manual and contact the service center.\n"),
 	/* ID_STS_MESSAGE_SC_USEDTANK_FULL_09 */
-	N_("Printer error has occurred.\nContact the service center.\n"),
+	N_("A printer error has occurred.\nSee the manual and contact the service center.\n"),
 	/* ID_STS_MESSAGE_SC_USEDTANK_FULLJP_09 */
-	N_("The ink absorber is full.\nIt needs to be replaced.\nContact the service center for replacement.\nThe ink absorber can only be replaced by a qualified technician.\n"),
+	N_("The ink absorber is full.\nIt needs to be replaced.\nSee the manual and contact the service center.\nThe ink absorber can only be replaced by a qualified technician.\n"),
 	/* ID_STS_MESSAGE_OC_USEDTANK_ALMOST_OK2 */
 	N_("The ink absorber is almost full.\nPress the printer's OK button to continue printing.\nContact the service center. \n"),
 	/* ID_STS_MESSAGE_OC_USEDTANK_ALMOSTJP_OK2 */
@@ -724,7 +724,7 @@ PRIVATE const gchar	*gSTSMessageTable[] = {
 	/* ID_STS_MESSAGE_OC_PAPER_JAM03_FRONTCOVERCLOSE_IFMEM */
 	N_("Remove the loaded paper in the front tray and close the front cover.\nIf a memory card is inserted, be sure to remove it.\n"),
 	/* ID_STS_MESSAGE_OC_PAPER_JAM03_RIGHTSIDEDOWN */
-	N_("Place the printer upright with the right side down, then open the transport unit by pressing down the open lever.\nRemove the jammed paper and immediately return the printer to its original position.\n\nRefer to the user's guide for details.\n"),
+	N_("Place the printer upright with the right side down, then open the transport unit by pressing down the open lever.\nRemove the jammed paper and immediately return the printer to its original position.\n\nRefer to the manual for details.\n"),
 	/* ID_STS_MESSAGE_BUSY_CARTRIDGE_CHANGE_FRONT */
 	N_("The holder is in the ink cartridge replacement position.\nAfter replacing the ink cartridge, close the paper output cover.\n"),
 	/* ID_STS_MESSAGE_BUSY_HEADPROTECT_FRONT */
@@ -766,7 +766,7 @@ PRIVATE const gchar	*gSTSMessageTable[] = {
 	/* ID_STS_MESSAGE_INK_GLAY0 */
 	N_(" Gray"),
 	/* ID_STS_MESSAGE_SC_SERVICE_ERROR_CARRIAGEPOS */
-	N_("A printer error has occurred.\nTurn the printer off. Then check that there are no foreign objects in the printer and that the ink tanks are installed properly.\nAfter that, turn the printer on again.\n\nIf this doesn't clear the error, the printer needs repair. See the user's guide and contact the service center.\n"),
+	N_("A printer error has occurred.\nTurn the printer off. Then check that there are no foreign objects in the printer and that the ink tanks are installed properly.\nAfter that, turn the printer on again.\n\nIf this doesn't clear the error, the printer needs repair. See the manual and contact the service center.\n"),
 	/* ID_STS_MESSAGE_OC_FITPAPER_CASSETUP */
 	N_("Fit paper into the cassette (upper).\n"),
 	/* ID_STS_MESSAGE_OC_FITPAPER_CASSETLOWER */
@@ -774,11 +774,11 @@ PRIVATE const gchar	*gSTSMessageTable[] = {
 	/* ID_STS_MESSAGE_SMMSG_TAP */
 	N_("Tap [OK] on the printer.\n"),
 	/* ID_STS_MESSAGE_OC_USERSIZE_RESUME */
-	N_("Cannot print with the specified paper size.\nPress the RESUME button on the printer to cancel printing. Then, change the paper size setting and print again.\nSee the user's guide for the correct paper size setting.\n"),
+	N_("Cannot print with the specified paper size.\nPress the printer's RESUME button to cancel printing. Then, change the paper size setting and print again.\nSee the user's guide for the correct paper size setting.\n"),
 	/* ID_STS_MESSAGE_OC_USERSIZE_STOP */
-	N_("Cannot print with the specified paper size.\nPress the printer's Stop button on the printer to cancel printing. Then, change the paper size setting and print again.\nSee the user's guide for the correct paper size setting.\n"),
+	N_("Cannot print with the specified paper size.\nPress the printer's Stop button to cancel printing. Then, change the paper size setting and print again.\nSee the manual for the correct paper size setting.\n"),
 	/* ID_STS_MESSAGE_OC_USERSIZE_STOP_TOUCH */
-	N_("Cannot print with the specified paper size.\nTouch the printer's Stop button on the printer to cancel printing. Then, change the paper size setting and print again.\nSee the user's guide for the correct paper size setting.\n"),
+	N_("Cannot print with the specified paper size.\nTouch the printer's Stop button to cancel printing. Then, change the paper size setting and print again.\nSee the user's guide for the correct paper size setting.\n"),
 	/* ID_STS_MESSAGE_OC_EJECTCOVERCLOSE12_1_BTN */
 	N_("Check that there are no objects in front of the printer and that the cassette (upper) is fully inserted, and then press the open button on the printer to open the paper output tray.\n"),
 	/* ID_STS_MESSAGE_OC_EJECTCOVERCLOSE12_1 */
@@ -834,13 +834,13 @@ PRIVATE const gchar	*gOtherMessageTable[] = {
 	/* ID_OTHER_MESSAGE_OTHEROPERATION */
 	N_("The printer is performing another operation.\n"),
 	/* ID_OTHER_MESSAGE_OFFLINE */
-	N_("The printer is offline.\nCheck that the printer cable is connected and the printer power is on.\n"),
+	N_("The printer is offline.\nCheck that the printer is connected and the printer power is on.\n"),
 	/* ID_OTHER_MESSAGE_USB_BACKEND_NORMAL */
 	N_("Printer not responding.\n"),
 	/* ID_OTHER_MESSAGE_FATAL_ERROR */
 	"\n  cngpijmon : fatal error occured.\n",
 	/* ID_OTHER_MESSAGE_ARGUMENT_ERROR */
-	"  cngpijmon(3.00.01.011) : argument error.\n  Usage: cngpijmon****** [printer name]\n\n   ex) cngpijmonmg6300 MG6300\n\n",
+	"  cngpijmon : argument error.\n  Usage: cngpijmon****** [printer name]\n\n   ex) cngpijmonmg6300 MG6300\n\n",
 };
 
 
