@@ -444,8 +444,8 @@ int get_printer_status(int dev_path, char *buf, int *reg, int *bytes)
 		if( (ret3 == -1) && (r_size > 0) ){
 		//if( ret3 == -1 ){
 			while(1){
-				/* for Ver.3.80 */
-				separate_flag = 1;
+				/* for Ver.3.90 delete */
+				/* separate_flag = 1; */
 				count++;
 				if(count == 5) break;
 				sleep(2);
@@ -485,6 +485,7 @@ int get_printer_status(int dev_path, char *buf, int *reg, int *bytes)
 		free(buf2);
 	}
 
+/* Ver.3.90 delete
 #ifdef DEBUG
 		fprintf(log_path, "separate_flag##### = %d\n",separate_flag);
 		fflush(log_path);
@@ -496,6 +497,7 @@ int get_printer_status(int dev_path, char *buf, int *reg, int *bytes)
 		fflush(log_path);
 #endif
 	}
+*/
 	/***************************************************/
 
 	*bytes = r_size;
