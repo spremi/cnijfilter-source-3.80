@@ -590,7 +590,7 @@ PRIVATE gint getPrinterURI(gchar *pDestName, gchar *pURI, gchar *pServerName, gi
 					}
 
 					// Tora 020418: Compare two printer names ignoring the character case.
-					if (strcasecmp(pDestName, pPrinter) == 0) {
+					if ((pDestName != NULL) && (pPrinter != NULL) && (pUri != NULL) && strcasecmp(pDestName, pPrinter) == 0) {
 						strncpy(pURI, pUri, bufSize);
 
 						pTemp = strstr(pURI, "//");
@@ -692,7 +692,7 @@ PUBLIC gint getDeviceURI(gchar *pDestName, gchar *pDeviceURI, gint bufSize)
 						pAttribute = ippNextAttribute(pResponse);
 					}
 
-					if (strcasecmp(pDestName, pPrinter) == 0) {
+					if ((pDestName != NULL) && (pPrinter != NULL) && (pDUri != NULL) &&strcasecmp(pDestName, pPrinter) == 0) {
 						strncpy(pDeviceURI, pDUri, bufSize);
 						break;
 					}
