@@ -341,9 +341,9 @@ int chk_inklow_part1(ST_CUPSSTS *p_tbl, ST_PrinterStatus *p_sts)
 	int Tflag = 0;
 	int ret = ID_ERR_ARGUMENT_ERR;
 	int string_pattern,i,k,q,x;
-	char warning[13];
-	char warning1[13];
-	char warning2[13];
+	char warning[12];
+	char warning1[12];
+	char warning2[12];
 
 
 	for(i=0; i<sizeof(warning); i++)	warning[i] = SPACE;
