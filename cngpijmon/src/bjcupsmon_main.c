@@ -273,7 +273,7 @@ PRIVATE gint initApplication(gint argc, gchar *argv[], gchar *pPrinterName)
 		pPrinterName = NULL;
 		//20090202 backend: IPP:ipp://198.168.1.23... cnijusb
 		if (strncmp(deviceURI, backend_name_usb, strlen(backend_name_usb)) == 0){
-			strncpy(macaddress, deviceURI + strlen(backend_name_usb), (strlen(deviceURI)-strlen(backend_name_usb)) );
+			strncpy(macaddress, deviceURI + strlen(backend_name_usb) - 1, 127);
 			backend_Is = CANON_USB_BACKEND_CNIJ_USB;
 			pPrinterName = NULL;
 		}
@@ -284,7 +284,7 @@ PRIVATE gint initApplication(gint argc, gchar *argv[], gchar *pPrinterName)
 		/*  usb backend  */
 
 	} else {
-		strncpy(macaddress, deviceURI + strlen(backend_name_net), (strlen(deviceURI)-strlen(backend_name_net)) );
+		strncpy(macaddress, deviceURI + strlen(backend_name_net), 127);
 		backend_Is = CANON_BJNP_BACKEND_CNIJ_NET;
 	}
 	/* for Network Ver.3.00 */
