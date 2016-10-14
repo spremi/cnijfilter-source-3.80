@@ -128,6 +128,9 @@ static int setup_bscc(int dev_path, char *jobIDStr)
 	short	i;
 #endif
 
+	if (jobIDStr == NULL)
+		return -1;
+
 	bscc_com = (char *)(malloc(512));
 	if(bscc_com == NULL)
 		return -1; /* no RAM */
