@@ -215,8 +215,10 @@ int ip100_setcartridgetype(ST_STORESET *p_s, ST_BSCC2STS *p_ct, bscc2sts_tbl *p_
   }
   memset (p_temp, 0, strlen(p_s->p_bsccsts) + 1);
   strncpy(p_temp, p_s->p_bsccsts, strlen(p_s->p_bsccsts));
-  if( (p_tok=strtok(p_temp,",") ) == NULL )
+  if( (p_tok=strtok(p_temp,",") ) == NULL ) {
+	free(p_temp);
 	return(OK);
+  }
 
   for(i=0; (i<MAXCARTRIDGENUM) && (p_tok!=NULL); i++){
     ret=commonstssetprocess(p_tok,&(p_tbl->cartridge[i].type), p_ct);
