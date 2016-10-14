@@ -311,7 +311,7 @@ void	data_write( int argc, FILE *fp, int copies, int pipe_fds )
 	}
 	memset(tmp_file, 0x00, sizeof(tmp_file));
 	strncpy(tmp_file, tmp_dir, sizeof(tmp_file)-1);
-	strncat(tmp_file, "/cnijnetXXXXXX", sizeof(tmp_file)-1);
+	strncat(tmp_file, "/cnijnetXXXXXX", sizeof(tmp_file) - strlen(tmp_file) - 1);
 
 	tmp_mask = umask(077);
 	tmp_fd   = mkstemp(tmp_file);
