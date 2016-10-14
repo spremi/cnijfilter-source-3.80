@@ -699,6 +699,7 @@ static short bmp_image_init( LPBJF_IMAGEINFO lpbjfimage )
 
 	if ( rstep == 0 ){
 		bjf_error( "Error in bmp_image_init", FILE_ERROR );
+		goto onErr;
 	}
 
 	if ( (buf = (unsigned char *)malloc( MAXBUF )) == NULL ) goto onErr;
