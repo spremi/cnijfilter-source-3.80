@@ -607,10 +607,9 @@ Err01:
 	release_printer_sem(sem_id); /* signal unblock */
 	signal_unblock(sigmask);     /* printer unlock */
 
-	if( !cmd_wrbuf )
-		free(cmd_wrbuf);
-	return(cnclerr);
+	free(cmd_wrbuf);
 
+	return(cnclerr);
 }
 
 /*************************************************************/
@@ -762,12 +761,9 @@ Err01:
 	release_printer_sem(sem_id); /* signal unblock */
 	signal_unblock(sigmask);     /* printer unlock */
 
-	if( !buf2 )
-		free(buf2);
-	if( !buf3 )
-		free(buf3);
-	if( !cmd_wrbuf )
-		free(cmd_wrbuf);
+	free(buf2);
+	free(buf3);
+	free(cmd_wrbuf);
 
 	return(cnclerr);
 
