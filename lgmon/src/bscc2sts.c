@@ -353,6 +353,7 @@ int parsebscc(char *p_s, ST_BSCCBUF *p_bsccbuf)
   p_tok = strtok(p_temp, ":");
 
   if(p_tok == NULL){
+    free(p_temp);
     return(ERR_BSCCNON);
   }
   strncpy(&bscccom_tmp[0], p_tok, 1023);
