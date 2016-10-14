@@ -356,7 +356,7 @@ static short getDeviceURI( const char *pDestName, char *pDeviceURI, short bufSiz
 						pAttribute = ippNextAttribute(pResponse);
 					}
 
-					if (strcasecmp(pDestName, pPrinter) == 0) {
+					if ((pDestName != NULL) && (pPrinter != NULL) && strcasecmp(pDestName, pPrinter) == 0) {
 						strncpy(pDeviceURI, pDUri, bufSize);
 						break;
 					}
