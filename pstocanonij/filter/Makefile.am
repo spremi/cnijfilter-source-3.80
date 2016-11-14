@@ -1,4 +1,4 @@
-filterdir=$(libdir)/cups/filter
+filterdir=$(libexecdir)/cups/filter
 
 filter_PROGRAMS= pstocanonij
 
