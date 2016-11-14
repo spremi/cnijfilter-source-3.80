@@ -948,8 +948,8 @@ static short ppm_image_init( LPBJF_IMAGEINFO lpbjfimage )
 	short			tmpformat;
 	short			retbyte = 0;
 	short			bpp = 3;
-	long			width = 0;
-	long			length = 0;
+	png_uint_32		width = 0;
+	png_uint_32		length = 0;
 	long			maxvalue = 0;
 	long			rstep = 0;
 	long			RasterLength = 0;
