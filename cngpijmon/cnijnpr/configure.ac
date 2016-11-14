@@ -39,7 +39,11 @@ AC_CHECK_FUNCS([memset socket strdup strrchr])
 
 CFLAGS="-O2"
 
-ARC=`getconf LONG_BIT`
+case "$ABI" in
+    x86) ARC=32;;
+    amd64) ARC=64;;
+    *) ARC=`getconf LONG_BIT`;;
+esac
 AC_SUBST(ARC)
 
 AC_CONFIG_FILES([Makefile

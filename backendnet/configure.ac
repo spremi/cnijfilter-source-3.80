@@ -25,7 +25,11 @@ fi
 AC_DEFINE_UNQUOTED([BJLIB_PATH], ["${enable_libpath}"], [BJLIB_PATH])
 AC_SUBST(BJLIB_PATH)
 
-ARC=`getconf LONG_BIT`
+case "$ABI" in
+    x86) ARC=32;;
+    amd64) ARC=64;;
+    *) ARC=`getconf LONG_BIT`;;
+esac
 AC_SUBST(ARC)
 
 # Checks for programs.

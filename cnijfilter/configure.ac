@@ -50,7 +50,11 @@ case "${program_suffix}" in
 esac
 AC_SUBST(CNCL_LIB_ID)
 
-ARC=`getconf LONG_BIT`
+case "$ABI" in
+    x86) ARC=32;;
+    amd64) ARC=64;;
+    *) ARC=`getconf LONG_BIT`;;
+esac
 AC_SUBST(ARC)
 
 AC_PROG_CC

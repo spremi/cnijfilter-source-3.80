@@ -116,7 +116,11 @@ CFLAGS="-O2 -Wall"
 XML2_CFLAGS=`xml2-config --cflags`
 AC_SUBST(XML2_CFLAGS)
 
-ARC=`getconf LONG_BIT`
+case "$ABI" in
+    x86) ARC=32;;
+    amd64) ARC=64;;
+    *) ARC=`getconf LONG_BIT`;;
+esac
 AC_SUBST(ARC)
 
 AC_CONFIG_FILES([
