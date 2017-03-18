@@ -27,7 +27,6 @@ Name: cnijfilter-%{PKG}
 Version: %{VERSION}
 Release: %{RELEASE}
 License: See the LICENSE*.txt file.
-Vendor: CANON INC.
 Source0: cnijfilter-source-%{version}-%{release}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-root
 #Requires:  cups popt
@@ -38,7 +37,6 @@ Requires: cnijfilter-common >= %{version} cups popt libxml2 gtk2 libtiff libpng
 %package -n cnijfilter-common
 Summary: IJ Printer Driver Ver.%{VERSION} for Linux
 License: See the LICENSE*.txt file.
-Vendor: CANON INC.
 Requires:  cups popt
 %endif
 
