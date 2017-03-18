@@ -36,7 +36,7 @@ BuildRoot     : %{_tmppath}/%{name}-root
 
 Requires      : cnijfilter-common >= %{version} cups popt libxml2 gtk2 libtiff libpng
 
-#BuildRequires: gtk-devel cups-devel
+BuildRequires : cups-devel popt-devel gtk2-devel libxml2-devel libtiff-devel
 
 %if %{with build_common_package}
 
@@ -45,7 +45,9 @@ Requires      : cnijfilter-common >= %{version} cups popt libxml2 gtk2 libtiff l
 Summary       : IJ Printer Driver Ver.%{VERSION} for Linux
 License       : See the LICENSE*.txt file.
 
-Requires      : cups popt
+Requires      : cups popt libxml2 gtk2 libtiff libpng
+
+BuildRequires : cups-devel popt-devel gtk2-devel libxml2-devel libtiff-devel
 
 %endif
 
