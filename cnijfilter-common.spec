@@ -3,7 +3,7 @@
 %bcond_with build_common_package
 
 %define VERSION 3.85
-%define RELEASE 1
+%define RELEASE 2
 
 %define _arc  %(getconf LONG_BIT)
 
@@ -403,6 +403,10 @@ fi
 
 
 %ChangeLog
+* Sat Mar 18 2017 Sanjeev Premi <spremi@ymail.com>
+- Bump release number.
+- Beautify & Simplify the RPM spec file.
+
 * Sun Jul 31 2016 Sanjeev Premi <spremi@ymail.com>
 - Bump package version to avoid conflict with existing packages.
 

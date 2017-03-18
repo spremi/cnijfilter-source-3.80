@@ -36,7 +36,7 @@ $ git clone https://github.com/spremi/cnijfilter-source-3.80.git
 
 #### Create source tarball
 ```
-$ git archive --format=tar.gz --prefix=cnijfilter-source-3.85-1/ HEAD > ../cnijfilter-source-3.85-1.tar.gz
+$ git archive --format=tar.gz --prefix=cnijfilter-source-3.85-2/ HEAD > ../cnijfilter-source-3.85-2.tar.gz
 ```
 
 #### Build RPM
@@ -45,7 +45,7 @@ Build RPM packages specific to a printer model. See the original instructions be
 
 For example:
 ```
-$ rpmbuild -tb cnijfilter-source-3.85-1.tar.gz --define="MODEL ip7200" --define="MODEL_NUM 406" --with build_common_package
+$ rpmbuild -tb cnijfilter-source-3.85-2.tar.gz --define="MODEL ip7200" --define="MODEL_NUM 406" --with build_common_package
 ```
 
 ## Original README Contents
