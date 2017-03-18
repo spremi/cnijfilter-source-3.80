@@ -6,15 +6,11 @@
 %define RELEASE 1
 
 %define _arc  %(getconf LONG_BIT)
-%define _is64 %(if [ `getconf LONG_BIT` = "64" ] ; then  printf "64"; fi)
 
 %define _cupsbindir     /usr/lib/cups
 %define _cupsbindir64   /usr/lib64/cups
 
-%define _prefix   /usr/local
-%define _bindir   %{_prefix}/bin
-%define _libdir   /usr/lib%{_is64}
-%define _ppddir   /usr
+%define _ppddir   %{_usr}
 
 %define CNBP_LIBS   libcnbpcmcm libcnbpcnclapi libcnbpcnclbjcmd libcnbpcnclui libcnbpess libcnbpo
 %define COM_LIBS    libcnnet
