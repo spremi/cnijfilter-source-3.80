@@ -11,9 +11,6 @@
 
 %define _ppddir         %{_datarootdir}/cups/model
 
-%define CNBP_LIBS   libcnbpcmcm libcnbpcnclapi libcnbpcnclbjcmd libcnbpcnclui libcnbpess libcnbpo
-%define COM_LIBS    libcnnet
-
 %define PRINT_PKG_PROGRAM   ppd cnijfilter maintenance lgmon cngpijmon
 
 %define PKG %{MODEL}series
@@ -299,19 +296,28 @@ fi
 # ####################### Post Uninstall
 #
 %postun
-# remove cnbp* libs
-for LIBS in %{CNBP_LIBS}; do
-  if [ -h %{_libdir}/${LIBS}%{MODEL_NUM}.so ]; then
-    rm -f %{_libdir}/${LIBS}%{MODEL_NUM}.so
-  fi
-done
+rm -f %{_bindir}/cif%{MODEL}
+rm -f %{_bindir}/cngpijmon%{MODEL}
+rm -f %{_bindir}/lgmon%{MODEL}
+rm -f %{_bindir}/maintenance%{MODEL}
 
-if [ "$1" = 0 ] ; then
-  rmdir -p --ignore-fail-on-non-empty %{_datarootdir}/locale/*/LC_MESSAGES
-  rmdir -p --ignore-fail-on-non-empty %{_datarootdir}/cngpijmon%{MODEL}
-  rmdir -p --ignore-fail-on-non-empty %{_datarootdir}/maintenance%{MODEL}
-  rmdir -p --ignore-fail-on-non-empty %{_bindir}
-fi
+rm -f %{_libdir}/bjlib/cif%{MODEL}.conf
+rm -f %{_libdir}/bjlib/cnb_%{MODEL_NUM}0.tbl
+rm -f %{_libdir}/bjlib/cnbpname%{MODEL_NUM}.tbl
+
+rm -f %{_libdir}/bjlib/cnbpname%{MODEL_NUM}.tbl
+
+rm -f %{_libdir}/libcnbp*%{MODEL_NUM}.so*
+
+rm -rf %{_ppddir}/canon%{MODEL}.ppd
+
+rm -rf %{_datarootdir}/cngpijmon%{MODEL}
+rm -rf %{_datarootdir}/maintenance%{MODEL}
+
+rm -rf %{_datarootdir}/doc/cnijfilter-%{PKG}
+
+rm -rf %{_datarootdir}/locale/*/LC_MESSAGES/cngpijmon%{MODEL}.mo
+rm -rf %{_datarootdir}/locale/*/LC_MESSAGES/maintenance%{MODEL}.mo
 
 if [ -x /sbin/ldconfig ]; then
   /sbin/ldconfig
@@ -320,15 +326,17 @@ fi
 %if %{with build_common_package}
 
 %postun -n cnijfilter-common
-for LIBS in %{COM_LIBS}; do
-  if [ -h %{_libdir}/${LIBS}.so ]; then
-    rm -f %{_libdir}/${LIBS}.so
-  fi
-done
+rm -f %{_bindir}/cngpij
+rm -f %{_bindir}/cngpijmnt
+rm -f %{_bindir}/cnijnpr
+rm -f %{_bindir}/cnijnetprn
 
-if [ "$1" = 0 ] ; then
-  rmdir -p --ignore-fail-on-non-empty %{_libdir}/bjlib
-fi
+rm -f %{_cupslibdir}/filter/pstocanonij
+rm -f %{_cupslibdir}/backend/cnijusb
+rm -f %{_cupslibdir}/backend/cnijnet
+
+rm -f %{_libdir}/libcnnet.so*
+rm -f %{_libdir}/bjlib/cnnet.ini
 
 if [ -x /sbin/ldconfig ]; then
   /sbin/ldconfig
