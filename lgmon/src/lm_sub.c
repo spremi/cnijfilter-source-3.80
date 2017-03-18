@@ -714,9 +714,10 @@ int status_to_viewer(struct bjst_rback *rback)
 	/* status return to stderr(used by CUPS system) */
 	if(r_bytes != 0)
 		ret3 = write_status_info( rback, r_bytes, buf );
-		/* clear buf */
-		if( ret3 < 0 )
-			memset(buf, 0, MAX_STATBUF);
+
+	/* clear buf */
+	if( ret3 < 0 )
+		memset(buf, 0, MAX_STATBUF);
 
 #if 0
 	{
@@ -841,9 +842,10 @@ int write_status_info( struct bjst_rback *rback, int r_bytes, char *buf )
 	if(rback->rback_handle > 0 && ret3 == OK )
 		//write(rback->rback_handle, (void *)&info_sts, (size_t)sizeof(info_sts));
 		w_size = write(rback->rback_handle, (void *)&info_sts, (size_t)sizeof(info_sts));
-		if(w_size < 0){
-			ret3 = -1;
-		}
+
+	if(w_size < 0){
+		ret3 = -1;
+	}
 #ifdef DEBUG
 	else {
 		fprintf(log_path,"Status Convert Error rback_handle:%d lib_stat:%d\n",rback->rback_handle,ret3);
