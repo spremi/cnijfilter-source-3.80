@@ -282,19 +282,6 @@ fi
 %if %{with build_common_package}
 
 %post -n cnijfilter-common
-if [ -e /usr/lib64/cups/backend/usb ] ; then
-  rm -f /usr/lib/cups/filter/pstocanonij
-  rm -f /usr/lib/cups/backend/cnijusb
-  rm -f /usr/lib/cups/backend/cnijnet
-  rmdir -p --ignore-fail-on-non-empty /usr/lib/cups/filter
-  rmdir -p --ignore-fail-on-non-empty /usr/lib/cups/backend
-elif  [ -e /usr/lib/cups/backend/usb ] ; then
-  rm -f /usr/lib64/cups/filter/pstocanonij
-  rm -f /usr/lib64/cups/backend/cnijusb
-  rm -f /usr/lib64/cups/backend/cnijnet
-  rmdir -p --ignore-fail-on-non-empty /usr/lib64/cups/filter
-  rmdir -p --ignore-fail-on-non-empty /usr/lib64/cups/backend
-fi
 
 if [ -x /sbin/ldconfig ]; then
   /sbin/ldconfig
