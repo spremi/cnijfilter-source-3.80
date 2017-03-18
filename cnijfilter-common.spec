@@ -7,8 +7,7 @@
 
 %define _arc  %(getconf LONG_BIT)
 
-%define _cupsbindir     /usr/lib/cups
-%define _cupsbindir64   /usr/lib64/cups
+%define _cupslibdir     %{_usr}/lib/cups
 
 %define _ppddir   %{_usr}
 
@@ -249,10 +248,8 @@ install -c -s -m 755 %{MODEL_NUM}/libs_bin%{_arc}/*.so.*  ${RPM_BUILD_ROOT}%{_li
 %if %{with build_common_package}
 
 mkdir -p ${RPM_BUILD_ROOT}%{_bindir}
-mkdir -p ${RPM_BUILD_ROOT}%{_cupsbindir}/filter
-mkdir -p ${RPM_BUILD_ROOT}%{_cupsbindir}/backend
-mkdir -p ${RPM_BUILD_ROOT}%{_cupsbindir64}/filter
-mkdir -p ${RPM_BUILD_ROOT}%{_cupsbindir64}/backend
+mkdir -p ${RPM_BUILD_ROOT}%{_cupslibdir}/filter
+mkdir -p ${RPM_BUILD_ROOT}%{_cupslibdir}/backend
 mkdir -p ${RPM_BUILD_ROOT}%{_prefix}/share/cups/model
 mkdir -p ${RPM_BUILD_ROOT}/etc/udev/rules.d/
 
@@ -261,10 +258,6 @@ install -c -m 644 com/ini/cnnet.ini   ${RPM_BUILD_ROOT}%{_libdir}/bjlib
 make install DESTDIR=${RPM_BUILD_ROOT}
 
 install -c -s -m 755 com/libs_bin%{_arc}/*.so.*   ${RPM_BUILD_ROOT}%{_libdir}
-
-install -c -m 755 ${RPM_BUILD_ROOT}%{_cupsbindir}/filter/pstocanonij  ${RPM_BUILD_ROOT}%{_cupsbindir64}/filter/pstocanonij
-install -c -m 755 ${RPM_BUILD_ROOT}%{_cupsbindir}/backend/cnijusb     ${RPM_BUILD_ROOT}%{_cupsbindir64}/backend/cnijusb
-install -c -m 755 ${RPM_BUILD_ROOT}%{_cupsbindir}/backend/cnijnet     ${RPM_BUILD_ROOT}%{_cupsbindir64}/backend/cnijnet
 
 install -c -m 644 etc/*.rules ${RPM_BUILD_ROOT}/etc/udev/rules.d/
 
@@ -391,12 +384,9 @@ fi
 
 %files -n cnijfilter-common
 %defattr(-,root,root)
-%{_cupsbindir}/filter/pstocanonij
-%{_cupsbindir}/backend/cnijusb
-%{_cupsbindir}/backend/cnijnet
-%{_cupsbindir64}/filter/pstocanonij
-%{_cupsbindir64}/backend/cnijusb
-%{_cupsbindir64}/backend/cnijnet
+%{_cupslibdir}/filter/pstocanonij
+%{_cupslibdir}/backend/cnijusb
+%{_cupslibdir}/backend/cnijnet
 %{_bindir}/cngpij
 %{_bindir}/cngpijmnt
 %{_bindir}/cnijnpr
