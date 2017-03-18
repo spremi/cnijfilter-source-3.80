@@ -1,4 +1,4 @@
-AC_INIT([pstocanonij],[3.85-1],[no-define])
+AC_INIT([pstocanonij],[3.85-2],[no-define])
 
 AM_INIT_AUTOMAKE
 
