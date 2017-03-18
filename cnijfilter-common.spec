@@ -9,7 +9,7 @@
 
 %define _cupslibdir     %{_usr}/lib/cups
 
-%define _ppddir   %{_usr}
+%define _ppddir         %{_datarootdir}/cups/model
 
 %define CNBP_LIBS   libcnbpcmcm libcnbpcnclapi libcnbpcnclbjcmd libcnbpcnclui libcnbpess libcnbpo
 %define COM_LIBS    libcnnet
@@ -112,14 +112,14 @@ pushd cnijfilter
 popd
 
 pushd maintenance
-./autogen.sh --prefix=%{_prefix} --program-suffix=CN_IJ_MODEL --datadir=%{_prefix}/share --enable-libpath=%{_libdir}/bjlib
+./autogen.sh --prefix=%{_prefix} --program-suffix=CN_IJ_MODEL --datadir=%{_datarootdir} --enable-libpath=%{_libdir}/bjlib
 popd
 pushd lgmon
 ./autogen.sh --prefix=%{_prefix} --program-suffix=CN_IJ_MODEL --enable-progpath=%{_bindir}
 popd
 
 pushd cngpijmon
-./autogen.sh --prefix=%{_prefix} --program-suffix=CN_IJ_MODEL  --enable-progpath=%{_bindir} --datadir=%{_prefix}/share
+./autogen.sh --prefix=%{_prefix} --program-suffix=CN_IJ_MODEL  --enable-progpath=%{_bindir} --datadir=%{_datarootdir}
 popd
 
 %else
@@ -250,7 +250,7 @@ install -c -s -m 755 %{MODEL_NUM}/libs_bin%{_arc}/*.so.*  ${RPM_BUILD_ROOT}%{_li
 mkdir -p ${RPM_BUILD_ROOT}%{_bindir}
 mkdir -p ${RPM_BUILD_ROOT}%{_cupslibdir}/filter
 mkdir -p ${RPM_BUILD_ROOT}%{_cupslibdir}/backend
-mkdir -p ${RPM_BUILD_ROOT}%{_prefix}/share/cups/model
+mkdir -p ${RPM_BUILD_ROOT}%{_datarootdir}/cups/model
 mkdir -p ${RPM_BUILD_ROOT}/etc/udev/rules.d/
 
 install -c -m 644 com/ini/cnnet.ini   ${RPM_BUILD_ROOT}%{_libdir}/bjlib
@@ -320,9 +320,9 @@ for LIBS in %{CNBP_LIBS}; do
 done
 
 if [ "$1" = 0 ] ; then
-  rmdir -p --ignore-fail-on-non-empty %{_prefix}/share/locale/*/LC_MESSAGES
-  rmdir -p --ignore-fail-on-non-empty %{_prefix}/share/cngpijmon%{MODEL}
-  rmdir -p --ignore-fail-on-non-empty %{_prefix}/share/maintenance%{MODEL}
+  rmdir -p --ignore-fail-on-non-empty %{_datarootdir}/locale/*/LC_MESSAGES
+  rmdir -p --ignore-fail-on-non-empty %{_datarootdir}/cngpijmon%{MODEL}
+  rmdir -p --ignore-fail-on-non-empty %{_datarootdir}/maintenance%{MODEL}
   rmdir -p --ignore-fail-on-non-empty %{_bindir}
 fi
 
@@ -358,11 +358,14 @@ fi
 %{_bindir}/cngpijmon%{MODEL}
 %{_bindir}/lgmon%{MODEL}
 %{_bindir}/maintenance%{MODEL}
-%{_ppddir}/share/cups/model/canon%{MODEL}.ppd
-%{_prefix}/share/locale/*/LC_MESSAGES/cngpijmon%{MODEL}.mo
-%{_prefix}/share/locale/*/LC_MESSAGES/maintenance%{MODEL}.mo
-%{_prefix}/share/cngpijmon%{MODEL}/*
-%{_prefix}/share/maintenance%{MODEL}/*
+
+%{_ppddir}/canon%{MODEL}.ppd
+
+%{_datarootdir}/cngpijmon%{MODEL}/*
+%{_datarootdir}/maintenance%{MODEL}/*
+
+%{_datarootdir}/locale/*/LC_MESSAGES/cngpijmon%{MODEL}.mo
+%{_datarootdir}/locale/*/LC_MESSAGES/maintenance%{MODEL}.mo
 
 %{_bindir}/cif%{MODEL}
 %{_libdir}/libcnbp*%{MODEL_NUM}.so*
