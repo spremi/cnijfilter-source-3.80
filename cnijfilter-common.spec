@@ -105,17 +105,21 @@ pushd  ppd
 popd
 
 pushd cnijfilter
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --program-suffix=CN_IJ_MODEL --enable-libpath=%{_libdir}/bjlib --enable-binpath=%{_bindir}
 popd
 
 pushd maintenance
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --program-suffix=CN_IJ_MODEL --datadir=%{_datarootdir} --enable-libpath=%{_libdir}/bjlib
 popd
 pushd lgmon
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --program-suffix=CN_IJ_MODEL --enable-progpath=%{_bindir}
 popd
 
 pushd cngpijmon
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --program-suffix=CN_IJ_MODEL  --enable-progpath=%{_bindir} --datadir=%{_datarootdir}
 popd
 
@@ -151,24 +155,28 @@ make
 popd
 
 pushd cnijfilter
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --program-suffix=%{MODEL} --enable-libpath=%{_libdir}/bjlib --enable-binpath=%{_bindir}
 make clean
 make
 popd
 
 pushd maintenance
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --program-suffix=%{MODEL} --datadir=%{_prefix}/share --enable-libpath=%{_libdir}/bjlib
 make clean
 make
 popd
 
 pushd lgmon
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --program-suffix=%{MODEL} --enable-progpath=%{_bindir}
 make clean
 make
 popd
 
 pushd cngpijmon
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --program-suffix=%{MODEL}  --enable-progpath=%{_bindir} --datadir=%{_prefix}/share
 make clean
 make
@@ -181,30 +189,37 @@ popd
 %if %{with build_common_package}
 
 pushd libs
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix}
 popd
 
 pushd cngpij
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --enable-progpath=%{_bindir}
 popd
 
 pushd cngpijmnt
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --enable-progpath=%{_bindir}
 popd
 
 pushd pstocanonij
+autoreconf --install
 ./autogen.sh --prefix=/usr --enable-progpath=%{_bindir}
 popd
 
 pushd backend
+autoreconf --install
 ./autogen.sh --prefix=/usr
 popd
 
 pushd backendnet
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --enable-libpath=%{_libdir}/bjlib --enable-progpath=%{_bindir} LDFLAGS="-L../../com/libs_bin%{_arc}"
 popd
 
 pushd cngpijmon/cnijnpr
+autoreconf --install
 ./autogen.sh --prefix=%{_prefix} --enable-libpath=%{_libdir}/bjlib
 popd
 
