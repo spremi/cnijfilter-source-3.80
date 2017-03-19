@@ -86,6 +86,25 @@ AC_ARG_PROGRAM
 #
 AC_ARG_ENABLE(progpath)
 
+#
+# Function to get full expansion of a variables
+#
+AC_DEFUN([SP_FULL_EXPANSION], [_arg="$1"
+  $2=`(_prev=''
+
+    while test "[$]_arg" != "[$]_prev"
+    do
+      _prev="[$]_arg"                           # Save current value
+      eval _arg="\"[$]_arg\""                   # Evaluate again
+    done
+
+    echo "[$]_arg")`
+])
+
+if test "x${datadir}" = "xNONE"; then
+  SP_FULL_EXPANSION(["${datarootdir}"], [pkgdatadir])
+fi
+
 if test "x${enable_progpath}" = "x" ; then
   enable_progpath="${ac_default_prefix}/bin"
 fi
@@ -104,23 +123,19 @@ AC_SUBST(CNIJ_MODEL)
 #
 # Set PACKAGE_LOCALE_DIR in config.h
 #
-if test "x${prefix}" = "xNONE"; then
-  AC_DEFINE_UNQUOTED([PACKAGE_LOCALE_DIR], ["${ac_default_prefix}/${DATADIRNAME}/locale"], [PACKAGE_LOCALE_DIR])
+if test "x${datadir}" = "xNONE"; then
+  AC_DEFINE_UNQUOTED([PACKAGE_LOCALE_DIR], "[${pkgdatadir}/locale"])
 else
-  AC_DEFINE_UNQUOTED([PACKAGE_LOCALE_DIR], ["${prefix}/${DATADIRNAME}/locale"], [PACKAGE_LOCALE_DIR])
+  AC_DEFINE_UNQUOTED([PACKAGE_LOCALE_DIR], ["${datadir}/locale"], [PACKAGE_LOCALE_DIR])
 fi
 
 #
 # Set PACKAGE_DATA_DIR in config.h
 #
-if test "x${datadir}" = 'x${prefix}/share'; then
-  if test "x${prefix}" = "xNONE"; then
-    AC_DEFINE_UNQUOTED([PACKAGE_DATA_DIR], ["${ac_default_prefix}/share/${PACKAGE}"], [PACKAGE_DATA_DIR])
+if test "x${datadir}" = "xNONE"; then
+  AC_DEFINE_UNQUOTED([PACKAGE_DATA_DIR], ["${pkgdatadir}/${PACKAGE}${program_suffix}"], [PACKAGE_DATA_DIR])
   else
-    AC_DEFINE_UNQUOTED([PACKAGE_DATA_DIR], ["${prefix}/share/${PACKAGE}"], [PACKAGE_DATA_DIR])
-  fi
-else
-  AC_DEFINE_UNQUOTED([PACKAGE_DATA_DIR], ["${datadir}/${PACKAGE}"], [PACKAGE_DATA_DIR])
+  AC_DEFINE_UNQUOTED([PACKAGE_DATA_DIR], ["${datadir}/${PACKAGE}${program_suffix}"], [PACKAGE_DATA_DIR])
 fi
 
 #
