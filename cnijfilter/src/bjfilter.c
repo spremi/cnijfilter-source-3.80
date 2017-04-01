@@ -126,19 +126,14 @@ int main( int argc, char *argv[] )
 	CNCLPAPERSIZE   	cnclpapersize;
 	BJFLTCOLORSYSTEM	bjfltcolor;
 	LPBJFILTERINFO		lpbjinfo = NULL;
-	IPCU				ipc;
-	short				ret;
 	char				socketname[256];
 	short				modelstrnum,i;
 	char				dispname[256];
 	char				modelname[256];
 	char				tmp_modelname[256],small_modelname[256];
-	char				*bsccdata = NULL;
 	FILE				*fp = NULL;
 	char				confname[256];
 	short				id = 0;
-	short				testprint_ret;
-	DATA_INFO			data_info;
 	short				return_code = 1;
 
 #if DEBUGLOG
@@ -243,14 +238,11 @@ static short MakeBJPrintData
 	long				ImageHeight;
 	long				topskip;
 	long				page_width;
-	long				i;
 	short				bpp;
 
 	CNCLNAMEINFO		cnclnameinfo;
 	BJFLTCOMSYSTEM		bjfltcom;
 	char 				tblPath[] = BJLIBPATH;
-	FILE				*fp=NULL;
-	CPKInt16			result;
 	char				*tmp_filename = NULL;
 	short				rev_flag = 0;
 	CIFRASTERINFO		CifRasterInfo;
@@ -1866,7 +1858,7 @@ onErr:
 /*-------------------------------------------------------------*/
 static short flush_raster_data( CNCLPtr lpCnclData , LPBJFILTERINFO lpbjinfo , int fd , LPBJF_ROOT root )
 {
-	long				restLines, tmpRestLines;
+	long				restLines;
 	short				result;
 	long				i;
 	CNCLErr				cnclerr = -1;

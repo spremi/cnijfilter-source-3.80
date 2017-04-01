@@ -97,6 +97,45 @@ static short ics_support = 0;
 static short vivid_support = 0;
 static short formattype = -1;
 
+/* over margin */
+static short ExtensionTbl[][2] =
+{
+  {0, CND_OVERMARGINLEVEL_00},
+  {1, CND_OVERMARGINLEVEL_01},
+  {2, CND_OVERMARGINLEVEL_02},
+  {3, CND_OVERMARGINLEVEL_03},
+  {-1, -1}			/* Max indicator */
+};
+
+static char usage_err_mes[OPT_ERR_CODE_MAX][256]={
+  "Allowed argument of \"--imageres\" : 1 - 32767\n",
+  "",
+  "",
+  "Allowed argument of \"--halftoning\" : ed / pattern\n",
+  "Allowed argument of \"--quality\" : 1 - 5\n",
+  "",
+  "",
+  "Allowed argument of \"--extension\" : 0 - 3\n",
+  "Allowed argument of \"--location\" : upperleft / center\n",
+  "Allowed argument of \"--percent\" : 20 - 400\n",
+  "Allowed argument of \"--copies\" : 1 - 999\n",
+  "",
+  "Allowed argument of \"--gamma\" : 1.4 / 1.8 / 2.2\n",
+  "Allowed argument of \"--balance_c\" : -50  -   50\n",
+  "Allowed argument of \"--balance_m\" : -50  -   50\n",
+  "Allowed argument of \"--balance_y\" : -50  -   50\n",
+  "Allowed argument of \"--balance_k\" : -50  -   50\n",
+  "Allowed argument of \"--density\" : -50  -   50\n",
+  "Allowed argument of \"--papergap\" : auto / wide\n",
+  "",
+  "Allowed argument of \"--stapleside\" : longside / shortside\n",
+  "",
+  "Allowed argument of \"--contrast\" : -50  -   50\n",
+  "Allowed argument of \"--tone\" : -50  -   50\n",
+  "Allowed argument of \"--rotate\" : 0  -  3\n",
+
+};
+
 /*-------------------------------------------------------------*/
 /* Display usage                                               */
 /*-------------------------------------------------------------*/
@@ -489,7 +528,7 @@ short SetCmdOption(
 	OPT					opt;
 	poptContext			optcon;
 	char				confname[256];
-	short				first_modelstrnum,i;
+	short				first_modelstrnum;
 	short				ret;
 
 	struct poptOption optionsTable[] = {
@@ -594,7 +633,7 @@ int cmdlinesw(
 	UIDB			uidb;
 	short			DefaultGamma = 0;
 	short			DefaultIntent = 0;	/* Default value (PHOTO) */
-	short			i,j;
+	short			i;
 	short			count_switch=0;
 	short			ext = -1;
 	short			change_paperload = 0;
@@ -1606,7 +1645,7 @@ void init_optioninfo( LPBJF_OPTINFO lpbjfoption )
 void MakeModelnameConfname( char *argv0, char *modelname, char *confname, char *path, char *extname )
 {
 	static char		bjfilter_path[] = "cif";
-	char			small_modelname[256],tmpconfilename[256],confilename[256];
+	char			small_modelname[256],tmpconfilename[256];
 	short			bjfiltstrlen = strlen(bjfilter_path);
 	short			argv0strlen = strlen(argv0);
 	short			i,count;

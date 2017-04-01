@@ -216,18 +216,6 @@ typedef struct {
 	BJF_BBOX	bbox;
 } BJF_OPTINFO, *LPBJF_OPTINFO;
 
-/* over margin */
-static short ExtensionTbl[][2] =
-{
-	{0, CND_OVERMARGINLEVEL_00},
-	{1, CND_OVERMARGINLEVEL_01},
-	{2, CND_OVERMARGINLEVEL_02},
-	{3, CND_OVERMARGINLEVEL_03},
-	{-1, -1}			/* Max indicator */
-};
-
-
-
 #define		OPT_ERR_IME			(0)
 #define		OPT_ERR_CAR			(1)
 #define		OPT_ERR_MED			(2)
@@ -255,38 +243,6 @@ static short ExtensionTbl[][2] =
 #define		OPT_ERR_ROTATE		(24)
 
 #define		OPT_ERR_CODE_MAX	(25)
-
-
-static char usage_err_mes[OPT_ERR_CODE_MAX][256]={
-	"Allowed argument of \"--imageres\" : 1 - 32767\n",
-	"",
-	"",
-	"Allowed argument of \"--halftoning\" : ed / pattern\n",
-	"Allowed argument of \"--quality\" : 1 - 5\n",
-	"",
-	"",
-	"Allowed argument of \"--extension\" : 0 - 3\n",
-	"Allowed argument of \"--location\" : upperleft / center\n",
-	"Allowed argument of \"--percent\" : 20 - 400\n",
-	"Allowed argument of \"--copies\" : 1 - 999\n",
-	"",
-	"Allowed argument of \"--gamma\" : 1.4 / 1.8 / 2.2\n",
-	"Allowed argument of \"--balance_c\" : -50  -   50\n",
-	"Allowed argument of \"--balance_m\" : -50  -   50\n",
-	"Allowed argument of \"--balance_y\" : -50  -   50\n",
-	"Allowed argument of \"--balance_k\" : -50  -   50\n",
-	"Allowed argument of \"--density\" : -50  -   50\n",
-	"Allowed argument of \"--papergap\" : auto / wide\n",
-	"",
-	"Allowed argument of \"--stapleside\" : longside / shortside\n",
-	"",
-	"Allowed argument of \"--contrast\" : -50  -   50\n",
-	"Allowed argument of \"--tone\" : -50  -   50\n",
-	"Allowed argument of \"--rotate\" : 0  -  3\n",
-
-};
-
-
 
 
 extern 	short SetCmdOption(int, char **, LPBJF_OPTINFO, LPBJFLTCOLORSYSTEM, LPBJFLTDEVICE, LPCNCLPAPERSIZE, char *, char *, char *);
