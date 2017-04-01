@@ -83,11 +83,6 @@ static short dumpPluralPages( LPBJF_ROOT root, int prn );
 static short dumpPluralPages_flush( LPBJF_ROOT root, int prn );
 static short dumpPluralPages_flush_duplex( LPBJF_ROOT root, int prn );
 /* testprint function */
-static short exec_testprint( char *command , long cmdslen , char *filename , int prn);
-static long get_file_bytes( char *filename );
-
-
-static int createInputfile( char name );
 
 static short modify_image_form( LPBJFILTERINFO lpbjinfo , int isDuplex, int pageNum );
 static short output_blank_page( CNCLPtr , int , int , LPBJF_ROOT );
@@ -1494,42 +1489,6 @@ onErr:
 
 
 /*-------------------------------------------------------------*/
-/* write testprint pattern.                                    */
-/*-------------------------------------------------------------*/
-static short exec_testprint( char *command , long cmdslen , char *filename , int prn)
-{
-	CPKByte	buf[BUFSIZ];
-	int		fd = 0;
-	int		r_size = 0;
-	short	ret = -1;
-
-
-	/* open testpattern file */
-	if ( (fd = open( filename, O_RDONLY )) < 0 ){
-		/* perror( "open" ); */
-		return -2;
-	}
-
-	/* send BJL to LM */
-	outCmd( (CPKByte CPKPTR)command, (CPKUInt32)cmdslen, prn );
-
-	/* read testpattern file and write to LM */
-	while ( (r_size = read( fd, buf, BUFSIZ)) > 0 ){
-
-		outCmd( buf, r_size, prn );  /* write( prn, buf, r_size ); */
-	}
-
-	ret = 0;
-
-	if(fd>0)close(fd);
-	return ret;
-
-
-}
-
-
-
-/*-------------------------------------------------------------*/
 /* modify image size and location.                             */
 /*-------------------------------------------------------------*/
 static short modify_image_form( LPBJFILTERINFO lpbjinfo , int isDuplex, int pageNum )
@@ -1892,21 +1851,6 @@ onErr:
 
 
 }
-
-/*-------------------------------------------------------------*/
-/* obtain the total file byte size.                            */
-/*-------------------------------------------------------------*/
-static long get_file_bytes( char *filename )
-{
-	struct stat stat_buf;
-
-	if( stat( filename, &stat_buf ) == 0 )
-		return (long)stat_buf.st_size;
-	else
-		return -1;
-}
-
-
 
 #if DEBUGLOG
 
