@@ -663,7 +663,9 @@ finish3:
 		removeTempfileCompletely(root);
 	}
 
+#if 0
 finish2:
+#endif
 	/****** CNCL End job ******/
 	if ( (cnclerr = CNCL_EndJob( &CnclData )) == CNCL_OK ) {
 		outCmd( CnclData.outputBuffer, CnclData.outputSize, lpbjinfo->prn );
@@ -1321,7 +1323,6 @@ static short dumpPage(LPBJF_NODE node, int prn)
 	}
 	ret = node->curCopies;
 
-onErr:
 	if(fd>0)close(fd);
 	return ret;
 }
@@ -1520,7 +1521,6 @@ static short exec_testprint( char *command , long cmdslen , char *filename , int
 
 	ret = 0;
 
-onErr:
 	if(fd>0)close(fd);
 	return ret;
 

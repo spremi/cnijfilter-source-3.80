@@ -505,9 +505,7 @@ static short ConvExtToID( short value )
 		}
 	}
 
-onErr:
 	return result;
-
 }
 
 /*-------------------------------------------------------------*/

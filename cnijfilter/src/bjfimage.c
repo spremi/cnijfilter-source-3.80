@@ -1767,7 +1767,6 @@ static short png_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 {
 	png_structp		png_ptr;
 	png_infop		info_ptr;
-	short			result = -1;
 
 	png_ptr = (png_structp)lpbjfimage->png_ptr;
 	info_ptr = (png_infop)lpbjfimage->info_ptr;
@@ -1779,9 +1778,6 @@ static short png_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 	lpbjfimage->info_ptr = NULL;
 
 	return 0;
-onErr:
-	return result;
-
 }
 
 static short png_image_close( LPBJF_IMAGEINFO lpbjfimage )
