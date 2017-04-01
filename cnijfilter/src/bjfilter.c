@@ -241,7 +241,7 @@ static short MakeBJPrintData
 	CIFRASTERINFO		CifRasterInfo;
 	int					f_input = -1;
 	LPBJF_ROOT			root = NULL;
-	int					fd;
+	int					fd = 0;
 	short				dumpp_ret;
 	BJFLTOVERMARGININFO	bjfltovermargin;
 	char		command_buffer[CNCL_MAKECOMMAND_BUF_LEN];
