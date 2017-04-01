@@ -124,7 +124,6 @@ int main( int argc, char *argv[] )
 	char				socketname[256];
 	short				modelstrnum,i;
 	char				dispname[256];
-	char				modelname[256];
 	char				tmp_modelname[256],small_modelname[256];
 	FILE				*fp = NULL;
 	char				confname[256];
@@ -151,7 +150,6 @@ int main( int argc, char *argv[] )
 			&bjfltdevice, &cnclpapersize, dispname, lpbjinfo->filename, tmp_modelname )) < 0 ) goto onErr;
 
 
-	for( i=0; i<sizeof(tmp_modelname); i++ )	modelname[i] = tmp_modelname[i];
 	for( i=0; i<sizeof(small_modelname); i++ )	small_modelname[i] = tolower(tmp_modelname[i]);
 
 	/*---------
@@ -1624,7 +1622,6 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 	CPKUInt16			current_page = 0;
 	long				page_width;
 	short				bpp;
-	long				topskip = 0;
 	CNCLPtr				lpCnclData;
 	int					fd;
 
@@ -1635,7 +1632,6 @@ static short process_raster_data( LPCIFRASTERINFO lpCifRasterInfo , LPBJFILTERIN
 	page_width		= lpCifRasterInfo->page_width;
 	width			= lpCifRasterInfo->width;
 	height			= lpCifRasterInfo->height;
-	topskip			= lpCifRasterInfo->top_skip;
 	bpp				= lpCifRasterInfo->bpp;
 	rev_flag		= lpCifRasterInfo->rev_flag;
 	current_page	= lpCifRasterInfo->page;
@@ -1817,13 +1813,11 @@ onErr:
 /*-------------------------------------------------------------*/
 static short flush_raster_data( CNCLPtr lpCnclData , LPBJFILTERINFO lpbjinfo , int fd , LPBJF_ROOT root )
 {
-	long				restLines;
 	short				result;
 	long				i;
 	CNCLErr				cnclerr = -1;
 	short				ret = -1;
 
-	restLines = 1;
 	do {
 		/****** Data out ******/
 		result = CNCL_FlushData( lpCnclData );

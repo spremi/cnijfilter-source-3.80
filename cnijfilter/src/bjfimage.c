@@ -382,11 +382,6 @@ static short bufmatch( char *buf1, char *buf2, short length )
 {
 	short i = 0;
 	short result = -1;
-	char *tmp1;
-	char *tmp2;
-
-	tmp1 = buf1;
-	tmp2 = buf2;
 
 	while( *buf1++ == *buf2++ ){
 		i++;
@@ -544,7 +539,6 @@ onErr:
 static short tiff_image_read_raster( LPBJF_IMAGEINFO lpbjfimage, char *buf, long x, long y, long width )
 {
 	char				*localbuf = NULL;
-	long				RasterLength;
 	short				bpp;
 	short				result = -1;
 
@@ -555,7 +549,6 @@ static short tiff_image_read_raster( LPBJF_IMAGEINFO lpbjfimage, char *buf, long
 		whose is defined by positon define module.
 	*/
 	bpp = lpbjfimage->bpp;
-	RasterLength = lpbjfimage->rasterlength;
 
 	localbuf = (char *)_TIFFmalloc( TIFFScanlineSize( lpbjfimage->tif ) );
 
@@ -852,7 +845,6 @@ onErr:
 static short bmp_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 {
 	long				length = 0;
-	long				top = 0;
 	long				readraster = 0;
 	long				rasterlength = 0;
 	long				remain = 0;
@@ -862,7 +854,6 @@ static short bmp_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 
 
 	/* copy global to local */
-	top = lpbjfimage->top;
 	length = lpbjfimage->length;
 	readraster = lpbjfimage->readraster;
 	rasterlength = lpbjfimage->rasterlength;
@@ -1136,7 +1127,7 @@ onErr:
 
 static short ppm_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 {
-	long			length, width, top;
+	long			length, width;
 	long			readraster, remain;
 	long			RasterLength;
 	short			bpp;
@@ -1144,7 +1135,6 @@ static short ppm_image_flush( LPBJF_IMAGEINFO lpbjfimage )
 	FILE			*readfp = NULL;
 	short			result = -1;
 
-	top        = lpbjfimage->top;
 	width	   = lpbjfimage->width;
 	length     = lpbjfimage->length;
 	bpp	       = lpbjfimage->bpp;
@@ -1682,8 +1672,6 @@ static short png_image_read_raster
 	long			i;
 	long			top, skip, rstep, laststep;
 	long			currentmax, currentpos;
-	long			RasterLength = 0;
-	FILE			*readfp = NULL;
 	short			result = -1;
 	png_structp		png_ptr;
 
@@ -1693,7 +1681,6 @@ static short png_image_read_raster
 	img_bpp		 = lpbjfimage->bpp;
 	img_width    = lpbjfimage->width;
 	img_length   = lpbjfimage->length;
-	RasterLength = lpbjfimage->rasterlength;
 
 	/* copy */
 	png_ptr = (png_structp)lpbjfimage->png_ptr;
@@ -1709,7 +1696,6 @@ static short png_image_read_raster
 	---*/
 	top          = lpbjfimage->top;
 	rstep        = lpbjfimage->rstep;
-	readfp       = lpbjfimage->bmp;
 	rawbuf	     = lpbjfimage->bmpraw;
 	currentmax   = top + rstep;
 	skip         = y - currentmax;
@@ -1815,9 +1801,7 @@ int ppm_write_tmpfile( LPBJF_IMAGEINFO lpbjfimage, char *filename , char *outfil
 	short			retbyte;
 	char			ch;
 	unsigned char	*buf = NULL;
-	long			parm_len = 0;
 	int				fd = -1;
-	int				w_size;
 	long			block_num = 0;
 	long			lastblock_size = 0;
 	short			i;
@@ -1848,15 +1832,15 @@ int ppm_write_tmpfile( LPBJF_IMAGEINFO lpbjfimage, char *filename , char *outfil
 	}
 
 	/* write "P6" */
-	w_size = write( fd , PPMRAWSTART , 2 );
+	write( fd , PPMRAWSTART , 2 );
 
 	/* skip "0x0A" after "P6" */
 	if ( (ch = fgetc( readfp )) == EOF ) goto onErr;
-	w_size = write( fd , &ch , 1 );
+	write( fd , &ch , 1 );
 
 
 	/* read and write PPM parameter */
-	parm_len = readwritePPMParam( readfp, &width, &length, &maxvalue , fd );
+	readwritePPMParam( readfp, &width, &length, &maxvalue , fd );
 
 	if ( (!width) || (!length) ) goto onErr;
 
@@ -1876,14 +1860,14 @@ int ppm_write_tmpfile( LPBJF_IMAGEINFO lpbjfimage, char *filename , char *outfil
 		if ( !(read_len = fread( buf, 1, MAXBUF, readfp ) )){
 			goto onErr;
 		}
-		w_size = write( fd , buf , MAXBUF );
+		write( fd , buf , MAXBUF );
 	}
 
 	if( lastblock_size > 0 ){
 		if ( !(read_len = fread( buf, 1, lastblock_size, readfp ) )){
 			goto onErr;
 		}
-		w_size = write( fd , buf , lastblock_size );
+		write( fd , buf , lastblock_size );
 	}
 
 	if( buf ) free(buf);
@@ -1909,7 +1893,6 @@ static long readwritePPMParam( FILE *fp, long *width, long *height, long *maxval
 	char	max_buf[25];
 	char	*ptr = NULL;
 	long	count = 0;
-	int		w_size;
 
 	ch = (char)fgetc( fp );
 
@@ -1921,7 +1904,7 @@ static long readwritePPMParam( FILE *fp, long *width, long *height, long *maxval
 		}
 	}
 	else {
-		w_size = write( fd , &ch , 1 );
+		write( fd , &ch , 1 );
 		count++;
 		wid_buf[0] = ch;
 		ptr = wid_buf + 1;
@@ -1929,7 +1912,7 @@ static long readwritePPMParam( FILE *fp, long *width, long *height, long *maxval
 
 	/* Width and Length */
 	while( (ch = (char)fgetc( fp )) != EOF ){
-		w_size = write( fd , &ch , 1 );
+		write( fd , &ch , 1 );
 		count++;
 
 		if ( ch == 0x0A ) break;
@@ -1948,7 +1931,7 @@ static long readwritePPMParam( FILE *fp, long *width, long *height, long *maxval
 	/* Max Value */
 	ptr = max_buf;
 	while( (ch = (char)fgetc( fp )) != EOF ){
-		w_size = write( fd , &ch , 1 );
+		write( fd , &ch , 1 );
 		count++;
 
 		if ( ch == 0x0A ) break;
