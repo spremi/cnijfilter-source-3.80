@@ -40,10 +40,10 @@
 #define mkpath(path)		mkpath2(path)
 
 /* data base file path */
-#define	BJLIBPATH			mkpath(XBJLIBPATH)
+#define	BJLIBPATH			XBJLIBPATH
 
 /* #define BJFILTERXXXXRCPATH */
-#define BJFILTERXXXXRCPATH			catpath(mkpath(XBJLIBPATH),BJFILTERRC)
+#define BJFILTERXXXXRCPATH			XBJLIBPATH BJFILTERRC
 
 /* program file path */
 #define LGMONPATH			catpath(mkpath(XBINPATH),LGMON)
